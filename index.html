@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#06277c">
+  <meta name="description" content="تكي - منصة الاختبارات الذكية">
+  <title>تكي | منصة الاختبارات الذكية</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./app.js" defer></script>
+</head>
+
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <main class="app-shell">
+
+    <!-- ================= شاشة الترحيب ================= -->
+    <section id="welcomeScreen" class="screen active">
+
+      <header class="welcome-header">
+        <div class="brand">
+          <img
+            class="brand-logo"
+            src="./assets/logo.png"
+            alt="شعار تكي"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"
+          >
+          <div class="brand-fallback" aria-hidden="true">ت</div>
+
+          <div class="brand-copy">
+            <h1>تكي</h1>
+            <p>منصة الاختبارات الذكية</p>
+          </div>
+        </div>
+
+        <div class="version-badge">
+          <span class="status-dot"></span>
+          مساحة التعلّم
+        </div>
+      </header>
+
+      <div class="welcome-hero">
+        <div class="hero-orb orb-one"></div>
+        <div class="hero-orb orb-two"></div>
+
+        <div class="hero-content">
+          <div class="eyebrow">
+            <span>✦</span>
+            تعلّم، اختبر، وتقدّم
+          </div>
+
+          <h2>
+            كل إجابة صحيحة،<br>
+            <span class="gradient-text">خطوة نحو التميّز.</span>
+          </h2>
+
+          <p class="hero-description">
+            استعد للتحدي، اختبر معلوماتك، واكتشف مستواك
+            من خلال تجربة تعليمية تفاعلية.
+          </p>
+
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <span class="stat-icon">◷</span>
+              <div>
+                <strong id="welcomeDuration">05:00</strong>
+                <small>الوقت المتاح</small>
+              </div>
+            </div>
+
+            <div class="hero-stat">
+              <span class="stat-icon">▤</span>
+              <div>
+                <strong id="welcomeQuestionCount">10</strong>
+                <small>عدد الأسئلة</small>
+              </div>
+            </div>
+
+            <div class="hero-stat">
+              <span class="stat-icon">★</span>
+              <div>
+                <strong>+1</strong>
+                <small>لكل إجابة صحيحة</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-decoration" aria-hidden="true">
+          <div class="decoration-ring ring-outer"></div>
+          <div class="decoration-ring ring-inner"></div>
+          <div class="decoration-core">ت</div>
+          <span class="floating-symbol symbol-one">✓</span>
+          <span class="floating-symbol symbol-two">✦</span>
+          <span class="floating-symbol symbol-three">+</span>
+        </div>
+      </div>
+
+      <section class="setup-card">
+        <div class="section-heading">
+          <div class="heading-icon">✦</div>
+          <div>
+            <h2>الاختبار النشط</h2>
+            <p>راجع بيانات الاختبار قبل أن تبدأ.</p>
+          </div>
+          <span class="active-pill">
+            <span class="status-dot"></span>
+            جاهز
+          </span>
+        </div>
+
+        <div class="field-group">
+          <label for="subjectInput">المادة الدراسية</label>
+          <input
+            id="subjectInput"
+            type="text"
+            maxlength="80"
+            value="الثقافة العامة"
+            placeholder="مثال: الرياضيات"
+          >
+        </div>
+
+        <div class="field-group">
+          <label for="topicInput">موضوع الاختبار</label>
+          <input
+            id="topicInput"
+            type="text"
+            maxlength="120"
+            value="اختبار المعرفة العامة"
+            placeholder="مثال: المعادلات الرياضية"
+          >
+        </div>
+
+        <div class="notice-card">
+          <span class="notice-icon">ⓘ</span>
+          <div>
+            <strong>قبل أن تبدأ</strong>
+            <p id="welcomeNote">
+              جهّز نفسك وأجب عن الأسئلة قبل انتهاء الوقت.
+            </p>
+          </div>
+        </div>
+
+        <button id="startButton" class="primary-button" disabled>
+          <span>جارٍ تحميل الأسئلة...</span>
+          <span class="button-arrow">←</span>
+          <span class="button-shine"></span>
+        </button>
+
+        <p class="privacy-note">
+          <span>◆</span>
+          اختبار مباشر دون تسجيل دخول
+        </p>
+      </section>
+
+      <footer class="app-footer">
+        <img src="./assets/logo.png" alt="" onerror="this.style.display='none'">
+        <span>تكي — اجعل المعرفة عادة.</span>
+      </footer>
+    </section>
+
+    <!-- ================= شاشة الاختبار ================= -->
+    <section id="quizScreen" class="screen">
+
+      <header class="quiz-header">
+        <div class="brand">
+          <img
+            class="brand-logo"
+            src="./assets/logo.png"
+            alt="شعار تكي"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"
+          >
+          <div class="brand-fallback" aria-hidden="true">ت</div>
+
+          <div class="brand-copy">
+            <h1>تكي</h1>
+            <p>رحلة المعرفة</p>
+          </div>
+        </div>
+
+        <button id="quitButton" class="icon-button" type="button" aria-label="إنهاء الاختبار">
+          ×
+        </button>
+      </header>
+
+      <div class="quiz-meta">
+        <div class="question-counter">
+          <span class="meta-icon">☷</span>
+          السؤال <strong id="currentQuestion">1</strong>
+          <span class="muted">من</span>
+          <strong id="totalQuestions">10</strong>
+        </div>
+
+        <div id="timerRing" class="timer-ring">
+          <span class="timer-icon">◷</span>
+          <strong id="timerText" aria-live="off">05:00</strong>
+          <small>الوقت المتبقي</small>
+        </div>
+      </div>
+
+      <div
+        class="progress-track"
+        role="progressbar"
+        aria-label="تقدم الاختبار"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="0"
+        id="progressTrack"
+      >
+        <div id="progressBar" class="progress-bar"></div>
+      </div>
+
+      <div class="quiz-info-strip">
+        <span>المادة: <strong id="activeSubject">الثقافة العامة</strong></span>
+        <span>الموضوع: <strong id="activeTopic">المعرفة العامة</strong></span>
+        <span class="score-chip">★ <strong id="scoreText">0</strong> نقطة</span>
+      </div>
+
+      <article class="question-card">
+        <div class="question-card-top">
+          <span class="question-label">سؤال الاختبار</span>
+          <span class="question-number-badge" id="questionNumberBadge">01</span>
+        </div>
+
+        <h2 id="questionText">جارٍ تحميل السؤال...</h2>
+
+        <p class="choose-hint">اختر إجابة واحدة من الخيارات التالية.</p>
+
+        <div id="optionsList" class="options-list"></div>
+
+        <div id="feedbackBox" class="feedback-box" hidden>
+          <div id="feedbackIcon" class="feedback-icon">✓</div>
+          <div class="feedback-content">
+            <strong id="feedbackTitle">إجابة صحيحة!</strong>
+            <p id="feedbackText"></p>
+          </div>
+          <span id="feedbackPoints" class="feedback-points">+1 نقطة</span>
+        </div>
+
+        <button id="nextButton" class="primary-button next-button" disabled>
+          <span id="nextButtonText">السؤال التالي</span>
+          <span class="button-arrow">←</span>
+          <span class="button-shine"></span>
+        </button>
+      </article>
+
+      <p class="quiz-footer-note">
+        ركّز في كل سؤال، فكل إجابة صحيحة تقرّبك من هدفك.
+      </p>
+    </section>
+
+    <!-- ================= شاشة النتائج ================= -->
+    <section id="resultScreen" class="screen">
+
+      <header class="result-header">
+        <div class="brand">
+          <img
+            class="brand-logo"
+            src="./assets/logo.png"
+            alt="شعار تكي"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"
+          >
+          <div class="brand-fallback" aria-hidden="true">ت</div>
+          <div class="brand-copy">
+            <h1>تكي</h1>
+            <p>تقرير الأداء</p>
+          </div>
+        </div>
+
+        <span class="completed-badge">✓ اكتمل الاختبار</span>
+      </header>
+
+      <div class="result-hero">
+        <div class="result-emblem">✦</div>
+        <p class="eyebrow">وصلت إلى نهاية التحدي</p>
+        <h2 id="resultHeading">أحسنت!</h2>
+        <p id="resultSubtitle">إليك تحليل أدائك في هذا الاختبار.</p>
+
+        <div class="result-score-circle">
+          <div class="score-circle-inner">
+            <strong id="finalPercent">0%</strong>
+            <span>نسبة النجاح</span>
+          </div>
+        </div>
+
+        <div class="final-score-line">
+          مجموع نقاطك
+          <strong id="finalScore">0</strong>
+          <span>نقطة</span>
+        </div>
+
+        <div class="result-subject">
+          <span id="resultSubject">الثقافة العامة</span>
+          <span class="subject-separator">•</span>
+          <span id="resultTopic">اختبار المعرفة العامة</span>
+        </div>
+      </div>
+
+      <section class="result-panel">
+        <div class="section-heading">
+          <div class="heading-icon">▦</div>
+          <div>
+            <h2>ملخص النتائج</h2>
+            <p>نظرة شاملة على إجاباتك.</p>
+          </div>
+        </div>
+
+        <div class="result-stats-grid">
+          <div class="result-stat correct-stat">
+            <span class="result-stat-icon">✓</span>
+            <strong id="correctCount">0</strong>
+            <span>إجابة صحيحة</span>
+          </div>
+
+          <div class="result-stat wrong-stat">
+            <span class="result-stat-icon">×</span>
+            <strong id="wrongCount">0</strong>
+            <span>إجابة خاطئة</span>
+          </div>
+
+          <div class="result-stat unanswered-stat">
+            <span class="result-stat-icon">○</span>
+            <strong id="unansweredCount">0</strong>
+            <span>دون إجابة</span>
+          </div>
+        </div>
+
+        <div class="result-progress-heading">
+          <span>نسبة الإجابات الصحيحة</span>
+          <strong id="resultProgressLabel">0%</strong>
+        </div>
+
+        <div class="progress-track result-progress-track">
+          <div id="resultProgress" class="progress-bar"></div>
+        </div>
+      </section>
+
+      <section class="result-panel">
+        <div class="section-heading">
+          <div class="heading-icon">◷</div>
+          <div>
+            <h2>تحليل الأداء</h2>
+            <p>تفاصيل تساعدك على تقييم تجربتك.</p>
+          </div>
+        </div>
+
+        <div id="analysisInsights" class="analysis-grid"></div>
+      </section>
+
+      <section class="result-panel">
+        <div class="section-heading">
+          <div class="heading-icon">☷</div>
+          <div>
+            <h2>مراجعة الإجابات</h2>
+            <p>تعرف على إجاباتك والإجابات الصحيحة.</p>
+          </div>
+        </div>
+
+        <div id="answerReview" class="answer-review"></div>
+      </section>
+
+      <div class="result-actions">
+        <button id="retryButton" class="primary-button">
+          <span>إعادة الاختبار</span>
+          <span class="button-arrow">↻</span>
+          <span class="button-shine"></span>
+        </button>
+
+        <button id="homeButton" class="secondary-button">
+          <span>العودة للرئيسية</span>
+          <span>⌂</span>
+        </button>
+      </div>
+
+      <footer class="app-footer">
+        <img src="./assets/logo.png" alt="" onerror="this.style.display='none'">
+        <span>تكي — كل محاولة تصنع فرقًا.</span>
+      </footer>
+    </section>
+
+  </main>
+
+  <!-- نافذة تأكيد الخروج -->
+  <dialog id="quitDialog" class="quit-dialog">
+    <div class="dialog-symbol">!</div>
+    <h2>إنهاء الاختبار؟</h2>
+    <p>ستنتهي المحاولة الحالية وستظهر نتيجتك حسب إجاباتك حتى الآن.</p>
+
+    <div class="dialog-actions">
+      <button id="cancelQuitButton" class="secondary-button" type="button">
+        متابعة الاختبار
+      </button>
+      <button id="confirmQuitButton" class="danger-button" type="button">
+        إنهاء الاختبار
+      </button>
+    </div>
+  </dialog>
+
+</body>
+    </html>
