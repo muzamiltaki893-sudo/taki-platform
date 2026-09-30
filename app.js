@@ -6,7 +6,7 @@
    ================================================== */
 
 const CONFIG = {
-  QUESTION_COUNT: 10,
+  QUESTION_COUNT: 5,
   TEST_DURATION_SECONDS: 300,
   POINTS_PER_CORRECT: 1,
 
