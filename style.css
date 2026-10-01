@@ -104,7 +104,7 @@ a {
 }
 
 /* ==================================================
-   شعار مؤسسة تكي الرسمي — تصميم احترافي
+   شعار تكي — تصميم احترافي بدون إطار أبيض
    ================================================== */
 
 .brand {
@@ -113,98 +113,83 @@ a {
   gap: 12px;
   text-decoration: none;
   min-width: 0;
-  -webkit-tap-highlight-color: transparent;
 }
 
-/* الإطار الخارجي للشعار */
+/* إطار الشعار: مربع متناسق مع هوية التطبيق */
+
 .brand-mark {
   position: relative;
   isolation: isolate;
-
-  width: 58px;
-  height: 58px;
-  flex: 0 0 58px;
-
+  width: 49px;
+  height: 49px;
+  flex: 0 0 49px;
   display: flex;
   align-items: center;
   justify-content: center;
 
-  padding: 4px;
-  margin: 0;
+  padding: 0;
   overflow: hidden;
-  box-sizing: border-box;
 
-  background: linear-gradient(
-    145deg,
-    #ffffff 0%,
-    #f4f8ff 42%,
-    #e5efff 100%
-  );
-
-  border: 1px solid rgba(111, 207, 255, .75);
-  border-radius: 17px;
+  background: transparent;
+  border: none;
+  border-radius: 14px;
 
   box-shadow:
-    0 0 0 1px rgba(37, 135, 255, .10),
-    0 4px 12px rgba(0, 0, 0, .16),
-    0 5px 20px rgba(37, 135, 255, .13);
+    0 0 0 1px rgba(66, 229, 255, .18),
+    0 4px 16px rgba(37, 135, 255, .14);
 
   transition:
-    border-color .25s ease,
     box-shadow .25s ease,
     transform .25s ease;
 }
 
-/* لمعة داخلية رقيقة */
+/* وهج خفيف يحافظ على أناقة الشعار */
+
 .brand-mark::before {
   content: "";
   position: absolute;
-  inset: 1px;
+  inset: 0;
   z-index: -1;
-  border-radius: 15px;
+  border-radius: inherit;
   background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, .75),
-    rgba(224, 240, 255, .12) 55%,
-    rgba(66, 229, 255, .12)
+    145deg,
+    rgba(37, 135, 255, .10),
+    rgba(140, 114, 255, .08)
   );
   pointer-events: none;
 }
 
-/* صورة الشعار الأصلية */
-.brand-logo {
-  display: block;
+/* تأثير بسيط عند المرور على الشعار */
 
+.brand:hover .brand-mark {
+  box-shadow:
+    0 0 0 1px rgba(66, 229, 255, .38),
+    0 0 20px rgba(37, 135, 255, .20);
+  transform: translateY(-1px);
+}
+
+/* الصورة نفسها تملأ المربع دون حواف بيضاء مضافة */
+
+.brand-logo {
+  position: relative;
+  z-index: 1;
+  display: block;
   width: 100%;
   height: 100%;
-
-  min-width: 0;
-  min-height: 0;
-
-  object-fit: contain;
-  object-position: center;
-
+  max-width: 100%;
+  max-height: 100%;
   margin: 0;
   padding: 0;
 
-  border: 0;
-  border-radius: 11px;
+  object-fit: cover;
+  object-position: center;
 
+  border: none;
+  border-radius: inherit;
   background: transparent;
-}
 
-/* تفاعل هادئ لا يبالغ في الإضاءة */
-.brand:hover .brand-mark {
-  border-color: rgba(66, 229, 255, .95);
-
-  box-shadow:
-    0 0 0 2px rgba(37, 135, 255, .09),
-    0 5px 16px rgba(0, 0, 0, .18),
-    0 0 19px rgba(66, 229, 255, .16);
-}
-
-.brand:active .brand-mark {
-  transform: scale(.97);
+  -webkit-user-drag: none;
+  user-select: none;
 }
 
 .brand-info {
@@ -304,17 +289,13 @@ a {
     opacity: 0;
     transform: translateY(10px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-h1,
-h2,
-h3,
-p {
+h1, h2, h3, p {
   margin-top: 0;
 }
 
@@ -533,7 +514,7 @@ p {
 }
 
 .secondary-button:hover {
-  border-color: #488bff;
+  border-color: var(--blue);
 }
 
 .danger-button {
@@ -1577,21 +1558,14 @@ p {
     gap: 9px;
   }
 
-  /* شعار أصغر مع الحفاظ على الإطار الاحترافي */
+  /* شعار أصغر قليلًا مع الحفاظ على تناسقه */
+
   .brand-mark {
-    width: 48px;
-    height: 48px;
-    flex-basis: 48px;
-    padding: 3px;
-    border-radius: 14px;
-  }
-
-  .brand-mark::before {
+    width: 43px;
+    height: 43px;
+    flex-basis: 43px;
+    padding: 0;
     border-radius: 12px;
-  }
-
-  .brand-logo {
-    border-radius: 9px;
   }
 
   .brand strong {
@@ -1790,39 +1764,6 @@ p {
 }
 
 @media (max-width: 390px) {
-  .brand {
-    gap: 7px;
-  }
-
-  .brand-mark {
-    width: 43px;
-    height: 43px;
-    flex-basis: 43px;
-    padding: 2px;
-    border-radius: 12px;
-  }
-
-  .brand-mark::before {
-    border-radius: 10px;
-  }
-
-  .brand-logo {
-    border-radius: 8px;
-  }
-
-  .brand strong {
-    font-size: 16px;
-  }
-
-  .brand strong span {
-    font-size: 11px;
-    letter-spacing: 1px;
-  }
-
-  .brand small {
-    font-size: 10px;
-  }
-
   .welcome-art {
     display: none;
   }
@@ -1861,10 +1802,6 @@ p {
     width: 100%;
   }
 }
-
-/* ==================================================
-   احترام إعداد تقليل الحركة في الجهاز
-   ================================================== */
 
 @media (prefers-reduced-motion: reduce) {
   *,
