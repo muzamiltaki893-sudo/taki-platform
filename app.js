@@ -7,7 +7,7 @@
 const CONFIG = {
   POINTS_PER_CORRECT: 1,
   SHUFFLE_QUESTIONS: true,
-  SHUFFLE_OPTIONS: false,
+  SHUFFLE_OPTIONS: true,
 
   STUDENTS_FILE: "./students.json",
 
@@ -217,7 +217,7 @@ const CONFIG = {
         {
           id: 20,
           name: "المادة العشرون",
-          description: "اختبار تدريبي للمادة العشرين.",
+          description: "اختبار تدريبي للمادة العشرون.",
           file: "./questions-20.json",
           icon: "▦"
         }
@@ -296,16 +296,21 @@ function notify(message) {
   element.classList.remove("hidden");
 
   window.clearTimeout(notify.timeoutId);
+
   notify.timeoutId = window.setTimeout(() => {
     element.classList.add("hidden");
   }, 3000);
 }
 
 async function readJSON(path) {
-  const response = await fetch(path, { cache: "no-store" });
+  const response = await fetch(path, {
+    cache: "no-store"
+  });
 
   if (!response.ok) {
-    throw new Error(`تعذر تحميل الملف ${path} (${response.status})`);
+    throw new Error(
+      `تعذر تحميل الملف ${path} (${response.status})`
+    );
   }
 
   return response.json();
@@ -316,14 +321,20 @@ function shuffle(array) {
 
   for (let i = result.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [result[i], result[j]] = [result[j], result[i]];
+
+    [result[i], result[j]] = [
+      result[j],
+      result[i]
+    ];
   }
 
   return result;
 }
 
 function formatDuration(minutes) {
-  return minutes === 1 ? "دقيقة واحدة" : `${minutes} دقائق`;
+  return minutes === 1
+    ? "دقيقة واحدة"
+    : `${minutes} دقائق`;
 }
 
 function studentStorageKey(type) {
@@ -331,11 +342,16 @@ function studentStorageKey(type) {
 }
 
 function getLocalNumber(type) {
-  return Number(localStorage.getItem(studentStorageKey(type)) || 0);
+  return Number(
+    localStorage.getItem(studentStorageKey(type)) || 0
+  );
 }
 
 function setLocalNumber(type, value) {
-  localStorage.setItem(studentStorageKey(type), String(value));
+  localStorage.setItem(
+    studentStorageKey(type),
+    String(value)
+  );
 }
 
 function getCompletedCount() {
@@ -349,20 +365,24 @@ function getPoints() {
 function updateStudentHeader() {
   if (!state.student) return;
 
-  $("#headerStudentName").textContent = state.student.name;
+  $("#headerStudentName").textContent =
+    state.student.name;
+
   $("#headerStudentSpecialization").textContent =
     state.student.specialization || "طالب تكي";
 
   $("#studentAvatar").textContent =
     [...state.student.name][0] || "ط";
 
-  $("#welcomeName").textContent = state.student.name.split(/\s+/)[0];
+  $("#welcomeName").textContent =
+    state.student.name.split(/\s+/)[0];
 
   $("#studentPoints").textContent = getPoints();
   $("#completedTests").textContent = getCompletedCount();
 
   const total = CONFIG.SECTIONS.reduce(
-    (sum, section) => sum + section.materials.length, 0
+    (sum, section) => sum + section.materials.length,
+    0
   );
 
   $("#totalSubjects").textContent = total;
@@ -378,7 +398,9 @@ async function loadStudents() {
     const data = await readJSON(CONFIG.STUDENTS_FILE);
 
     if (!Array.isArray(data)) {
-      throw new Error("يجب أن يكون students.json مصفوفة JSON.");
+      throw new Error(
+        "يجب أن يكون students.json مصفوفة JSON."
+      );
     }
 
     state.students = data;
@@ -402,7 +424,10 @@ function loginStudent(event) {
   hideMessage(message);
 
   if (!number || !password) {
-    showMessage(message, "أدخل رقم الطالب وكلمة المرور.");
+    showMessage(
+      message,
+      "أدخل رقم الطالب وكلمة المرور."
+    );
     return;
   }
 
@@ -412,7 +437,10 @@ function loginStudent(event) {
   );
 
   if (!student) {
-    showMessage(message, "رقم الطالب أو كلمة المرور غير صحيحة.");
+    showMessage(
+      message,
+      "رقم الطالب أو كلمة المرور غير صحيحة."
+    );
     return;
   }
 
@@ -429,10 +457,7 @@ function loginStudent(event) {
 }
 
 function logout() {
-  if (state.timerId) {
-    clearInterval(state.timerId);
-    state.timerId = null;
-  }
+  stopTimer();
 
   state.student = null;
   state.section = null;
@@ -473,17 +498,25 @@ function renderSections() {
       </div>
       <h3>${escapeHTML(section.name)}</h3>
       <p>${escapeHTML(section.subtitle)}</p>
-      <p>${section.materials.length} ${section.materials.length === 1 ? "مادة" : "مواد"}</p>
+      <p>${section.materials.length} ${
+        section.materials.length === 1 ? "مادة" : "مواد"
+      }</p>
       <span class="card-arrow">←</span>
     `;
 
-    card.addEventListener("click", () => openSection(section.id));
+    card.addEventListener("click", () => {
+      openSection(section.id);
+    });
+
     grid.appendChild(card);
   });
 }
 
 function openSection(sectionId) {
-  const section = CONFIG.SECTIONS.find((item) => item.id === sectionId);
+  const section = CONFIG.SECTIONS.find(
+    (item) => item.id === sectionId
+  );
+
   if (!section) return;
 
   state.section = section;
@@ -494,6 +527,7 @@ function openSection(sectionId) {
 
   $("#materialEyebrow").textContent = section.name;
   $("#materialsTitle").textContent = section.name;
+
   $("#materialsDescription").textContent =
     `${section.subtitle} — اختر مادة لبدء الاختبار.`;
 
@@ -520,7 +554,10 @@ function renderMaterials(section) {
       <span class="material-arrow">←</span>
     `;
 
-    card.addEventListener("click", () => openMaterial(material));
+    card.addEventListener("click", () => {
+      openMaterial(material);
+    });
+
     grid.appendChild(card);
   });
 }
@@ -536,17 +573,25 @@ async function openMaterial(material) {
 
   $("#subjectTitle").textContent = material.name;
   $("#subjectSectionName").textContent = section.name;
+
   $("#subjectDescription").textContent =
-    material.description || "استعد للاختبار وابدأ عندما تكون جاهزاً.";
+    material.description ||
+    "استعد للاختبار وابدأ عندما تكون جاهزاً.";
 
   $("#subjectSymbol").textContent = material.icon || "✦";
-  $("#subjectQuestionCount").textContent = section.questionCount;
+
+  $("#subjectQuestionCount").textContent =
+    section.questionCount;
+
   $("#subjectDuration").textContent =
     formatDuration(section.durationMinutes);
 
-  $("#subjectPoints").textContent = CONFIG.POINTS_PER_CORRECT;
+  $("#subjectPoints").textContent =
+    CONFIG.POINTS_PER_CORRECT;
+
   $("#subjectAvailability").classList.add("hidden");
   $("#startButton").disabled = false;
+
   $("#startButton").innerHTML =
     "<span>ابدأ الاختبار</span><span>←</span>";
 
@@ -554,9 +599,12 @@ async function openMaterial(material) {
 }
 
 async function prepareQuiz() {
-  if (!state.student || !state.section || !state.material) return;
+  if (!state.student || !state.section || !state.material) {
+    return;
+  }
 
   const button = $("#startButton");
+
   button.disabled = true;
   button.textContent = "جارٍ تجهيز الاختبار…";
 
@@ -572,11 +620,15 @@ async function prepareQuiz() {
       typeof item.q === "string" &&
       typeof item.a === "string" &&
       Array.isArray(item.w) &&
-      item.w.every((answer) => typeof answer === "string")
+      item.w.every(
+        (answer) => typeof answer === "string"
+      )
     );
 
     if (validQuestions.length === 0) {
-      throw new Error("لا توجد أسئلة صالحة في ملف هذه المادة.");
+      throw new Error(
+        "لا توجد أسئلة صالحة في ملف هذه المادة."
+      );
     }
 
     const count = Math.min(
@@ -584,36 +636,57 @@ async function prepareQuiz() {
       validQuestions.length
     );
 
-    let chosen = CONFIG.SHUFFLE_QUESTIONS
+    const chosen = CONFIG.SHUFFLE_QUESTIONS
       ? shuffle(validQuestions).slice(0, count)
       : validQuestions.slice(0, count);
 
     state.questions = chosen.map((question) => {
-      const options = [question.a, ...question.w];
+      // نجمع الإجابة الصحيحة مع الإجابات الخاطئة.
+      const options = [
+        question.a,
+        ...question.w
+      ];
+
+      // التعديل الأساسي: خلط الخيارات عشوائيًا.
+      const shuffledOptions = CONFIG.SHUFFLE_OPTIONS
+        ? shuffle(options)
+        : options;
 
       return {
         q: question.q,
         a: question.a,
-        options: CONFIG.SHUFFLE_OPTIONS ? shuffle(options) : options
+        options: shuffledOptions
       };
     });
 
-    state.answers = new Array(state.questions.length).fill(null);
+    state.answers = new Array(
+      state.questions.length
+    ).fill(null);
+
     state.currentIndex = 0;
     state.score = 0;
     state.finished = false;
     state.selectedAnswer = null;
-    state.secondsLeft = state.section.durationMinutes * 60;
 
-    $("#activeSubject").textContent = state.material.name;
-    $("#activeTopic").textContent = state.section.name;
+    state.secondsLeft =
+      state.section.durationMinutes * 60;
 
-    $("#totalQuestions").textContent = state.questions.length;
+    $("#activeSubject").textContent =
+      state.material.name;
+
+    $("#activeTopic").textContent =
+      state.section.name;
+
+    $("#totalQuestions").textContent =
+      state.questions.length;
+
     $("#scoreText").textContent = "0";
 
     showScreen("#quizScreen");
+
     renderQuestion();
     startTimer();
+
   } catch (error) {
     console.error(error);
 
@@ -624,10 +697,14 @@ async function prepareQuiz() {
     );
 
     $("#subjectAvailability").classList.remove("hidden");
+
     notify("تحقق من ملف أسئلة المادة على GitHub.");
+
   } finally {
     button.disabled = false;
-    button.innerHTML = "<span>ابدأ الاختبار</span><span>←</span>";
+
+    button.innerHTML =
+      "<span>ابدأ الاختبار</span><span>←</span>";
   }
 }
 
@@ -637,11 +714,14 @@ async function prepareQuiz() {
 
 function renderQuestion() {
   const question = state.questions[state.currentIndex];
+
   if (!question) return;
 
   state.selectedAnswer = null;
 
-  $("#currentQuestion").textContent = state.currentIndex + 1;
+  $("#currentQuestion").textContent =
+    state.currentIndex + 1;
+
   $("#questionNumberBadge").textContent =
     `السؤال ${state.currentIndex + 1}`;
 
@@ -664,15 +744,20 @@ function renderQuestion() {
     button.className = "option-button";
 
     const letter = document.createElement("span");
+
     letter.className = "option-letter";
-    letter.textContent = letters[index] || String(index + 1);
+    letter.textContent =
+      letters[index] || String(index + 1);
 
     const text = document.createElement("span");
     text.textContent = option;
 
     button.append(letter, text);
 
-    button.addEventListener("click", () => chooseAnswer(option, button));
+    button.addEventListener("click", () => {
+      chooseAnswer(option, button);
+    });
+
     list.appendChild(button);
   });
 
@@ -687,7 +772,9 @@ function renderQuestion() {
 }
 
 function hideFeedback() {
-  $("#feedbackBox").className = "feedback-box hidden";
+  $("#feedbackBox").className =
+    "feedback-box hidden";
+
   $("#feedbackIcon").textContent = "✓";
   $("#feedbackTitle").textContent = "";
   $("#feedbackText").textContent = "";
@@ -695,11 +782,19 @@ function hideFeedback() {
 }
 
 function chooseAnswer(answer, selectedButton) {
-  if (state.finished || state.selectedAnswer !== null) return;
+  if (
+    state.finished ||
+    state.selectedAnswer !== null
+  ) {
+    return;
+  }
 
   state.selectedAnswer = answer;
 
   const question = state.questions[state.currentIndex];
+
+  // يظل التصحيح مرتبطًا بالإجابة الصحيحة نفسها،
+  // وليس بموضعها بين الخيارات.
   const correct = answer === question.a;
 
   state.answers[state.currentIndex] = {
@@ -709,12 +804,15 @@ function chooseAnswer(answer, selectedButton) {
     correct
   };
 
-  const buttons = [...$("#optionsList").querySelectorAll(".option-button")];
+  const buttons = [
+    ...$("#optionsList").querySelectorAll(".option-button")
+  ];
 
   buttons.forEach((button) => {
     button.disabled = true;
 
-    const optionText = button.lastElementChild.textContent;
+    const optionText =
+      button.lastElementChild.textContent;
 
     if (optionText === question.a) {
       button.classList.add("correct");
@@ -723,37 +821,61 @@ function chooseAnswer(answer, selectedButton) {
 
   if (correct) {
     state.score += CONFIG.POINTS_PER_CORRECT;
+
     $("#scoreText").textContent = state.score;
 
-    $("#feedbackBox").className = "feedback-box correct";
+    $("#feedbackBox").className =
+      "feedback-box correct";
+
     $("#feedbackIcon").textContent = "✓";
-    $("#feedbackTitle").textContent = "إجابة صحيحة، أحسنت!";
-    $("#feedbackText").textContent = "واصل تقدمك، أنت على الطريق الصحيح.";
+
+    $("#feedbackTitle").textContent =
+      "إجابة صحيحة، أحسنت!";
+
+    $("#feedbackText").textContent =
+      "واصل تقدمك، أنت على الطريق الصحيح.";
+
     $("#feedbackPoints").textContent =
       `+${CONFIG.POINTS_PER_CORRECT} نقطة`;
+
   } else {
     selectedButton.classList.add("wrong");
 
-    $("#feedbackBox").className = "feedback-box wrong";
+    $("#feedbackBox").className =
+      "feedback-box wrong";
+
     $("#feedbackIcon").textContent = "×";
-    $("#feedbackTitle").textContent = "ليست الإجابة الصحيحة";
+
+    $("#feedbackTitle").textContent =
+      "ليست الإجابة الصحيحة";
+
     $("#feedbackText").textContent =
       `الإجابة الصحيحة هي: ${question.a}`;
-    $("#feedbackPoints").textContent = "حاول الاستفادة من التصحيح في المرة القادمة.";
+
+    $("#feedbackPoints").textContent =
+      "حاول الاستفادة من التصحيح في المرة القادمة.";
   }
 
   $("#nextButton").disabled = false;
 }
 
 function nextQuestion() {
-  if (state.finished || state.selectedAnswer === null) return;
+  if (
+    state.finished ||
+    state.selectedAnswer === null
+  ) {
+    return;
+  }
 
-  if (state.currentIndex + 1 >= state.questions.length) {
+  if (
+    state.currentIndex + 1 >= state.questions.length
+  ) {
     finishQuiz("completed");
     return;
   }
 
   state.currentIndex += 1;
+
   renderQuestion();
 }
 
@@ -763,6 +885,7 @@ function nextQuestion() {
 
 function startTimer() {
   stopTimer();
+
   updateTimerDisplay();
 
   state.timerId = window.setInterval(() => {
@@ -772,6 +895,7 @@ function startTimer() {
     }
 
     state.secondsLeft -= 1;
+
     updateTimerDisplay();
 
     if (state.secondsLeft <= 0) {
@@ -789,12 +913,22 @@ function stopTimer() {
 
 function updateTimerDisplay() {
   const seconds = Math.max(0, state.secondsLeft);
-  const minutesText = String(Math.floor(seconds / 60)).padStart(2, "0");
-  const secondsText = String(seconds % 60).padStart(2, "0");
 
-  $("#timerText").textContent = `${minutesText}:${secondsText}`;
+  const minutesText = String(
+    Math.floor(seconds / 60)
+  ).padStart(2, "0");
 
-  $("#timerRing").classList.toggle("danger", seconds <= 30);
+  const secondsText = String(
+    seconds % 60
+  ).padStart(2, "0");
+
+  $("#timerText").textContent =
+    `${minutesText}:${secondsText}`;
+
+  $("#timerRing").classList.toggle(
+    "danger",
+    seconds <= 30
+  );
 }
 
 /* =========================================================
@@ -802,9 +936,15 @@ function updateTimerDisplay() {
    ========================================================= */
 
 function finishQuiz(reason = "completed") {
-  if (state.finished || !state.questions.length) return;
+  if (
+    state.finished ||
+    !state.questions.length
+  ) {
+    return;
+  }
 
   state.finished = true;
+
   stopTimer();
 
   const correctCount = state.answers.filter(
@@ -816,33 +956,51 @@ function finishQuiz(reason = "completed") {
   ).length;
 
   const unansweredCount =
-    state.questions.length - correctCount - wrongCount;
+    state.questions.length -
+    correctCount -
+    wrongCount;
 
   const percentage = Math.round(
     (correctCount / state.questions.length) * 100
   );
 
-  const pointsEarned = correctCount * CONFIG.POINTS_PER_CORRECT;
+  const pointsEarned =
+    correctCount * CONFIG.POINTS_PER_CORRECT;
 
-  setLocalNumber("points", getPoints() + pointsEarned);
-  setLocalNumber("completed", getCompletedCount() + 1);
+  setLocalNumber(
+    "points",
+    getPoints() + pointsEarned
+  );
+
+  setLocalNumber(
+    "completed",
+    getCompletedCount() + 1
+  );
 
   updateStudentHeader();
 
   $("#finalScore").textContent = pointsEarned;
-  $("#finalPercent").textContent = `${percentage}%`;
+
+  $("#finalPercent").textContent =
+    `${percentage}%`;
 
   $("#correctCount").textContent = correctCount;
   $("#wrongCount").textContent = wrongCount;
-  $("#unansweredCount").textContent = unansweredCount;
 
-  $("#resultProgress").style.width = `${percentage}%`;
+  $("#unansweredCount").textContent =
+    unansweredCount;
+
+  $("#resultProgress").style.width =
+    `${percentage}%`;
 
   $("#resultHeading").textContent =
-    percentage >= 90 ? "إنجاز رائع!" :
-    percentage >= 70 ? "أحسنت، واصل التقدم!" :
-    percentage >= 50 ? "خطوة جيدة، استمر!" :
-    "كل محاولة فرصة للتعلّم!";
+    percentage >= 90
+      ? "إنجاز رائع!"
+      : percentage >= 70
+        ? "أحسنت، واصل التقدم!"
+        : percentage >= 50
+          ? "خطوة جيدة، استمر!"
+          : "كل محاولة فرصة للتعلّم!";
 
   $("#resultSubtitle").textContent =
     reason === "timeout"
@@ -850,17 +1008,34 @@ function finishQuiz(reason = "completed") {
       : "انتهيت من الاختبار. راجع إجاباتك واستفد من التصحيح.";
 
   $("#resultMedal").textContent =
-    percentage >= 90 ? "✦" : percentage >= 70 ? "★" : "◇";
+    percentage >= 90
+      ? "✦"
+      : percentage >= 70
+        ? "★"
+        : "◇";
 
-  renderAnalysis(correctCount, wrongCount, unansweredCount, percentage);
+  renderAnalysis(
+    correctCount,
+    wrongCount,
+    unansweredCount,
+    percentage
+  );
+
   renderAnswerReview();
 
   $("#quitDialog").classList.add("hidden");
+
   showScreen("#resultScreen");
 }
 
-function renderAnalysis(correct, wrong, unanswered, percentage) {
+function renderAnalysis(
+  correct,
+  wrong,
+  unanswered,
+  percentage
+) {
   const insights = $("#analysisInsights");
+
   insights.innerHTML = "";
 
   const messages = [
@@ -876,18 +1051,22 @@ function renderAnalysis(correct, wrong, unanswered, percentage) {
 
   messages.forEach((message) => {
     const item = document.createElement("div");
+
     item.className = "insight";
     item.textContent = message;
+
     insights.appendChild(item);
   });
 }
 
 function renderAnswerReview() {
   const review = $("#answerReview");
+
   review.innerHTML = "";
 
   state.questions.forEach((question, index) => {
     const answer = state.answers[index];
+
     const item = document.createElement("article");
 
     let type = "skipped-review";
@@ -904,32 +1083,48 @@ function renderAnswerReview() {
     item.className = `review-item ${type}`;
 
     const title = document.createElement("div");
+
     title.className = "review-question";
     title.textContent = `${index + 1}. ${question.q}`;
 
     const statusLine = document.createElement("p");
+
     statusLine.className = "review-answer";
     statusLine.textContent = status;
 
     const yourAnswer = document.createElement("p");
+
     yourAnswer.className = "review-answer";
 
     const yourLabel = document.createElement("strong");
     yourLabel.textContent = "إجابتك: ";
 
-    yourAnswer.append(yourLabel, document.createTextNode(
-      answer ? answer.selected : "لم تجب"
-    ));
+    yourAnswer.append(
+      yourLabel,
+      document.createTextNode(
+        answer ? answer.selected : "لم تجب"
+      )
+    );
 
     const correctAnswer = document.createElement("p");
+
     correctAnswer.className = "review-answer";
 
     const correctLabel = document.createElement("strong");
     correctLabel.textContent = "الإجابة الصحيحة: ";
 
-    correctAnswer.append(correctLabel, document.createTextNode(question.a));
+    correctAnswer.append(
+      correctLabel,
+      document.createTextNode(question.a)
+    );
 
-    item.append(title, statusLine, yourAnswer, correctAnswer);
+    item.append(
+      title,
+      statusLine,
+      yourAnswer,
+      correctAnswer
+    );
+
     review.appendChild(item);
   });
 }
@@ -940,6 +1135,7 @@ function renderAnswerReview() {
 
 function goToLibrary() {
   stopTimer();
+
   state.finished = true;
   state.material = null;
 
@@ -953,6 +1149,7 @@ function goToLibrary() {
 
 function retryQuiz() {
   if (!state.material) return;
+
   prepareQuiz();
 }
 
@@ -971,61 +1168,117 @@ function closeQuitDialog() {
    ========================================================= */
 
 function bindEvents() {
-  $("#loginForm").addEventListener("submit", loginStudent);
+  $("#loginForm").addEventListener(
+    "submit",
+    loginStudent
+  );
 
   $("#togglePassword").addEventListener("click", () => {
     const input = $("#studentPassword");
-    input.type = input.type === "password" ? "text" : "password";
+
+    input.type =
+      input.type === "password"
+        ? "text"
+        : "password";
   });
 
-  $("#logoutButton").addEventListener("click", logout);
+  $("#logoutButton").addEventListener(
+    "click",
+    logout
+  );
 
-  $("#brandHome").addEventListener("click", (event) => {
-    event.preventDefault();
+  $("#brandHome").addEventListener(
+    "click",
+    (event) => {
+      event.preventDefault();
 
-    if (state.student) {
-      goToLibrary();
-    } else {
-      showScreen("#loginScreen");
+      if (state.student) {
+        goToLibrary();
+      } else {
+        showScreen("#loginScreen");
+      }
     }
-  });
+  );
 
-  $("#backToLibrary").addEventListener("click", () => {
-    showScreen("#libraryScreen");
-  });
+  $("#backToLibrary").addEventListener(
+    "click",
+    () => {
+      showScreen("#libraryScreen");
+    }
+  );
 
-  $("#backToMaterials").addEventListener("click", () => {
-    if (state.section) openSection(state.section.id);
-  });
+  $("#backToMaterials").addEventListener(
+    "click",
+    () => {
+      if (state.section) {
+        openSection(state.section.id);
+      }
+    }
+  );
 
-  $("#startButton").addEventListener("click", prepareQuiz);
-  $("#nextButton").addEventListener("click", nextQuestion);
+  $("#startButton").addEventListener(
+    "click",
+    prepareQuiz
+  );
 
-  $("#quitButton").addEventListener("click", openQuitDialog);
-  $("#cancelQuitButton").addEventListener("click", closeQuitDialog);
+  $("#nextButton").addEventListener(
+    "click",
+    nextQuestion
+  );
 
-  $("#confirmQuitButton").addEventListener("click", () => {
-    finishQuiz("quit");
-  });
+  $("#quitButton").addEventListener(
+    "click",
+    openQuitDialog
+  );
 
-  $("#retryButton").addEventListener("click", retryQuiz);
-  $("#homeButton").addEventListener("click", goToLibrary);
+  $("#cancelQuitButton").addEventListener(
+    "click",
+    closeQuitDialog
+  );
 
-  $("#quitDialog").addEventListener("click", (event) => {
-    if (event.target === $("#quitDialog")) closeQuitDialog();
-  });
+  $("#confirmQuitButton").addEventListener(
+    "click",
+    () => {
+      finishQuiz("quit");
+    }
+  );
+
+  $("#retryButton").addEventListener(
+    "click",
+    retryQuiz
+  );
+
+  $("#homeButton").addEventListener(
+    "click",
+    goToLibrary
+  );
+
+  $("#quitDialog").addEventListener(
+    "click",
+    (event) => {
+      if (event.target === $("#quitDialog")) {
+        closeQuitDialog();
+      }
+    }
+  );
 }
 
 async function init() {
   bindEvents();
+
   await loadStudents();
 
   showScreen("#loginScreen");
 
   // لا نخفي رسالة الخطأ إذا فشل تحميل students.json.
   if (state.students.length === 0) {
-    console.info("أضف حساب طالب إلى students.json لتجربة تسجيل الدخول.");
+    console.info(
+      "أضف حساب طالب إلى students.json لتجربة تسجيل الدخول."
+    );
   }
 }
 
-document.addEventListener("DOMContentLoaded", init);
+document.addEventListener(
+  "DOMContentLoaded",
+  init
+);
