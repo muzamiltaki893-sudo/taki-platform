@@ -3,6 +3,40 @@
     "studentNumber": "1001",
     "name": "مزمل تكي",
     "specialization": "علوم الحاسوب",
-    "password": "TAKI-demo-123"
+    "password": "TAKI-MZ-4821"
+  },
+  {
+    "studentNumber": "1002",
+    "name": "ملكة تكي",
+    "specialization": "علوم المختبرات الحاسوب    "password": "TAKI-MK-7354"
+  },
+  {
+    "studentNumber": "1003",
+    "name": "مصطفى تكي",
+    "specialization": "علوم مختلفة",
+    "password": "TAKI-MS-6193"
+  },
+  {
+    "studentNumber": "1004",
+    "name": "محمد تكي",
+    "specialization": "الهندسة الحاسوب   "password": "TAKI-MH-8246"
+  },
+  {
+    "studentNumber": "1005",
+    "name": "مدثر تكي",
+    "specialization": "الحاسوب" 
+    "password": "TAKI-MD-3579"
+  },
+  {
+    "studentNumber": "1006",
+    "name": "مودة تكي",
+    "specialization": "كلية الاداب" 
+    "password": "TAKI-MW-9415"
+  },
+  {
+    "studentNumber": "1007",
+    "name": "سامي الصادق",
+    "specialization": "علوم المختبرات الطبية" 
+    "password": "TAKI-SM-2684"
   }
 ]
