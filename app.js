@@ -1,7 +1,8 @@
+
 "use strict";
 
 /* =========================================================
-   1. إعدادات منصة تكي — عدّل المواد والمدة وعدد الأسئلة هنا
+   1. إعدادات منصة تكي
    ========================================================= */
 
 const CONFIG = {
@@ -30,7 +31,6 @@ const CONFIG = {
         }
       ]
     },
-
     {
       id: 2,
       name: "القسم الثاني",
@@ -56,7 +56,6 @@ const CONFIG = {
         }
       ]
     },
-
     {
       id: 3,
       name: "القسم الثالث",
@@ -89,7 +88,6 @@ const CONFIG = {
         }
       ]
     },
-
     {
       id: 4,
       name: "القسم الرابع",
@@ -129,7 +127,6 @@ const CONFIG = {
         }
       ]
     },
-
     {
       id: 5,
       name: "القسم الخامس",
@@ -176,7 +173,6 @@ const CONFIG = {
         }
       ]
     },
-
     {
       id: 6,
       name: "القسم السادس",
@@ -322,13 +318,74 @@ function shuffle(array) {
   for (let i = result.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
 
-    [result[i], result[j]] = [
-      result[j],
-      result[i]
-    ];
+    [result[i], result[j]] = [result[j], result[i]];
   }
 
   return result;
+}
+
+/*
+ * توزيع الخيارات:
+ * 1. الإجابة الصحيحة لا تُثبّت في أول القائمة.
+ * 2. تُخلط الإجابات الخاطئة.
+ * 3. يُختار موضع عشوائي للصحيحة.
+ * 4. نحاول منع تكرار موضع الصحيحة في سؤالين متتاليين.
+ */
+function createQuestionOptions(question, previousCorrectIndex) {
+  const correctAnswer = question.a;
+
+  // منع تكرار الخيار الصحيح ضمن الخيارات الخاطئة.
+  const wrongOptions = [
+    ...new Set(
+      question.w.filter((option) => option !== correctAnswer)
+    )
+  ];
+
+  // خلط الخيارات الخاطئة.
+  const shuffledWrongOptions = CONFIG.SHUFFLE_OPTIONS
+    ? shuffle(wrongOptions)
+    : [...wrongOptions];
+
+  const options = [...shuffledWrongOptions, correctAnswer];
+
+  if (!CONFIG.SHUFFLE_OPTIONS) {
+    return {
+      options: [correctAnswer, ...shuffledWrongOptions],
+      correctIndex: 0
+    };
+  }
+
+  // تحديد الموضع الذي ستظهر فيه الإجابة الصحيحة.
+  let correctIndex = Math.floor(
+    Math.random() * options.length
+  );
+
+  // إذا تكرر الموضع السابق، نختار موضعًا مختلفًا.
+  if (
+    options.length > 1 &&
+    correctIndex === previousCorrectIndex
+  ) {
+    const possibleIndexes = [];
+
+    for (let i = 0; i < options.length; i++) {
+      if (i !== previousCorrectIndex) {
+        possibleIndexes.push(i);
+      }
+    }
+
+    correctIndex = possibleIndexes[
+      Math.floor(Math.random() * possibleIndexes.length)
+    ];
+  }
+
+  // إزالة الإجابة الصحيحة من آخر القائمة ووضعها في موضعها العشوائي.
+  options.pop();
+  options.splice(correctIndex, 0, correctAnswer);
+
+  return {
+    options,
+    correctIndex
+  };
 }
 
 function formatDuration(minutes) {
@@ -424,10 +481,7 @@ function loginStudent(event) {
   hideMessage(message);
 
   if (!number || !password) {
-    showMessage(
-      message,
-      "أدخل رقم الطالب وكلمة المرور."
-    );
+    showMessage(message, "أدخل رقم الطالب وكلمة المرور.");
     return;
   }
 
@@ -437,10 +491,7 @@ function loginStudent(event) {
   );
 
   if (!student) {
-    showMessage(
-      message,
-      "رقم الطالب أو كلمة المرور غير صحيحة."
-    );
+    showMessage(message, "رقم الطالب أو كلمة المرور غير صحيحة.");
     return;
   }
 
@@ -504,9 +555,7 @@ function renderSections() {
       <span class="card-arrow">←</span>
     `;
 
-    card.addEventListener("click", () => {
-      openSection(section.id);
-    });
+    card.addEventListener("click", () => openSection(section.id));
 
     grid.appendChild(card);
   });
@@ -554,16 +603,14 @@ function renderMaterials(section) {
       <span class="material-arrow">←</span>
     `;
 
-    card.addEventListener("click", () => {
-      openMaterial(material);
-    });
+    card.addEventListener("click", () => openMaterial(material));
 
     grid.appendChild(card);
   });
 }
 
 /* =========================================================
-   6. فتح المادة وتجهيز إعداداتها
+   6. فتح المادة وتجهيز الاختبار
    ========================================================= */
 
 async function openMaterial(material) {
@@ -620,15 +667,11 @@ async function prepareQuiz() {
       typeof item.q === "string" &&
       typeof item.a === "string" &&
       Array.isArray(item.w) &&
-      item.w.every(
-        (answer) => typeof answer === "string"
-      )
+      item.w.every((answer) => typeof answer === "string")
     );
 
     if (validQuestions.length === 0) {
-      throw new Error(
-        "لا توجد أسئلة صالحة في ملف هذه المادة."
-      );
+      throw new Error("لا توجد أسئلة صالحة في ملف هذه المادة.");
     }
 
     const count = Math.min(
@@ -640,46 +683,34 @@ async function prepareQuiz() {
       ? shuffle(validQuestions).slice(0, count)
       : validQuestions.slice(0, count);
 
-    state.questions = chosen.map((question) => {
-      // نجمع الإجابة الصحيحة مع الإجابات الخاطئة.
-      const options = [
-        question.a,
-        ...question.w
-      ];
+    let previousCorrectIndex = -1;
 
-      // التعديل الأساسي: خلط الخيارات عشوائيًا.
-      const shuffledOptions = CONFIG.SHUFFLE_OPTIONS
-        ? shuffle(options)
-        : options;
+    state.questions = chosen.map((question) => {
+      const result = createQuestionOptions(
+        question,
+        previousCorrectIndex
+      );
+
+      previousCorrectIndex = result.correctIndex;
 
       return {
         q: question.q,
         a: question.a,
-        options: shuffledOptions
+        options: result.options
       };
     });
 
-    state.answers = new Array(
-      state.questions.length
-    ).fill(null);
-
+    state.answers = new Array(state.questions.length).fill(null);
     state.currentIndex = 0;
     state.score = 0;
     state.finished = false;
     state.selectedAnswer = null;
 
-    state.secondsLeft =
-      state.section.durationMinutes * 60;
+    state.secondsLeft = state.section.durationMinutes * 60;
 
-    $("#activeSubject").textContent =
-      state.material.name;
-
-    $("#activeTopic").textContent =
-      state.section.name;
-
-    $("#totalQuestions").textContent =
-      state.questions.length;
-
+    $("#activeSubject").textContent = state.material.name;
+    $("#activeTopic").textContent = state.section.name;
+    $("#totalQuestions").textContent = state.questions.length;
     $("#scoreText").textContent = "0";
 
     showScreen("#quizScreen");
@@ -697,7 +728,6 @@ async function prepareQuiz() {
     );
 
     $("#subjectAvailability").classList.remove("hidden");
-
     notify("تحقق من ملف أسئلة المادة على GitHub.");
 
   } finally {
@@ -719,8 +749,7 @@ function renderQuestion() {
 
   state.selectedAnswer = null;
 
-  $("#currentQuestion").textContent =
-    state.currentIndex + 1;
+  $("#currentQuestion").textContent = state.currentIndex + 1;
 
   $("#questionNumberBadge").textContent =
     `السؤال ${state.currentIndex + 1}`;
@@ -744,12 +773,11 @@ function renderQuestion() {
     button.className = "option-button";
 
     const letter = document.createElement("span");
-
     letter.className = "option-letter";
-    letter.textContent =
-      letters[index] || String(index + 1);
+    letter.textContent = letters[index] || String(index + 1);
 
     const text = document.createElement("span");
+    text.className = "option-text";
     text.textContent = option;
 
     button.append(letter, text);
@@ -772,9 +800,7 @@ function renderQuestion() {
 }
 
 function hideFeedback() {
-  $("#feedbackBox").className =
-    "feedback-box hidden";
-
+  $("#feedbackBox").className = "feedback-box hidden";
   $("#feedbackIcon").textContent = "✓";
   $("#feedbackTitle").textContent = "";
   $("#feedbackText").textContent = "";
@@ -782,19 +808,13 @@ function hideFeedback() {
 }
 
 function chooseAnswer(answer, selectedButton) {
-  if (
-    state.finished ||
-    state.selectedAnswer !== null
-  ) {
+  if (state.finished || state.selectedAnswer !== null) {
     return;
   }
 
   state.selectedAnswer = answer;
 
   const question = state.questions[state.currentIndex];
-
-  // يظل التصحيح مرتبطًا بالإجابة الصحيحة نفسها،
-  // وليس بموضعها بين الخيارات.
   const correct = answer === question.a;
 
   state.answers[state.currentIndex] = {
@@ -812,6 +832,7 @@ function chooseAnswer(answer, selectedButton) {
     button.disabled = true;
 
     const optionText =
+      button.querySelector(".option-text")?.textContent ??
       button.lastElementChild.textContent;
 
     if (optionText === question.a) {
@@ -821,61 +842,47 @@ function chooseAnswer(answer, selectedButton) {
 
   if (correct) {
     state.score += CONFIG.POINTS_PER_CORRECT;
-
     $("#scoreText").textContent = state.score;
 
-    $("#feedbackBox").className =
-      "feedback-box correct";
-
+    $("#feedbackBox").className = "feedback-box correct";
     $("#feedbackIcon").textContent = "✓";
-
-    $("#feedbackTitle").textContent =
-      "إجابة صحيحة، أحسنت!";
-
+    $("#feedbackTitle").textContent = "إجابة صحيحة، أحسنت!";
     $("#feedbackText").textContent =
       "واصل تقدمك، أنت على الطريق الصحيح.";
-
     $("#feedbackPoints").textContent =
       `+${CONFIG.POINTS_PER_CORRECT} نقطة`;
 
   } else {
     selectedButton.classList.add("wrong");
 
-    $("#feedbackBox").className =
-      "feedback-box wrong";
-
+    $("#feedbackBox").className = "feedback-box wrong";
     $("#feedbackIcon").textContent = "×";
-
-    $("#feedbackTitle").textContent =
-      "ليست الإجابة الصحيحة";
-
+    $("#feedbackTitle").textContent = "ليست الإجابة الصحيحة";
     $("#feedbackText").textContent =
       `الإجابة الصحيحة هي: ${question.a}`;
-
     $("#feedbackPoints").textContent =
       "حاول الاستفادة من التصحيح في المرة القادمة.";
   }
+
+  $("#nextButtonText").textContent =
+    state.currentIndex === state.questions.length - 1
+      ? "عرض النتائج"
+      : "السؤال التالي";
 
   $("#nextButton").disabled = false;
 }
 
 function nextQuestion() {
-  if (
-    state.finished ||
-    state.selectedAnswer === null
-  ) {
+  if (state.finished || state.selectedAnswer === null) {
     return;
   }
 
-  if (
-    state.currentIndex + 1 >= state.questions.length
-  ) {
+  if (state.currentIndex + 1 >= state.questions.length) {
     finishQuiz("completed");
     return;
   }
 
   state.currentIndex += 1;
-
   renderQuestion();
 }
 
@@ -885,7 +892,6 @@ function nextQuestion() {
 
 function startTimer() {
   stopTimer();
-
   updateTimerDisplay();
 
   state.timerId = window.setInterval(() => {
@@ -895,7 +901,6 @@ function startTimer() {
     }
 
     state.secondsLeft -= 1;
-
     updateTimerDisplay();
 
     if (state.secondsLeft <= 0) {
@@ -918,17 +923,12 @@ function updateTimerDisplay() {
     Math.floor(seconds / 60)
   ).padStart(2, "0");
 
-  const secondsText = String(
-    seconds % 60
-  ).padStart(2, "0");
+  const secondsText = String(seconds % 60).padStart(2, "0");
 
   $("#timerText").textContent =
     `${minutesText}:${secondsText}`;
 
-  $("#timerRing").classList.toggle(
-    "danger",
-    seconds <= 30
-  );
+  $("#timerRing").classList.toggle("danger", seconds <= 30);
 }
 
 /* =========================================================
@@ -936,15 +936,11 @@ function updateTimerDisplay() {
    ========================================================= */
 
 function finishQuiz(reason = "completed") {
-  if (
-    state.finished ||
-    !state.questions.length
-  ) {
+  if (state.finished || !state.questions.length) {
     return;
   }
 
   state.finished = true;
-
   stopTimer();
 
   const correctCount = state.answers.filter(
@@ -956,9 +952,7 @@ function finishQuiz(reason = "completed") {
   ).length;
 
   const unansweredCount =
-    state.questions.length -
-    correctCount -
-    wrongCount;
+    state.questions.length - correctCount - wrongCount;
 
   const percentage = Math.round(
     (correctCount / state.questions.length) * 100
@@ -967,31 +961,19 @@ function finishQuiz(reason = "completed") {
   const pointsEarned =
     correctCount * CONFIG.POINTS_PER_CORRECT;
 
-  setLocalNumber(
-    "points",
-    getPoints() + pointsEarned
-  );
-
-  setLocalNumber(
-    "completed",
-    getCompletedCount() + 1
-  );
+  // إضافة النقاط مرة واحدة عند إنهاء الاختبار.
+  setLocalNumber("points", getPoints() + pointsEarned);
+  setLocalNumber("completed", getCompletedCount() + 1);
 
   updateStudentHeader();
 
   $("#finalScore").textContent = pointsEarned;
-
-  $("#finalPercent").textContent =
-    `${percentage}%`;
-
+  $("#finalPercent").textContent = `${percentage}%`;
   $("#correctCount").textContent = correctCount;
   $("#wrongCount").textContent = wrongCount;
+  $("#unansweredCount").textContent = unansweredCount;
 
-  $("#unansweredCount").textContent =
-    unansweredCount;
-
-  $("#resultProgress").style.width =
-    `${percentage}%`;
+  $("#resultProgress").style.width = `${percentage}%`;
 
   $("#resultHeading").textContent =
     percentage >= 90
@@ -1008,11 +990,7 @@ function finishQuiz(reason = "completed") {
       : "انتهيت من الاختبار. راجع إجاباتك واستفد من التصحيح.";
 
   $("#resultMedal").textContent =
-    percentage >= 90
-      ? "✦"
-      : percentage >= 70
-        ? "★"
-        : "◇";
+    percentage >= 90 ? "✦" : percentage >= 70 ? "★" : "◇";
 
   renderAnalysis(
     correctCount,
@@ -1024,18 +1002,11 @@ function finishQuiz(reason = "completed") {
   renderAnswerReview();
 
   $("#quitDialog").classList.add("hidden");
-
   showScreen("#resultScreen");
 }
 
-function renderAnalysis(
-  correct,
-  wrong,
-  unanswered,
-  percentage
-) {
+function renderAnalysis(correct, wrong, unanswered, percentage) {
   const insights = $("#analysisInsights");
-
   insights.innerHTML = "";
 
   const messages = [
@@ -1051,22 +1022,18 @@ function renderAnalysis(
 
   messages.forEach((message) => {
     const item = document.createElement("div");
-
     item.className = "insight";
     item.textContent = message;
-
     insights.appendChild(item);
   });
 }
 
 function renderAnswerReview() {
   const review = $("#answerReview");
-
   review.innerHTML = "";
 
   state.questions.forEach((question, index) => {
     const answer = state.answers[index];
-
     const item = document.createElement("article");
 
     let type = "skipped-review";
@@ -1083,17 +1050,14 @@ function renderAnswerReview() {
     item.className = `review-item ${type}`;
 
     const title = document.createElement("div");
-
     title.className = "review-question";
     title.textContent = `${index + 1}. ${question.q}`;
 
     const statusLine = document.createElement("p");
-
     statusLine.className = "review-answer";
     statusLine.textContent = status;
 
     const yourAnswer = document.createElement("p");
-
     yourAnswer.className = "review-answer";
 
     const yourLabel = document.createElement("strong");
@@ -1101,13 +1065,10 @@ function renderAnswerReview() {
 
     yourAnswer.append(
       yourLabel,
-      document.createTextNode(
-        answer ? answer.selected : "لم تجب"
-      )
+      document.createTextNode(answer ? answer.selected : "لم تجب")
     );
 
     const correctAnswer = document.createElement("p");
-
     correctAnswer.className = "review-answer";
 
     const correctLabel = document.createElement("strong");
@@ -1118,13 +1079,7 @@ function renderAnswerReview() {
       document.createTextNode(question.a)
     );
 
-    item.append(
-      title,
-      statusLine,
-      yourAnswer,
-      correctAnswer
-    );
-
+    item.append(title, statusLine, yourAnswer, correctAnswer);
     review.appendChild(item);
   });
 }
@@ -1149,7 +1104,6 @@ function goToLibrary() {
 
 function retryQuiz() {
   if (!state.material) return;
-
   prepareQuiz();
 }
 
@@ -1168,109 +1122,62 @@ function closeQuitDialog() {
    ========================================================= */
 
 function bindEvents() {
-  $("#loginForm").addEventListener(
-    "submit",
-    loginStudent
-  );
+  $("#loginForm").addEventListener("submit", loginStudent);
 
   $("#togglePassword").addEventListener("click", () => {
     const input = $("#studentPassword");
 
     input.type =
-      input.type === "password"
-        ? "text"
-        : "password";
+      input.type === "password" ? "text" : "password";
   });
 
-  $("#logoutButton").addEventListener(
-    "click",
-    logout
-  );
+  $("#logoutButton").addEventListener("click", logout);
 
-  $("#brandHome").addEventListener(
-    "click",
-    (event) => {
-      event.preventDefault();
+  $("#brandHome").addEventListener("click", (event) => {
+    event.preventDefault();
 
-      if (state.student) {
-        goToLibrary();
-      } else {
-        showScreen("#loginScreen");
-      }
+    if (state.student) {
+      goToLibrary();
+    } else {
+      showScreen("#loginScreen");
     }
-  );
+  });
 
-  $("#backToLibrary").addEventListener(
-    "click",
-    () => {
-      showScreen("#libraryScreen");
+  $("#backToLibrary").addEventListener("click", () => {
+    showScreen("#libraryScreen");
+  });
+
+  $("#backToMaterials").addEventListener("click", () => {
+    if (state.section) {
+      openSection(state.section.id);
     }
-  );
+  });
 
-  $("#backToMaterials").addEventListener(
-    "click",
-    () => {
-      if (state.section) {
-        openSection(state.section.id);
-      }
+  $("#startButton").addEventListener("click", prepareQuiz);
+  $("#nextButton").addEventListener("click", nextQuestion);
+  $("#quitButton").addEventListener("click", openQuitDialog);
+  $("#cancelQuitButton").addEventListener("click", closeQuitDialog);
+
+  $("#confirmQuitButton").addEventListener("click", () => {
+    finishQuiz("quit");
+  });
+
+  $("#retryButton").addEventListener("click", retryQuiz);
+  $("#homeButton").addEventListener("click", goToLibrary);
+
+  $("#quitDialog").addEventListener("click", (event) => {
+    if (event.target === $("#quitDialog")) {
+      closeQuitDialog();
     }
-  );
-
-  $("#startButton").addEventListener(
-    "click",
-    prepareQuiz
-  );
-
-  $("#nextButton").addEventListener(
-    "click",
-    nextQuestion
-  );
-
-  $("#quitButton").addEventListener(
-    "click",
-    openQuitDialog
-  );
-
-  $("#cancelQuitButton").addEventListener(
-    "click",
-    closeQuitDialog
-  );
-
-  $("#confirmQuitButton").addEventListener(
-    "click",
-    () => {
-      finishQuiz("quit");
-    }
-  );
-
-  $("#retryButton").addEventListener(
-    "click",
-    retryQuiz
-  );
-
-  $("#homeButton").addEventListener(
-    "click",
-    goToLibrary
-  );
-
-  $("#quitDialog").addEventListener(
-    "click",
-    (event) => {
-      if (event.target === $("#quitDialog")) {
-        closeQuitDialog();
-      }
-    }
-  );
+  });
 }
 
 async function init() {
   bindEvents();
-
   await loadStudents();
 
   showScreen("#loginScreen");
 
-  // لا نخفي رسالة الخطأ إذا فشل تحميل students.json.
   if (state.students.length === 0) {
     console.info(
       "أضف حساب طالب إلى students.json لتجربة تسجيل الدخول."
@@ -1278,7 +1185,4 @@ async function init() {
   }
 }
 
-document.addEventListener(
-  "DOMContentLoaded",
-  init
-);
+document.addEventListener("DOMContentLoaded", init);
