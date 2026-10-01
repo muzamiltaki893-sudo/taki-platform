@@ -1,92 +1,727 @@
 [
-  {
-    "q": "ما العملية التي تنتج الطاقة داخل الخلية؟",
-    "a": "التنفس الخلوي",
-    "w": [
-      "البناء الضوئي",
-      "الانقسام الخلوي",
-      "الانتشار"
-    ]
-  },
-  {
-    "q": "ما عاصمة السودان؟",
-    "a": "الخرطوم",
-    "w": [
-      "القاهرة",
-      "الرياض",
-      "أسمرة"
-    ]
-  },
-  {
-    "q": "أي الكواكب أقرب إلى الشمس؟",
-    "a": "عطارد",
-    "w": [
-      "الزهرة",
-      "الأرض",
-      "المريخ"
-    ]
-  },
-  {
-    "q": "ما ناتج 9 × 7؟",
-    "a": "63",
-    "w": [
-      "56",
-      "72",
-      "67"
-    ]
-  },
-  {
-    "q": "ما الغاز الذي تمتصه النباتات في عملية البناء الضوئي؟",
-    "a": "ثاني أكسيد الكربون",
-    "w": [
-      "الأكسجين",
-      "النيتروجين",
-      "الهيدروجين"
-    ]
-  },
-  {
-    "q": "ما الوحدة الأساسية لبناء الكائنات الحية؟",
-    "a": "الخلية",
-    "w": [
-      "النسيج",
-      "العضو",
-      "الجهاز"
-    ]
-  },
-  {
-    "q": "أي لغة تُستخدم لتنسيق صفحات الويب؟",
-    "a": "CSS",
-    "w": [
-      "SQL",
-      "JSON",
-      "HTML"
-    ]
-  },
-  {
-    "q": "كم ضلعًا للمثلث؟",
-    "a": "ثلاثة أضلاع",
-    "w": [
-      "أربعة أضلاع",
-      "خمسة أضلاع",
-      "ستة أضلاع"
-    ]
-  },
-  {
-    "q": "ما أكبر محيط في العالم؟",
-    "a": "المحيط الهادئ",
-    "w": [
-      "المحيط الأطلسي",
-      "المحيط الهندي",
-      "المحيط المتجمد الشمالي"
-    ]
-  },
-  {
-    "q": "أي صيغة تُستخدم لتمثيل البيانات المنظمة في هذا المشروع؟",
-    "a": "JSON",
-    "w": [
-      "JPG",
-      "MP3",
-      "EXE"
-    ]
-  }
-    ]
+{
+"q": "What is the title of the lecture?",
+"a": "Renal Physiology",
+"w": ["Cardiovascular Physiology", "Respiratory Physiology", "Gastrointestinal Physiology"]
+},
+{
+"q": "Which system is the main subject of the lecture?",
+"a": "The renal system",
+"w": ["The nervous system", "The endocrine system", "The respiratory system"]
+},
+{
+"q": "How many kidneys are present in the renal system described in the lecture?",
+"a": "Two kidneys",
+"w": ["One kidney", "Three kidneys", "Four kidneys"]
+},
+{
+"q": "How many ureters are included in the structure of the renal system?",
+"a": "Two ureters",
+"w": ["One ureter", "Three ureters", "Four ureters"]
+},
+{
+"q": "Which organ stores urine before it is eliminated?",
+"a": "The urinary bladder",
+"w": ["The glomerulus", "The renal vein", "Bowman's capsule"]
+},
+{
+"q": "Which structure is included in the renal system and carries urine to the external environment?",
+"a": "The urethra",
+"w": ["The afferent arteriole", "The renal artery", "The peritubular capillaries"]
+},
+{
+"q": "Which of the following is a component of the renal system?",
+"a": "The ureter",
+"w": ["The trachea", "The esophagus", "The pancreas"]
+},
+{
+"q": "How many kidneys are listed in the structural description of the renal system?",
+"a": "2",
+"w": ["1", "3", "4"]
+},
+{
+"q": "Which combination correctly represents the structures listed in the renal system?",
+"a": "Two kidneys, two ureters, urinary bladder, and urethra",
+"w": ["One kidney, one ureter, urinary bladder, and trachea", "Two kidneys, two arteries, and gallbladder", "Two kidneys, esophagus, and urethra"]
+},
+{
+"q": "What is one of the principal functions of the kidneys?",
+"a": "Excretion of waste products",
+"w": ["Production of digestive enzymes", "Gas exchange in the lungs", "Storage of bile"]
+},
+{
+"q": "Which extracellular fluid property is controlled by the kidneys?",
+"a": "ECF volume",
+"w": ["Lung volume only", "Intracellular DNA content", "Bone length"]
+},
+{
+"q": "What does ECF stand for in the lecture?",
+"a": "Extracellular fluid",
+"w": ["Intracellular fluid", "Extracellular filtration", "Essential cellular function"]
+},
+{
+"q": "Which property of extracellular fluid is regulated by the kidneys in addition to its volume?",
+"a": "Osmolarity",
+"w": ["Viscosity of air", "Bone density", "Muscle length"]
+},
+{
+"q": "Which aspect of extracellular fluid composition is controlled by the kidneys?",
+"a": "Electrolytes",
+"w": ["Digestive enzymes", "Hemoglobin synthesis in red cells", "Bile pigments only"]
+},
+{
+"q": "Which cardiovascular variable is regulated by the kidneys?",
+"a": "Blood pressure",
+"w": ["Heart chamber number", "Heart valve number", "Electrical wiring of the heart"]
+},
+{
+"q": "Which acid-base-related variable is controlled by the kidneys?",
+"a": "pH",
+"w": ["Body height", "Visual acuity", "Skin pigmentation"]
+},
+{
+"q": "How many major kidney functions are listed in the lecture?",
+"a": "Six",
+"w": ["Three", "Four", "Eight"]
+},
+{
+"q": "Which of the following is NOT listed as a function of the kidney?",
+"a": "Production of digestive enzymes",
+"w": ["Excretion of waste products", "Control of ECF volume", "Control of blood pressure"]
+},
+{
+"q": "Which pair consists of kidney functions described in the lecture?",
+"a": "Control of ECF osmolarity and control of pH",
+"w": ["Control of vision and hearing", "Control of digestion and bile storage", "Control of skeletal growth and hair color"]
+},
+{
+"q": "Which kidney function helps regulate the body's extracellular fluid environment?",
+"a": "Control of ECF electrolytes",
+"w": ["Production of saliva", "Storage of digestive enzymes", "Control of sound transmission"]
+},
+{
+"q": "What is the functional unit of the kidney?",
+"a": "The nephron",
+"w": ["The ureter", "The urinary bladder", "The urethra"]
+},
+{
+"q": "Approximately how many nephrons are present in each kidney according to the lecture?",
+"a": "One million",
+"w": ["One thousand", "Ten thousand", "One hundred million"]
+},
+{
+"q": "Which two major components make up each nephron?",
+"a": "The glomerulus and the tubules",
+"w": ["The ureter and the urethra", "The renal vein and the bladder", "The renal pelvis and the urinary bladder"]
+},
+{
+"q": "Which nephron component is primarily associated with filtration?",
+"a": "The glomerulus",
+"w": ["The collecting duct", "The distal convoluted tubule", "The urethra"]
+},
+{
+"q": "Which nephron component is associated with reabsorption and secretion?",
+"a": "The tubules",
+"w": ["The urinary bladder only", "The urethra only", "The renal vein only"]
+},
+{
+"q": "What is the main process associated with the glomerulus in the lecture?",
+"a": "Filtration",
+"w": ["Urine storage", "Urine elimination", "Glucose synthesis"]
+},
+{
+"q": "Which processes are specifically associated with the renal tubules?",
+"a": "Reabsorption and secretion",
+"w": ["Filtration only", "Blood production and gas exchange", "Urine storage only"]
+},
+{
+"q": "Which statement about nephron number agrees with the lecture?",
+"a": "Each kidney contains about one million nephrons",
+"w": ["Each kidney contains about one hundred nephrons", "Both kidneys together contain about one thousand nephrons", "Each kidney contains exactly ten nephrons"]
+},
+{
+"q": "Which structure forms part of the nephron and receives the glomerular filtrate?",
+"a": "Bowman's capsule",
+"w": ["The urinary bladder", "The urethra", "The renal vein"]
+},
+{
+"q": "Which structure is associated with the glomerulus in the filtration process?",
+"a": "Bowman's capsule",
+"w": ["The urinary bladder", "The external urethral opening", "The ureteral outlet"]
+},
+{
+"q": "What is the abbreviation for the proximal convoluted tubule?",
+"a": "PCT",
+"w": ["DCT", "CD", "GFR"]
+},
+{
+"q": "What does LH stand for in the lecture?",
+"a": "Loop of Henle",
+"w": ["Left hilum", "Lumen of the heart", "Longitudinal hormone"]
+},
+{
+"q": "What does DCT stand for?",
+"a": "Distal convoluted tubule",
+"w": ["Descending collecting tube", "Distal capillary tract", "Direct cortical transport"]
+},
+{
+"q": "What does CD stand for in the lecture's list of renal tubules?",
+"a": "Collecting duct",
+"w": ["Cortical division", "Cardiac duct", "Convoluted drainage"]
+},
+{
+"q": "Which structure is listed first among the nephron tubules?",
+"a": "The proximal convoluted tubule",
+"w": ["The collecting duct", "The distal convoluted tubule", "The loop of Henle"]
+},
+{
+"q": "Which structure is listed after the proximal convoluted tubule in the lecture?",
+"a": "The loop of Henle",
+"w": ["The urethra", "The urinary bladder", "The renal vein"]
+},
+{
+"q": "Which structure follows the loop of Henle in the lecture's list?",
+"a": "The distal convoluted tubule",
+"w": ["The glomerulus", "The ureter", "The renal vein"]
+},
+{
+"q": "Which structure is listed last among the nephron tubules?",
+"a": "The collecting duct",
+"w": ["The proximal convoluted tubule", "The loop of Henle", "Bowman's capsule"]
+},
+{
+"q": "What are the renal tubules specialized for?",
+"a": "Reabsorption and excretion",
+"w": ["Gas exchange and ventilation", "Bile production and storage", "Blood clot formation"]
+},
+{
+"q": "Which of the following is a renal tubular structure?",
+"a": "The distal convoluted tubule",
+"w": ["The urethral sphincter only", "The aorta", "The esophagus"]
+},
+{
+"q": "Which of the following is NOT included in the lecture's list of nephron tubules?",
+"a": "The ureter",
+"w": ["The proximal convoluted tubule", "The loop of Henle", "The collecting duct"]
+},
+{
+"q": "How many main processes are listed under the functions of the nephron?",
+"a": "Four",
+"w": ["Two", "Three", "Six"]
+},
+{
+"q": "Which set correctly identifies the four nephron processes?",
+"a": "Filtration, reabsorption, secretion, and excretion",
+"w": ["Digestion, absorption, ventilation, and circulation", "Synthesis, storage, contraction, and diffusion", "Ingestion, mastication, swallowing, and digestion"]
+},
+{
+"q": "What is filtration in the renal diagram?",
+"a": "Movement from blood to the tubular lumen",
+"w": ["Movement from the tubular lumen to blood", "Movement from the lumen to the external environment", "Movement from the bladder to the kidney"]
+},
+{
+"q": "What is reabsorption in the renal diagram?",
+"a": "Movement from the tubular lumen to blood",
+"w": ["Movement from blood to the tubular lumen", "Movement from the bladder to the urethra", "Movement from the external environment into the lumen"]
+},
+{
+"q": "What is secretion in the renal diagram?",
+"a": "Movement from blood to the tubular lumen",
+"w": ["Movement from the tubular lumen to blood", "Movement from the lumen to the external environment", "Movement from the bladder to the renal vein"]
+},
+{
+"q": "What is excretion in the renal diagram?",
+"a": "Movement from the tubular lumen to the external environment",
+"w": ["Movement from blood to the tubular lumen", "Movement from the lumen to blood", "Movement from the renal vein to the glomerulus"]
+},
+{
+"q": "Which renal process transfers substances from the blood into the nephron lumen by filtration?",
+"a": "Filtration",
+"w": ["Reabsorption", "Excretion", "Urine storage"]
+},
+{
+"q": "Which renal process returns substances from the tubular lumen to the blood?",
+"a": "Reabsorption",
+"w": ["Secretion", "Filtration", "Excretion"]
+},
+{
+"q": "Which renal process transfers substances from blood into the tubular lumen after they are in the blood?",
+"a": "Secretion",
+"w": ["Reabsorption", "Excretion", "Glomerular filtration only"]
+},
+{
+"q": "Which process represents the final elimination of substances in urine to the external environment?",
+"a": "Excretion",
+"w": ["Reabsorption", "Filtration", "Secretion"]
+},
+{
+"q": "Which process has the direction lumen to blood?",
+"a": "Reabsorption",
+"w": ["Filtration", "Secretion", "Excretion"]
+},
+{
+"q": "Which two processes have the direction blood to lumen in the lecture's diagram?",
+"a": "Filtration and secretion",
+"w": ["Reabsorption and excretion", "Filtration and reabsorption", "Secretion and excretion"]
+},
+{
+"q": "Which process has the direction lumen to the external environment?",
+"a": "Excretion",
+"w": ["Filtration", "Reabsorption", "Secretion"]
+},
+{
+"q": "Which blood vessel carries blood into the glomerulus?",
+"a": "The afferent arteriole",
+"w": ["The efferent arteriole", "The renal vein", "The ureter"]
+},
+{
+"q": "Which blood vessel carries blood away from the glomerulus?",
+"a": "The efferent arteriole",
+"w": ["The afferent arteriole", "The urethra", "The collecting duct"]
+},
+{
+"q": "Which capillaries are identified in the renal function diagram around the tubules?",
+"a": "Peritubular capillaries",
+"w": ["Pulmonary capillaries", "Alveolar capillaries", "Intestinal lacteals"]
+},
+{
+"q": "According to the renal diagram, blood ultimately drains toward which vessel?",
+"a": "The renal vein",
+"w": ["The ureter", "The collecting duct", "The urethra"]
+},
+{
+"q": "What is glomerular filtration?",
+"a": "Transport of fluid and electrolytes from glomerular capillaries to Bowman's space",
+"w": ["Transport of urine from the bladder to the urethra", "Transport of blood from the renal vein to the bladder", "Transport of glucose from the intestine into the blood"]
+},
+{
+"q": "From which location does fluid move during glomerular filtration?",
+"a": "Glomerular capillaries",
+"w": ["The urinary bladder", "The external environment", "The urethra"]
+},
+{
+"q": "Where does the fluid go during glomerular filtration?",
+"a": "Bowman's space",
+"w": ["The renal vein", "The urinary bladder directly", "The external environment directly"]
+},
+{
+"q": "How is the glomerular filtrate described in comparison with plasma?",
+"a": "It is similar to plasma but does not contain proteins",
+"w": ["It contains more proteins than plasma", "It consists only of proteins", "It contains no water or electrolytes"]
+},
+{
+"q": "According to the lecture, which component is absent from the glomerular filtrate?",
+"a": "Proteins",
+"w": ["Water", "Electrolytes", "All dissolved small substances"]
+},
+{
+"q": "Which expression represents the lecture's description of glomerular filtrate?",
+"a": "Plasma minus proteins",
+"w": ["Plasma plus all proteins", "Proteins minus water", "Blood cells plus plasma proteins"]
+},
+{
+"q": "What does GFR stand for?",
+"a": "Glomerular filtration rate",
+"w": ["Glucose filtration ratio", "General fluid regulation", "Glomerular flow resistance"]
+},
+{
+"q": "What does the glomerular filtration rate measure?",
+"a": "The rate of filtration at the glomeruli",
+"w": ["The rate of urine storage in the bladder", "The rate of glucose production in the liver", "The rate of air movement in the lungs"]
+},
+{
+"q": "What is the normal GFR stated in the lecture?",
+"a": "125 mL/min",
+"w": ["25 mL/min", "75 mL/min", "250 mL/min"]
+},
+{
+"q": "Which unit is used for the normal GFR in the lecture?",
+"a": "mL/min",
+"w": ["mmol/day", "L/hour", "mg/kg"]
+},
+{
+"q": "According to the lecture, how does GFR compare between males and females?",
+"a": "It is higher in males than in females",
+"w": ["It is always higher in females", "It is identical in every individual", "It is absent in males"]
+},
+{
+"q": "What is the daily volume of filtered water entering Bowman's capsule stated in the lecture?",
+"a": "180 L/day",
+"w": ["18 L/day", "1.8 L/day", "500 L/day"]
+},
+{
+"q": "Approximately how much water is excreted in urine per day according to the lecture?",
+"a": "1.5 L/day",
+"w": ["15 L/day", "18 L/day", "180 L/day"]
+},
+{
+"q": "What happens to most of the water filtered by the kidneys?",
+"a": "It is reabsorbed",
+"w": ["It is all excreted", "It is converted into plasma proteins", "It remains permanently in Bowman's capsule"]
+},
+{
+"q": "How is most filtered water reabsorbed according to the lecture?",
+"a": "Passively",
+"w": ["Actively using ATP in every case", "By protein synthesis", "By glomerular secretion only"]
+},
+{
+"q": "Approximately what percentage of filtered sodium is reabsorbed by the renal tubules?",
+"a": "99%",
+"w": ["25%", "50%", "75%"]
+},
+{
+"q": "How is filtered sodium reabsorbed according to the lecture?",
+"a": "Actively",
+"w": ["Entirely passively", "Only by glomerular filtration", "By conversion into glucose"]
+},
+{
+"q": "What is the daily sodium loss stated in the lecture?",
+"a": "About 150 mmol/day",
+"w": ["About 15 mmol/day", "About 1.5 mmol/day", "About 1500 mmol/min"]
+},
+{
+"q": "Which substance is specifically mentioned in the lecture's discussion of water and sodium reabsorption?",
+"a": "Sodium",
+"w": ["Hemoglobin", "Bilirubin", "Keratin"]
+},
+{
+"q": "Which comparison between filtered water and urinary water output matches the lecture?",
+"a": "180 L/day is filtered, while about 1.5 L/day is excreted",
+"w": ["1.5 L/day is filtered, while 180 L/day is excreted", "180 L/day is filtered, and all 180 L/day is excreted", "18 L/day is filtered, and 15 L/day is excreted"]
+},
+{
+"q": "What is the approximate difference between daily filtered water and daily urinary water output in the lecture?",
+"a": "178.5 L/day",
+"w": ["18.5 L/day", "180.5 L/day", "1.5 L/day"]
+},
+{
+"q": "Which statement about sodium handling is consistent with the lecture?",
+"a": "About 99% of filtered sodium is reabsorbed actively",
+"w": ["All filtered sodium is excreted", "Only 1% of filtered sodium is reabsorbed", "Filtered sodium is not handled by renal tubules"]
+},
+{
+"q": "Which renal process explains the return of most filtered water to the blood?",
+"a": "Reabsorption",
+"w": ["Excretion", "Secretion", "Urine storage"]
+},
+{
+"q": "What determines the amount of glucose filtered according to the lecture?",
+"a": "The plasma glucose level",
+"w": ["The color of urine", "The number of ureters", "The length of the urethra"]
+},
+{
+"q": "Where is glucose totally reabsorbed at normal blood glucose levels according to the lecture?",
+"a": "The proximal convoluted tubule",
+"w": ["The urinary bladder", "The urethra", "The renal vein"]
+},
+{
+"q": "What happens to glucose at normal blood glucose levels according to the lecture?",
+"a": "It is totally reabsorbed by the PCT",
+"w": ["It is totally excreted in urine", "It is stored in Bowman's capsule", "It is converted into sodium in the tubules"]
+},
+{
+"q": "Does glucose reabsorption have an upper limit according to the lecture?",
+"a": "Yes, it has an upper limit",
+"w": ["No, it has no limit", "It occurs only in the bladder", "It is unrelated to glucose filtration"]
+},
+{
+"q": "Is the upper limit of glucose reabsorption normally reached according to the lecture?",
+"a": "No, it is not normally reached",
+"w": ["Yes, it is always reached", "Yes, it is reached in every healthy person", "The lecture states that glucose is never reabsorbed"]
+},
+{
+"q": "Which renal process returns filtered glucose from the tubular lumen toward the blood?",
+"a": "Reabsorption",
+"w": ["Excretion", "Filtration", "Secretion"]
+},
+{
+"q": "Which type of transport is responsible for glucose entry across the luminal membrane of PCT cells?",
+"a": "Secondary active transport",
+"w": ["Simple diffusion only", "Primary active transport of glucose by itself", "Osmosis"]
+},
+{
+"q": "With which ion is glucose cotransported across the luminal membrane?",
+"a": "Sodium (Na+)",
+"w": ["Potassium (K+) only", "Calcium (Ca2+) only", "Chloride (Cl-) only"]
+},
+{
+"q": "What is the function of sodium cotransport in glucose reabsorption?",
+"a": "It allows glucose to enter PCT cells",
+"w": ["It prevents glucose from entering PCT cells", "It converts glucose into bicarbonate", "It moves glucose directly from the bladder to the urethra"]
+},
+{
+"q": "Which transporter is identified in the lecture as a carrier for glucose uptake at the luminal membrane?",
+"a": "SGLT1",
+"w": ["GLUT2", "Hemoglobin", "Aquaporin only"]
+},
+{
+"q": "After entering PCT cells, how does glucose move into the interstitium according to the lecture?",
+"a": "By facilitated diffusion",
+"w": ["By glomerular filtration", "By urinary excretion", "By simple bulk flow through the urethra"]
+},
+{
+"q": "Which transporter is identified in the lecture for glucose movement into the interstitium?",
+"a": "GLUT2",
+"w": ["SGLT1", "ATP synthase", "The afferent arteriole"]
+},
+{
+"q": "Which transporter is associated with secondary active glucose transport on the luminal membrane?",
+"a": "SGLT1",
+"w": ["GLUT2", "The sodium-potassium pump only", "The renal vein"]
+},
+{
+"q": "Which transporter is associated with facilitated diffusion of glucose toward the interstitium?",
+"a": "GLUT2",
+"w": ["SGLT1", "The afferent arteriole", "The efferent arteriole"]
+},
+{
+"q": "Which membrane is associated with SGLT1 in the glucose reabsorption diagram?",
+"a": "The luminal membrane",
+"w": ["The membrane of the urinary bladder only", "The outer membrane of a red blood cell", "The membrane of the urethra only"]
+},
+{
+"q": "Which cellular structure is labeled in the glucose reabsorption diagram at the luminal side?",
+"a": "The brush border",
+"w": ["The nuclear envelope", "The mitochondrial matrix", "The urinary bladder wall"]
+},
+{
+"q": "Which molecule is shown alongside ATP in the glucose transport diagram as a product of ATP breakdown?",
+"a": "ADP + Pi",
+"w": ["DNA + RNA", "Glucose + fructose", "HCO3- + H+"]
+},
+{
+"q": "Which ions are shown in the lecture's glucose reabsorption diagram in connection with membrane transport?",
+"a": "Na+ and K+",
+"w": ["Fe2+ and I-", "Mg2+ and phosphate only", "H+ and helium ions"]
+},
+{
+"q": "Which part of the nephron is emphasized in the lecture's glucose reabsorption mechanism?",
+"a": "The proximal convoluted tubule",
+"w": ["The urethra", "The urinary bladder", "The renal vein"]
+},
+{
+"q": "What is the principal subject of the lecture section following renal glucose handling?",
+"a": "Acid-base balance",
+"w": ["Visual physiology", "Muscle contraction", "Digestive secretion"]
+},
+{
+"q": "How is pH defined in the lecture?",
+"a": "pH = -log[H+]",
+"w": ["pH = log[Na+]", "pH = [H+] × 10", "pH = -log[O2]"]
+},
+{
+"q": "What hydrogen ion concentration is stated for arterial blood?",
+"a": "40 nmol/L",
+"w": ["4 nmol/L", "400 nmol/L", "40 mmol/L"]
+},
+{
+"q": "What is the normal plasma pH stated in the lecture?",
+"a": "7.4 ± 0.05",
+"w": ["6.4 ± 0.5", "8.4 ± 0.5", "7.0 ± 1.0"]
+},
+{
+"q": "At what blood pH does the lecture define alkalosis?",
+"a": "Above 7.45",
+"w": ["Below 7.35", "Exactly 7.00", "Below 6.50"]
+},
+{
+"q": "At what blood pH does the lecture define acidosis?",
+"a": "Below 7.35",
+"w": ["Above 7.45", "Exactly 7.40", "Above 8.00"]
+},
+{
+"q": "Which pH value falls within the normal plasma pH range given in the lecture?",
+"a": "7.40",
+"w": ["7.20", "7.50", "6.90"]
+},
+{
+"q": "Which pH value meets the lecture's stated definition of alkalosis?",
+"a": "7.50",
+"w": ["7.30", "7.35", "7.40"]
+},
+{
+"q": "Which pH value meets the lecture's stated definition of acidosis?",
+"a": "7.30",
+"w": ["7.46", "7.50", "7.60"]
+},
+{
+"q": "Which statement correctly describes the relationship between hydrogen ion concentration and pH in the given formula?",
+"a": "pH is the negative logarithm of hydrogen ion concentration",
+"w": ["pH is the direct multiplication of hydrogen ion concentration by sodium concentration", "pH is the positive logarithm of oxygen concentration", "pH is independent of hydrogen ion concentration"]
+},
+{
+"q": "How many mechanisms are listed for maintaining an acceptable extracellular fluid pH range?",
+"a": "Three",
+"w": ["One", "Two", "Five"]
+},
+{
+"q": "Which three mechanisms regulate acid-base balance according to the lecture?",
+"a": "Chemical buffers, respiratory regulation, and renal regulation",
+"w": ["Digestion, circulation, and movement", "Filtration, hearing, and vision", "Secretion, muscle contraction, and blood clotting"]
+},
+{
+"q": "Which mechanism reacts very rapidly, within seconds according to the lecture?",
+"a": "Chemical buffers",
+"w": ["Renal regulation", "Urine storage", "Glomerular filtration only"]
+},
+{
+"q": "What is the response time of chemical buffers stated in the lecture?",
+"a": "Seconds",
+"w": ["Days to weeks", "Hours to days", "Months"]
+},
+{
+"q": "What is the response time of respiratory regulation stated in the lecture?",
+"a": "Seconds to minutes",
+"w": ["Minutes to hours only", "Days to weeks", "Several months"]
+},
+{
+"q": "What is the response time of renal regulation stated in the lecture?",
+"a": "Minutes to hours",
+"w": ["Milliseconds only", "Seconds only", "Several years"]
+},
+{
+"q": "Which acid-base regulatory mechanism is described as the slowest of the three?",
+"a": "Renal regulation",
+"w": ["Chemical buffers", "Respiratory regulation", "All three are stated to act at identical speeds"]
+},
+{
+"q": "Which mechanism is described as responding within seconds to minutes?",
+"a": "Respiratory regulation",
+"w": ["Renal regulation", "Chemical buffers only", "Urinary bladder storage"]
+},
+{
+"q": "Which mechanism acts on the extracellular pH range through chemical buffering?",
+"a": "Chemical buffers",
+"w": ["The ureter", "The urinary bladder", "The urethra"]
+},
+{
+"q": "According to the lecture, which organ is the most effective regulator of pH?",
+"a": "The kidney",
+"w": ["The urinary bladder", "The urethra", "The esophagus"]
+},
+{
+"q": "What does the lecture state about pH balance when the kidneys fail?",
+"a": "pH balance fails",
+"w": ["pH balance becomes permanently independent of all regulatory mechanisms", "The kidneys begin producing glucose", "Blood pH can no longer be affected by acids or bases"]
+},
+{
+"q": "Which substance is reabsorbed by the kidneys as part of acid-base regulation?",
+"a": "Bicarbonate (HCO3-)",
+"w": ["Hemoglobin", "Bilirubin", "Keratin"]
+},
+{
+"q": "Which bicarbonate-related process is performed by the kidneys to help regulate pH?",
+"a": "Synthesis of new bicarbonate",
+"w": ["Conversion of bicarbonate into hemoglobin", "Permanent elimination of all bicarbonate", "Storage of bicarbonate in the urinary bladder"]
+},
+{
+"q": "Which ion is secreted by the kidneys as part of acid-base regulation?",
+"a": "Hydrogen ion (H+)",
+"w": ["Helium ion", "Hydroxyl radical only", "Iron ion only"]
+},
+{
+"q": "Which set correctly describes the kidney's roles in acid-base balance?",
+"a": "Reabsorption of HCO3-, synthesis of new HCO3-, and secretion of H+",
+"w": ["Excretion of all HCO3-, synthesis of H+, and reabsorption of proteins", "Production of oxygen, secretion of glucose, and storage of sodium", "Reabsorption of hemoglobin, secretion of bile, and synthesis of insulin"]
+},
+{
+"q": "What happens to the kidney's listed acid-base regulatory mechanisms during acidosis?",
+"a": "They increase",
+"w": ["They all decrease", "They stop completely", "They become unrelated to pH"]
+},
+{
+"q": "What happens to the kidney's listed acid-base regulatory mechanisms during alkalosis?",
+"a": "They decrease",
+"w": ["They all increase", "They remain permanently maximized", "They are replaced by glucose filtration"]
+},
+{
+"q": "During acidosis, what happens to renal bicarbonate reabsorption according to the lecture?",
+"a": "It increases",
+"w": ["It decreases", "It stops completely", "It becomes unrelated to acid-base regulation"]
+},
+{
+"q": "During acidosis, what happens to the synthesis of new bicarbonate according to the lecture?",
+"a": "It increases",
+"w": ["It decreases", "It stops permanently", "It is converted into glucose"]
+},
+{
+"q": "During acidosis, what happens to renal hydrogen ion secretion according to the lecture?",
+"a": "It increases",
+"w": ["It decreases", "It stops completely", "It is replaced by protein filtration"]
+},
+{
+"q": "During alkalosis, what happens to renal bicarbonate reabsorption according to the lecture's general statement?",
+"a": "The listed renal acid-base mechanisms decrease",
+"w": ["All listed mechanisms increase", "All listed mechanisms stop permanently", "Only glomerular filtration increases while the others are unchanged"]
+},
+{
+"q": "Which section title in the lecture specifically concerns bicarbonate handling?",
+"a": "Reabsorption of Bicarbonate",
+"w": ["Glucose Filtration", "Water Storage", "Renal Blood Pressure Measurement"]
+},
+{
+"q": "What can cause a disturbance in acid-base balance according to the lecture?",
+"a": "An abnormality in one or more pH control mechanisms",
+"w": ["Only a change in body height", "Only an increase in the number of ureters", "Only a change in eye color"]
+},
+{
+"q": "Which two major disturbances of acid-base balance are listed in the lecture?",
+"a": "Acidosis and alkalosis",
+"w": ["Filtration and reabsorption", "Secretion and excretion", "Hyperglycemia and glycosuria only"]
+},
+{
+"q": "How does the lecture define acidosis?",
+"a": "A condition in which the blood has too much acid or too little base",
+"w": ["A condition in which the blood has too much base or too little acid", "A condition in which the blood contains no water", "A condition in which the kidneys stop filtering all electrolytes"]
+},
+{
+"q": "What frequently happens to blood pH during acidosis according to the lecture?",
+"a": "It decreases",
+"w": ["It always increases", "It remains above 8.0", "It becomes independent of hydrogen ions"]
+},
+{
+"q": "How does the lecture define alkalosis?",
+"a": "A condition in which the blood has too much base or too little acid",
+"w": ["A condition in which the blood has too much acid or too little base", "A condition in which the blood contains no electrolytes", "A condition in which all plasma proteins disappear"]
+},
+{
+"q": "What may happen to blood pH during alkalosis according to the lecture?",
+"a": "It increases",
+"w": ["It always decreases below 7.0", "It becomes exactly zero", "It is permanently fixed at 7.35"]
+},
+{
+"q": "Which statement distinguishes acidosis from alkalosis in the lecture?",
+"a": "Acidosis involves too much acid or too little base, whereas alkalosis involves too much base or too little acid",
+"w": ["Acidosis involves too much base, whereas alkalosis involves too much acid", "Both conditions mean that the blood has no electrolytes", "Both conditions refer only to increased urine volume"]
+},
+{
+"q": "Which renal process is responsible for moving fluid and electrolytes from glomerular capillaries into Bowman's space?",
+"a": "Glomerular filtration",
+"w": ["Tubular secretion", "Tubular reabsorption", "Urinary excretion"]
+},
+{
+"q": "Which statement about renal filtration and reabsorption is correct?",
+"a": "Filtration moves substances from blood to lumen, while reabsorption moves substances from lumen to blood",
+"w": ["Filtration and reabsorption both move substances from the lumen to the external environment", "Filtration moves substances from lumen to blood, while reabsorption moves them from blood to lumen", "Both processes refer only to urine storage"]
+},
+{
+"q": "Which statement correctly links the nephron's structure with its functions?",
+"a": "The glomerulus performs filtration, while the tubules are involved in reabsorption and secretion",
+"w": ["The urethra performs glomerular filtration, while the bladder synthesizes bicarbonate", "The collecting duct is the only structure involved in all renal functions", "The renal vein performs urinary excretion directly to the external environment"]
+},
+{
+"q": "Which pair of processes is involved in the renal handling of glucose described in the lecture?",
+"a": "Sodium-coupled secondary active transport and facilitated diffusion",
+"w": ["Glomerular secretion and urinary storage", "Protein synthesis and osmosis only", "Respiratory regulation and chemical buffering"]
+},
+{
+"q": "Which combination of values matches the lecture's normal plasma pH and normal GFR?",
+"a": "pH 7.4 ± 0.05 and GFR 125 mL/min",
+"w": ["pH 6.4 ± 0.5 and GFR 25 mL/min", "pH 8.4 ± 0.5 and GFR 250 mL/min", "pH 7.0 ± 1.0 and GFR 500 mL/min"]
+},
+{
+"q": "Which statement best summarizes the kidney's contribution to homeostasis as presented in the lecture?",
+"a": "It excretes waste and regulates ECF volume, osmolarity, electrolytes, blood pressure, and pH",
+"w": ["It only stores urine and has no role in fluid balance", "It only controls breathing and gas exchange", "It only produces digestive enzymes and stores bile"]
+}
+]
