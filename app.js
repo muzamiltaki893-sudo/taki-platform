@@ -1,82 +1,314 @@
 "use strict";
 
-/* ==================================================
-   TAKI QUIZ ENGINE
-   جميع إعدادات الاختبار موجودة في CONFIG
-   ================================================== */
+/* =========================================================
+   1. إعدادات منصة تكي — عدّل المواد والمدة وعدد الأسئلة هنا
+   ========================================================= */
 
 const CONFIG = {
-  QUESTION_COUNT: 40,
-  TEST_DURATION_SECONDS: 1200,
   POINTS_PER_CORRECT: 1,
-
   SHUFFLE_QUESTIONS: true,
   SHUFFLE_OPTIONS: false,
 
-  QUESTIONS_FILE: "./questions.json"
+  STUDENTS_FILE: "./students.json",
+
+  SECTIONS: [
+    {
+      id: 1,
+      name: "القسم الأول",
+      subtitle: "الأساسيات والانطلاقة",
+      questionCount: 10,
+      durationMinutes: 5,
+      accent: "#43cfff",
+      icon: "✦",
+      materials: [
+        {
+          id: 1,
+          name: "مبادئ المادة الأولى",
+          description: "تدرّب على المفاهيم الأساسية.",
+          file: "./questions.json",
+          icon: "▤"
+        }
+      ]
+    },
+
+    {
+      id: 2,
+      name: "القسم الثاني",
+      subtitle: "التعلّم والتطبيق",
+      questionCount: 15,
+      durationMinutes: 8,
+      accent: "#a795ff",
+      icon: "◈",
+      materials: [
+        {
+          id: 2,
+          name: "المادة الثانية",
+          description: "اختبار تدريبي للمادة الثانية.",
+          file: "./questions-02.json",
+          icon: "⌘"
+        },
+        {
+          id: 3,
+          name: "المادة الثالثة",
+          description: "اختبار تدريبي للمادة الثالثة.",
+          file: "./questions-03.json",
+          icon: "◇"
+        }
+      ]
+    },
+
+    {
+      id: 3,
+      name: "القسم الثالث",
+      subtitle: "المعرفة والمهارات",
+      questionCount: 20,
+      durationMinutes: 10,
+      accent: "#4de0b3",
+      icon: "⌘",
+      materials: [
+        {
+          id: 4,
+          name: "المادة الرابعة",
+          description: "اختبار تدريبي للمادة الرابعة.",
+          file: "./questions-04.json",
+          icon: "▦"
+        },
+        {
+          id: 5,
+          name: "المادة الخامسة",
+          description: "اختبار تدريبي للمادة الخامسة.",
+          file: "./questions-05.json",
+          icon: "◉"
+        },
+        {
+          id: 6,
+          name: "المادة السادسة",
+          description: "اختبار تدريبي للمادة السادسة.",
+          file: "./questions-06.json",
+          icon: "⌬"
+        }
+      ]
+    },
+
+    {
+      id: 4,
+      name: "القسم الرابع",
+      subtitle: "التوسّع والتدريب",
+      questionCount: 25,
+      durationMinutes: 12,
+      accent: "#ffbd70",
+      icon: "◉",
+      materials: [
+        {
+          id: 7,
+          name: "المادة السابعة",
+          description: "اختبار تدريبي للمادة السابعة.",
+          file: "./questions-07.json",
+          icon: "▧"
+        },
+        {
+          id: 8,
+          name: "المادة الثامنة",
+          description: "اختبار تدريبي للمادة الثامنة.",
+          file: "./questions-08.json",
+          icon: "⌘"
+        },
+        {
+          id: 9,
+          name: "المادة التاسعة",
+          description: "اختبار تدريبي للمادة التاسعة.",
+          file: "./questions-09.json",
+          icon: "◇"
+        },
+        {
+          id: 10,
+          name: "المادة العاشرة",
+          description: "اختبار تدريبي للمادة العاشرة.",
+          file: "./questions-10.json",
+          icon: "▤"
+        }
+      ]
+    },
+
+    {
+      id: 5,
+      name: "القسم الخامس",
+      subtitle: "التحديات المتقدمة",
+      questionCount: 30,
+      durationMinutes: 15,
+      accent: "#ff83bb",
+      icon: "✧",
+      materials: [
+        {
+          id: 11,
+          name: "المادة الحادية عشرة",
+          description: "اختبار تدريبي للمادة الحادية عشرة.",
+          file: "./questions-11.json",
+          icon: "▤"
+        },
+        {
+          id: 12,
+          name: "المادة الثانية عشرة",
+          description: "اختبار تدريبي للمادة الثانية عشرة.",
+          file: "./questions-12.json",
+          icon: "◈"
+        },
+        {
+          id: 13,
+          name: "المادة الثالثة عشرة",
+          description: "اختبار تدريبي للمادة الثالثة عشرة.",
+          file: "./questions-13.json",
+          icon: "⌘"
+        },
+        {
+          id: 14,
+          name: "المادة الرابعة عشرة",
+          description: "اختبار تدريبي للمادة الرابعة عشرة.",
+          file: "./questions-14.json",
+          icon: "◇"
+        },
+        {
+          id: 15,
+          name: "المادة الخامسة عشرة",
+          description: "اختبار تدريبي للمادة الخامسة عشرة.",
+          file: "./questions-15.json",
+          icon: "▦"
+        }
+      ]
+    },
+
+    {
+      id: 6,
+      name: "القسم السادس",
+      subtitle: "المراجعة الشاملة",
+      questionCount: 40,
+      durationMinutes: 20,
+      accent: "#68a5ff",
+      icon: "✦",
+      materials: [
+        {
+          id: 16,
+          name: "المادة السادسة عشرة",
+          description: "اختبار تدريبي للمادة السادسة عشرة.",
+          file: "./questions-16.json",
+          icon: "▤"
+        },
+        {
+          id: 17,
+          name: "المادة السابعة عشرة",
+          description: "اختبار تدريبي للمادة السابعة عشرة.",
+          file: "./questions-17.json",
+          icon: "◈"
+        },
+        {
+          id: 18,
+          name: "المادة الثامنة عشرة",
+          description: "اختبار تدريبي للمادة الثامنة عشرة.",
+          file: "./questions-18.json",
+          icon: "⌘"
+        },
+        {
+          id: 19,
+          name: "المادة التاسعة عشرة",
+          description: "اختبار تدريبي للمادة التاسعة عشرة.",
+          file: "./questions-19.json",
+          icon: "◇"
+        },
+        {
+          id: 20,
+          name: "المادة العشرون",
+          description: "اختبار تدريبي للمادة العشرين.",
+          file: "./questions-20.json",
+          icon: "▦"
+        }
+      ]
+    }
+  ]
 };
 
-/* اختصارات عناصر الصفحة */
+/* =========================================================
+   2. حالة التطبيق
+   ========================================================= */
+
+const state = {
+  students: [],
+  student: null,
+  section: null,
+  material: null,
+
+  questions: [],
+  answers: [],
+  currentIndex: 0,
+  score: 0,
+  secondsLeft: 0,
+  timerId: null,
+  finished: false,
+  selectedAnswer: null
+};
 
 const $ = (selector) => document.querySelector(selector);
 
-const screens = {
-  welcome: $("#welcomeScreen"),
-  quiz: $("#quizScreen"),
-  result: $("#resultScreen")
-};
+const screens = [
+  "#loginScreen",
+  "#libraryScreen",
+  "#materialsScreen",
+  "#subjectScreen",
+  "#quizScreen",
+  "#resultScreen"
+];
 
-/* حالة الاختبار */
+/* =========================================================
+   3. أدوات مساعدة
+   ========================================================= */
 
-let questionBank = [];
-let testQuestions = [];
-let questionIndex = 0;
-
-let score = 0;
-let correctAnswers = 0;
-let wrongAnswers = 0;
-let unansweredAnswers = 0;
-
-let secondsLeft = CONFIG.TEST_DURATION_SECONDS;
-let timerInterval = null;
-
-let testFinished = false;
-let testStartedAt = null;
-
-let answersLog = [];
-
-let activeSubject = "";
-let activeTopic = "";
-
-/* ==================================================
-   أدوات عامة
-   ================================================== */
-
-function formatTime(seconds) {
-  const safe = Math.max(0, Math.floor(seconds));
-
-  const minutes = String(Math.floor(safe / 60))
-    .padStart(2, "0");
-
-  const remaining = String(safe % 60)
-    .padStart(2, "0");
-
-  return `${minutes}:${remaining}`;
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
 }
 
-function showScreen(name) {
-  if (!screens[name]) return;
-
-  Object.values(screens).forEach((screen) => {
-    screen.classList.remove("active");
+function showScreen(id) {
+  screens.forEach((selector) => {
+    $(selector).classList.toggle("hidden", selector !== id);
   });
 
-  screens[name].classList.add("active");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
 
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
+function showMessage(element, message, type = "error") {
+  element.textContent = message;
+  element.className = `message ${type}`;
+  element.classList.remove("hidden");
+}
+
+function hideMessage(element) {
+  element.textContent = "";
+  element.className = "message hidden";
+}
+
+function notify(message) {
+  const element = $("#globalMessage");
+  element.textContent = message;
+  element.classList.remove("hidden");
+
+  window.clearTimeout(notify.timeoutId);
+  notify.timeoutId = window.setTimeout(() => {
+    element.classList.add("hidden");
+  }, 3000);
+}
+
+async function readJSON(path) {
+  const response = await fetch(path, { cache: "no-store" });
+
+  if (!response.ok) {
+    throw new Error(`تعذر تحميل الملف ${path} (${response.status})`);
+  }
+
+  return response.json();
 }
 
 function shuffle(array) {
@@ -84,622 +316,600 @@ function shuffle(array) {
 
   for (let i = result.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-
     [result[i], result[j]] = [result[j], result[i]];
   }
 
   return result;
 }
 
-function setText(selector, value) {
-  const element = $(selector);
-
-  if (element) {
-    element.textContent = String(value);
-  }
+function formatDuration(minutes) {
+  return minutes === 1 ? "دقيقة واحدة" : `${minutes} دقائق`;
 }
 
-/* ==================================================
-   قراءة بنك الأسئلة والتحقق منه
-   ================================================== */
-
-function normalizeQuestion(item, index) {
-  if (
-    !item ||
-    typeof item.q !== "string" ||
-    typeof item.a !== "string" ||
-    !Array.isArray(item.w)
-  ) {
-    console.warn(
-      `تم تجاهل السؤال ${index + 1}: صيغة غير صحيحة.`
-    );
-
-    return null;
-  }
-
-  const question = item.q.trim();
-  const answer = item.a.trim();
-
-  const wrongOptions = item.w
-    .filter((value) => typeof value === "string")
-    .map((value) => value.trim())
-    .filter((value) => value.length > 0 && value !== answer);
-
-  const choices = [
-    ...new Set([answer, ...wrongOptions])
-  ];
-
-  if (!question || !answer || choices.length < 2) {
-    console.warn(
-      `تم تجاهل السؤال ${index + 1}: بيانات ناقصة.`
-    );
-
-    return null;
-  }
-
-  return {
-    q: question,
-    a: answer,
-    choices
-  };
+function studentStorageKey(type) {
+  return `taki_${type}_${state.student.studentNumber}`;
 }
 
-async function loadQuestions() {
-  const startButton = $("#startButton");
+function getLocalNumber(type) {
+  return Number(localStorage.getItem(studentStorageKey(type)) || 0);
+}
 
-  startButton.disabled = true;
-  startButton.querySelector("span").textContent =
-    "جارٍ تحميل الأسئلة...";
+function setLocalNumber(type, value) {
+  localStorage.setItem(studentStorageKey(type), String(value));
+}
 
+function getCompletedCount() {
+  return getLocalNumber("completed");
+}
+
+function getPoints() {
+  return getLocalNumber("points");
+}
+
+function updateStudentHeader() {
+  if (!state.student) return;
+
+  $("#headerStudentName").textContent = state.student.name;
+  $("#headerStudentSpecialization").textContent =
+    state.student.specialization || "طالب تكي";
+
+  $("#studentAvatar").textContent =
+    [...state.student.name][0] || "ط";
+
+  $("#welcomeName").textContent = state.student.name.split(/\s+/)[0];
+
+  $("#studentPoints").textContent = getPoints();
+  $("#completedTests").textContent = getCompletedCount();
+
+  const total = CONFIG.SECTIONS.reduce(
+    (sum, section) => sum + section.materials.length, 0
+  );
+
+  $("#totalSubjects").textContent = total;
+  $("#headerStudent").classList.remove("hidden");
+}
+
+/* =========================================================
+   4. تسجيل الدخول
+   ========================================================= */
+
+async function loadStudents() {
   try {
-    const response = await fetch(CONFIG.QUESTIONS_FILE, {
-      cache: "no-store"
-    });
-
-    if (!response.ok) {
-      throw new Error(
-        `تعذر الوصول إلى ملف الأسئلة: HTTP ${response.status}`
-      );
-    }
-
-    const data = await response.json();
+    const data = await readJSON(CONFIG.STUDENTS_FILE);
 
     if (!Array.isArray(data)) {
-      throw new Error(
-        "يجب أن يكون questions.json مصفوفة JSON."
-      );
+      throw new Error("يجب أن يكون students.json مصفوفة JSON.");
     }
 
-    questionBank = data
-      .map((item, index) => normalizeQuestion(item, index))
-      .filter(Boolean);
-
-    if (questionBank.length === 0) {
-      throw new Error("لا توجد أسئلة صالحة في بنك الأسئلة.");
-    }
-
-    const availableCount = Math.min(
-      CONFIG.QUESTION_COUNT,
-      questionBank.length
-    );
-
-    setText("#welcomeQuestionCount", availableCount);
-
-    setText(
-      "#welcomeDuration",
-      formatTime(CONFIG.TEST_DURATION_SECONDS)
-    );
-
-    const pointValue = CONFIG.POINTS_PER_CORRECT;
-
-    $("#welcomeNote").textContent =
-      `سيعرض الاختبار ${availableCount} سؤالًا، ` +
-      `ولديك ${formatTime(CONFIG.TEST_DURATION_SECONDS)}. ` +
-      `تحصل على ${pointValue} نقطة لكل إجابة صحيحة. ` +
-      `تظهر لك صحة الإجابة بعد اختيارها.`;
-
-    startButton.disabled = false;
-
-    startButton.querySelector("span").textContent =
-      "ابدأ الاختبار";
-
+    state.students = data;
   } catch (error) {
-    console.error("TAKI:", error);
+    console.error(error);
 
-    $("#welcomeNote").textContent =
-      "تعذر تحميل بنك الأسئلة. تأكد من رفع questions.json " +
-      "في المسار الصحيح ثم أعد تحميل الصفحة.";
-
-    startButton.disabled = true;
-
-    startButton.querySelector("span").textContent =
-      "تعذر تحميل الأسئلة";
+    showMessage(
+      $("#loginMessage"),
+      "تعذر تحميل بيانات الطلاب. تحقق من وجود students.json وصحة محتواه."
+    );
   }
 }
 
-/* ==================================================
-   بدء الاختبار
-   ================================================== */
+function loginStudent(event) {
+  event.preventDefault();
 
-function startTest() {
-  if (!questionBank.length || !screens.welcome || !screens.quiz) {
+  const number = $("#studentNumber").value.trim();
+  const password = $("#studentPassword").value;
+  const message = $("#loginMessage");
+
+  hideMessage(message);
+
+  if (!number || !password) {
+    showMessage(message, "أدخل رقم الطالب وكلمة المرور.");
     return;
   }
 
-  clearInterval(timerInterval);
-  timerInterval = null;
-
-  activeSubject =
-    $("#subjectInput").value.trim() || "اختبار عام";
-
-  activeTopic =
-    $("#topicInput").value.trim() || "موضوع متنوع";
-
-  const orderedQuestions = CONFIG.SHUFFLE_QUESTIONS
-    ? shuffle(questionBank)
-    : [...questionBank];
-
-  testQuestions = orderedQuestions.slice(
-    0,
-    Math.min(CONFIG.QUESTION_COUNT, questionBank.length)
+  const student = state.students.find((item) =>
+    String(item.studentNumber) === number &&
+    String(item.password) === password
   );
 
-  questionIndex = 0;
+  if (!student) {
+    showMessage(message, "رقم الطالب أو كلمة المرور غير صحيحة.");
+    return;
+  }
 
-  score = 0;
-  correctAnswers = 0;
-  wrongAnswers = 0;
-  unansweredAnswers = 0;
+  state.student = {
+    studentNumber: String(student.studentNumber),
+    name: String(student.name),
+    specialization: String(student.specialization || ""),
+    password: String(student.password)
+  };
 
-  answersLog = Array(testQuestions.length).fill(null);
+  updateStudentHeader();
+  renderSections();
+  showScreen("#libraryScreen");
+}
 
-  testFinished = false;
+function logout() {
+  if (state.timerId) {
+    clearInterval(state.timerId);
+    state.timerId = null;
+  }
 
-  secondsLeft = CONFIG.TEST_DURATION_SECONDS;
-  testStartedAt = Date.now();
+  state.student = null;
+  state.section = null;
+  state.material = null;
+  state.finished = false;
 
-  setText("#activeSubject", activeSubject);
-  setText("#activeTopic", activeTopic);
+  $("#headerStudent").classList.add("hidden");
+  $("#studentPassword").value = "";
+  $("#studentNumber").value = "";
 
-  setText("#scoreText", score);
-  setText("#totalQuestions", testQuestions.length);
+  hideMessage($("#loginMessage"));
+  $("#quitDialog").classList.add("hidden");
 
-  updateTimer();
+  showScreen("#loginScreen");
+}
 
-  showScreen("quiz");
+/* =========================================================
+   5. إنشاء بطاقات الأقسام
+   ========================================================= */
 
+function renderSections() {
+  const grid = $("#sectionsGrid");
+  grid.innerHTML = "";
+
+  CONFIG.SECTIONS.forEach((section) => {
+    const card = document.createElement("button");
+
+    card.type = "button";
+    card.className = "section-card";
+    card.style.setProperty("--accent", section.accent);
+
+    card.innerHTML = `
+      <div class="section-card-top">
+        <span class="section-number">
+          القسم ${String(section.id).padStart(2, "0")}
+        </span>
+        <span class="section-icon">${escapeHTML(section.icon)}</span>
+      </div>
+      <h3>${escapeHTML(section.name)}</h3>
+      <p>${escapeHTML(section.subtitle)}</p>
+      <p>${section.materials.length} ${section.materials.length === 1 ? "مادة" : "مواد"}</p>
+      <span class="card-arrow">←</span>
+    `;
+
+    card.addEventListener("click", () => openSection(section.id));
+    grid.appendChild(card);
+  });
+}
+
+function openSection(sectionId) {
+  const section = CONFIG.SECTIONS.find((item) => item.id === sectionId);
+  if (!section) return;
+
+  state.section = section;
+  state.material = null;
+
+  $("#materialEmblem").textContent =
+    String(section.id).padStart(2, "0");
+
+  $("#materialEyebrow").textContent = section.name;
+  $("#materialsTitle").textContent = section.name;
+  $("#materialsDescription").textContent =
+    `${section.subtitle} — اختر مادة لبدء الاختبار.`;
+
+  renderMaterials(section);
+  showScreen("#materialsScreen");
+}
+
+function renderMaterials(section) {
+  const grid = $("#materialsGrid");
+  grid.innerHTML = "";
+
+  section.materials.forEach((material) => {
+    const card = document.createElement("button");
+
+    card.type = "button";
+    card.className = "material-card";
+
+    card.innerHTML = `
+      <span class="material-symbol">${escapeHTML(material.icon || "▤")}</span>
+      <span class="material-copy">
+        <strong>${escapeHTML(material.name)}</strong>
+        <small>${escapeHTML(material.description || "اختبار تدريبي")}</small>
+      </span>
+      <span class="material-arrow">←</span>
+    `;
+
+    card.addEventListener("click", () => openMaterial(material));
+    grid.appendChild(card);
+  });
+}
+
+/* =========================================================
+   6. فتح المادة وتجهيز إعداداتها
+   ========================================================= */
+
+async function openMaterial(material) {
+  state.material = material;
+
+  const section = state.section;
+
+  $("#subjectTitle").textContent = material.name;
+  $("#subjectSectionName").textContent = section.name;
+  $("#subjectDescription").textContent =
+    material.description || "استعد للاختبار وابدأ عندما تكون جاهزاً.";
+
+  $("#subjectSymbol").textContent = material.icon || "✦";
+  $("#subjectQuestionCount").textContent = section.questionCount;
+  $("#subjectDuration").textContent =
+    formatDuration(section.durationMinutes);
+
+  $("#subjectPoints").textContent = CONFIG.POINTS_PER_CORRECT;
+  $("#subjectAvailability").classList.add("hidden");
+  $("#startButton").disabled = false;
+  $("#startButton").innerHTML =
+    "<span>ابدأ الاختبار</span><span>←</span>";
+
+  showScreen("#subjectScreen");
+}
+
+async function prepareQuiz() {
+  if (!state.student || !state.section || !state.material) return;
+
+  const button = $("#startButton");
+  button.disabled = true;
+  button.textContent = "جارٍ تجهيز الاختبار…";
+
+  try {
+    const data = await readJSON(state.material.file);
+
+    if (!Array.isArray(data)) {
+      throw new Error("ملف الأسئلة ليس مصفوفة JSON.");
+    }
+
+    const validQuestions = data.filter((item) =>
+      item &&
+      typeof item.q === "string" &&
+      typeof item.a === "string" &&
+      Array.isArray(item.w) &&
+      item.w.every((answer) => typeof answer === "string")
+    );
+
+    if (validQuestions.length === 0) {
+      throw new Error("لا توجد أسئلة صالحة في ملف هذه المادة.");
+    }
+
+    const count = Math.min(
+      state.section.questionCount,
+      validQuestions.length
+    );
+
+    let chosen = CONFIG.SHUFFLE_QUESTIONS
+      ? shuffle(validQuestions).slice(0, count)
+      : validQuestions.slice(0, count);
+
+    state.questions = chosen.map((question) => {
+      const options = [question.a, ...question.w];
+
+      return {
+        q: question.q,
+        a: question.a,
+        options: CONFIG.SHUFFLE_OPTIONS ? shuffle(options) : options
+      };
+    });
+
+    state.answers = new Array(state.questions.length).fill(null);
+    state.currentIndex = 0;
+    state.score = 0;
+    state.finished = false;
+    state.selectedAnswer = null;
+    state.secondsLeft = state.section.durationMinutes * 60;
+
+    $("#activeSubject").textContent = state.material.name;
+    $("#activeTopic").textContent = state.section.name;
+
+    $("#totalQuestions").textContent = state.questions.length;
+    $("#scoreText").textContent = "0";
+
+    showScreen("#quizScreen");
+    renderQuestion();
+    startTimer();
+  } catch (error) {
+    console.error(error);
+
+    showMessage(
+      $("#subjectAvailability"),
+      `تعذر بدء الاختبار: ${error.message}`,
+      "error"
+    );
+
+    $("#subjectAvailability").classList.remove("hidden");
+    notify("تحقق من ملف أسئلة المادة على GitHub.");
+  } finally {
+    button.disabled = false;
+    button.innerHTML = "<span>ابدأ الاختبار</span><span>←</span>";
+  }
+}
+
+/* =========================================================
+   7. عرض الأسئلة والخيارات
+   ========================================================= */
+
+function renderQuestion() {
+  const question = state.questions[state.currentIndex];
+  if (!question) return;
+
+  state.selectedAnswer = null;
+
+  $("#currentQuestion").textContent = state.currentIndex + 1;
+  $("#questionNumberBadge").textContent =
+    `السؤال ${state.currentIndex + 1}`;
+
+  $("#questionText").textContent = question.q;
+
+  $("#progressBar").style.width =
+    `${((state.currentIndex + 1) / state.questions.length) * 100}%`;
+
+  const list = $("#optionsList");
+  list.innerHTML = "";
+
+  hideFeedback();
+
+  const letters = ["أ", "ب", "ج", "د", "هـ", "و"];
+
+  question.options.forEach((option, index) => {
+    const button = document.createElement("button");
+
+    button.type = "button";
+    button.className = "option-button";
+
+    const letter = document.createElement("span");
+    letter.className = "option-letter";
+    letter.textContent = letters[index] || String(index + 1);
+
+    const text = document.createElement("span");
+    text.textContent = option;
+
+    button.append(letter, text);
+
+    button.addEventListener("click", () => chooseAnswer(option, button));
+    list.appendChild(button);
+  });
+
+  $("#nextButton").disabled = true;
+
+  $("#nextButtonText").textContent =
+    state.currentIndex === state.questions.length - 1
+      ? "عرض النتائج"
+      : "السؤال التالي";
+
+  updateTimerDisplay();
+}
+
+function hideFeedback() {
+  $("#feedbackBox").className = "feedback-box hidden";
+  $("#feedbackIcon").textContent = "✓";
+  $("#feedbackTitle").textContent = "";
+  $("#feedbackText").textContent = "";
+  $("#feedbackPoints").textContent = "";
+}
+
+function chooseAnswer(answer, selectedButton) {
+  if (state.finished || state.selectedAnswer !== null) return;
+
+  state.selectedAnswer = answer;
+
+  const question = state.questions[state.currentIndex];
+  const correct = answer === question.a;
+
+  state.answers[state.currentIndex] = {
+    question: question.q,
+    selected: answer,
+    correctAnswer: question.a,
+    correct
+  };
+
+  const buttons = [...$("#optionsList").querySelectorAll(".option-button")];
+
+  buttons.forEach((button) => {
+    button.disabled = true;
+
+    const optionText = button.lastElementChild.textContent;
+
+    if (optionText === question.a) {
+      button.classList.add("correct");
+    }
+  });
+
+  if (correct) {
+    state.score += CONFIG.POINTS_PER_CORRECT;
+    $("#scoreText").textContent = state.score;
+
+    $("#feedbackBox").className = "feedback-box correct";
+    $("#feedbackIcon").textContent = "✓";
+    $("#feedbackTitle").textContent = "إجابة صحيحة، أحسنت!";
+    $("#feedbackText").textContent = "واصل تقدمك، أنت على الطريق الصحيح.";
+    $("#feedbackPoints").textContent =
+      `+${CONFIG.POINTS_PER_CORRECT} نقطة`;
+  } else {
+    selectedButton.classList.add("wrong");
+
+    $("#feedbackBox").className = "feedback-box wrong";
+    $("#feedbackIcon").textContent = "×";
+    $("#feedbackTitle").textContent = "ليست الإجابة الصحيحة";
+    $("#feedbackText").textContent =
+      `الإجابة الصحيحة هي: ${question.a}`;
+    $("#feedbackPoints").textContent = "حاول الاستفادة من التصحيح في المرة القادمة.";
+  }
+
+  $("#nextButton").disabled = false;
+}
+
+function nextQuestion() {
+  if (state.finished || state.selectedAnswer === null) return;
+
+  if (state.currentIndex + 1 >= state.questions.length) {
+    finishQuiz("completed");
+    return;
+  }
+
+  state.currentIndex += 1;
   renderQuestion();
+}
 
-  timerInterval = setInterval(() => {
-    if (testFinished) {
-      clearInterval(timerInterval);
+/* =========================================================
+   8. المؤقت
+   ========================================================= */
+
+function startTimer() {
+  stopTimer();
+  updateTimerDisplay();
+
+  state.timerId = window.setInterval(() => {
+    if (state.finished) {
+      stopTimer();
       return;
     }
 
-    secondsLeft = Math.max(0, secondsLeft - 1);
+    state.secondsLeft -= 1;
+    updateTimerDisplay();
 
-    updateTimer();
-
-    if (secondsLeft <= 0) {
-      finishTest(true);
+    if (state.secondsLeft <= 0) {
+      finishQuiz("timeout");
     }
   }, 1000);
 }
 
-/* ==================================================
-   المؤقت
-   ================================================== */
-
-function updateTimer() {
-  setText("#timerText", formatTime(secondsLeft));
-
-  $("#timerRing").classList.toggle(
-    "urgent",
-    secondsLeft <= 30
-  );
+function stopTimer() {
+  if (state.timerId !== null) {
+    window.clearInterval(state.timerId);
+    state.timerId = null;
+  }
 }
 
-/* ==================================================
-   تحديث شريط التقدم
-   ================================================== */
+function updateTimerDisplay() {
+  const seconds = Math.max(0, state.secondsLeft);
+  const minutesText = String(Math.floor(seconds / 60)).padStart(2, "0");
+  const secondsText = String(seconds % 60).padStart(2, "0");
 
-function updateProgress(completedQuestions) {
-  const total = testQuestions.length;
+  $("#timerText").textContent = `${minutesText}:${secondsText}`;
 
-  const percentage = total > 0
-    ? (completedQuestions / total) * 100
-    : 0;
-
-  $("#progressBar").style.width = `${percentage}%`;
-
-  $("#progressTrack").setAttribute(
-    "aria-valuenow",
-    String(Math.round(percentage))
-  );
+  $("#timerRing").classList.toggle("danger", seconds <= 30);
 }
 
-/* ==================================================
-   عرض السؤال والخيارات
-   ================================================== */
+/* =========================================================
+   9. إنهاء الاختبار وحساب النتائج
+   ========================================================= */
 
-function renderQuestion() {
-  if (testFinished) return;
+function finishQuiz(reason = "completed") {
+  if (state.finished || !state.questions.length) return;
 
-  const question = testQuestions[questionIndex];
+  state.finished = true;
+  stopTimer();
 
-  if (!question) {
-    finishTest(false);
-    return;
-  }
+  const correctCount = state.answers.filter(
+    (answer) => answer?.correct
+  ).length;
 
-  setText("#currentQuestion", questionIndex + 1);
+  const wrongCount = state.answers.filter(
+    (answer) => answer && !answer.correct
+  ).length;
 
-  setText(
-    "#questionNumberBadge",
-    String(questionIndex + 1).padStart(2, "0")
+  const unansweredCount =
+    state.questions.length - correctCount - wrongCount;
+
+  const percentage = Math.round(
+    (correctCount / state.questions.length) * 100
   );
 
-  setText("#questionText", question.q);
+  const pointsEarned = correctCount * CONFIG.POINTS_PER_CORRECT;
 
-  setText("#scoreText", score);
+  setLocalNumber("points", getPoints() + pointsEarned);
+  setLocalNumber("completed", getCompletedCount() + 1);
 
-  $("#optionsList").replaceChildren();
+  updateStudentHeader();
 
-  $("#feedbackBox").hidden = true;
-  $("#feedbackBox").classList.remove("wrong-feedback");
+  $("#finalScore").textContent = pointsEarned;
+  $("#finalPercent").textContent = `${percentage}%`;
 
-  $("#nextButton").disabled = true;
-
-  setText(
-    "#nextButtonText",
-    questionIndex === testQuestions.length - 1
-      ? "عرض النتيجة"
-      : "السؤال التالي"
-  );
-
-  updateProgress(questionIndex);
-
-  const choices = CONFIG.SHUFFLE_OPTIONS
-    ? shuffle(question.choices)
-    : [...question.choices];
-
-  choices.forEach((choice, index) => {
-    const button = document.createElement("button");
-
-    button.type = "button";
-    button.className = "option";
-
-    button.setAttribute(
-      "aria-label",
-      `الخيار ${index + 1}: ${choice}`
-    );
-
-    const radio = document.createElement("span");
-    radio.className = "option-radio";
-    radio.setAttribute("aria-hidden", "true");
-
-    const text = document.createElement("span");
-    text.textContent = choice;
-
-    button.append(radio, text);
-
-    button.addEventListener("click", () => {
-      gradeAnswer(choice);
-    });
-
-    $("#optionsList").appendChild(button);
-  });
-}
-
-/* ==================================================
-   التصحيح الفوري
-   ================================================== */
-
-function gradeAnswer(selectedChoice) {
-  if (
-    testFinished ||
-    answersLog[questionIndex] !== null
-  ) {
-    return;
-  }
-
-  const question = testQuestions[questionIndex];
-
-  const isCorrect =
-    selectedChoice.trim() === question.a.trim();
-
-  answersLog[questionIndex] = {
-    question: question.q,
-    chosen: selectedChoice,
-    correct: question.a,
-    isCorrect,
-    timedOut: false
-  };
-
-  if (isCorrect) {
-    correctAnswers++;
-
-    score += CONFIG.POINTS_PER_CORRECT;
-  } else {
-    wrongAnswers++;
-  }
-
-  setText("#scoreText", score);
-
-  /* تعطيل جميع الخيارات بعد الاختيار */
-
-  document.querySelectorAll(".option").forEach((button) => {
-    button.disabled = true;
-
-    const label =
-      button.querySelector("span:last-child").textContent;
-
-    if (label.trim() === question.a.trim()) {
-      button.classList.add("correct");
-    }
-
-    if (
-      label.trim() === selectedChoice.trim() &&
-      !isCorrect
-    ) {
-      button.classList.add("wrong");
-    }
-
-    if (
-      label.trim() === selectedChoice.trim() &&
-      isCorrect
-    ) {
-      button.classList.add("selected");
-    }
-  });
-
-  /* إظهار رسالة النتيجة */
-
-  const feedback = $("#feedbackBox");
-
-  feedback.hidden = false;
-
-  feedback.classList.toggle(
-    "wrong-feedback",
-    !isCorrect
-  );
-
-  setText("#feedbackIcon", isCorrect ? "✓" : "×");
-
-  setText(
-    "#feedbackTitle",
-    isCorrect ? "إجابة صحيحة! أحسنت" : "إجابة غير صحيحة"
-  );
-
-  setText(
-    "#feedbackText",
-    isCorrect
-      ? "أحسنت! لقد أُضيفت نقاطك إلى نتيجة الاختبار."
-      : `الإجابة الصحيحة هي: ${question.a}`
-  );
-
-  setText(
-    "#feedbackPoints",
-    isCorrect
-      ? `+${CONFIG.POINTS_PER_CORRECT} نقطة`
-      : "+0 نقطة"
-  );
-
-  $("#nextButton").disabled = false;
-
-  updateProgress(questionIndex + 1);
-}
-
-/* ==================================================
-   الانتقال إلى السؤال التالي
-   ================================================== */
-
-function nextQuestion() {
-  if (
-    testFinished ||
-    answersLog[questionIndex] === null
-  ) {
-    return;
-  }
-
-  if (questionIndex >= testQuestions.length - 1) {
-    finishTest(false);
-    return;
-  }
-
-  questionIndex++;
-
-  renderQuestion();
-}
-
-/* ==================================================
-   إنهاء الاختبار
-   ================================================== */
-
-function finishTest(timeExpired = false) {
-  if (testFinished) return;
-
-  testFinished = true;
-
-  clearInterval(timerInterval);
-  timerInterval = null;
-
-  /*
-    كل سؤال لم يُجب عنه يسجل كسؤال دون إجابة.
-    لا يمنح السؤال غير المجاب عنه أي نقاط.
-  */
-
-  testQuestions.forEach((question, index) => {
-    if (answersLog[index] === null) {
-      answersLog[index] = {
-        question: question.q,
-        chosen: null,
-        correct: question.a,
-        isCorrect: false,
-        timedOut: Boolean(timeExpired)
-      };
-
-      unansweredAnswers++;
-    }
-  });
-
-  const total = testQuestions.length;
-
-  const percentage = total > 0
-    ? Math.round((correctAnswers / total) * 100)
-    : 0;
-
-  const elapsedSeconds = testStartedAt
-    ? Math.max(
-        0,
-        Math.floor((Date.now() - testStartedAt) / 1000)
-      )
-    : 0;
-
-  const actualElapsed = Math.min(
-    CONFIG.TEST_DURATION_SECONDS,
-    elapsedSeconds
-  );
-
-  /* معلومات الاختبار */
-
-  setText("#resultSubject", activeSubject);
-  setText("#resultTopic", activeTopic);
-
-  setText("#finalScore", score);
-  setText("#finalPercent", `${percentage}%`);
-
-  setText("#correctCount", correctAnswers);
-  setText("#wrongCount", wrongAnswers);
-  setText("#unansweredCount", unansweredAnswers);
-
-  setText("#resultProgressLabel", `${percentage}%`);
+  $("#correctCount").textContent = correctCount;
+  $("#wrongCount").textContent = wrongCount;
+  $("#unansweredCount").textContent = unansweredCount;
 
   $("#resultProgress").style.width = `${percentage}%`;
 
-  /* رسالة الأداء */
+  $("#resultHeading").textContent =
+    percentage >= 90 ? "إنجاز رائع!" :
+    percentage >= 70 ? "أحسنت، واصل التقدم!" :
+    percentage >= 50 ? "خطوة جيدة، استمر!" :
+    "كل محاولة فرصة للتعلّم!";
 
-  if (percentage >= 90) {
-    setText("#resultHeading", "مذهل! أداء استثنائي");
+  $("#resultSubtitle").textContent =
+    reason === "timeout"
+      ? "انتهى الوقت المخصص للاختبار. إليك مراجعة أدائك."
+      : "انتهيت من الاختبار. راجع إجاباتك واستفد من التصحيح.";
 
-    setText(
-      "#resultSubtitle",
-      "أظهرت مستوى مميزًا في هذا الاختبار. واصل التقدم!"
-    );
+  $("#resultMedal").textContent =
+    percentage >= 90 ? "✦" : percentage >= 70 ? "★" : "◇";
 
-  } else if (percentage >= 75) {
-    setText("#resultHeading", "أداء رائع! أحسنت");
-
-    setText(
-      "#resultSubtitle",
-      "نتيجة جيدة جدًا، واصل المراجعة لتعزيز معرفتك."
-    );
-
-  } else if (percentage >= 50) {
-    setText("#resultHeading", "تقدم جيد، واصل التعلم");
-
-    setText(
-      "#resultSubtitle",
-      "راجع الأسئلة التي أخطأت فيها، وستتمكن من التحسن."
-    );
-
-  } else {
-    setText("#resultHeading", "كل محاولة فرصة للتعلم");
-
-    setText(
-      "#resultSubtitle",
-      "لا تتوقف! راجع الإجابات وحاول مرة أخرى."
-    );
-  }
-
-  /* إنشاء بطاقات تحليل الأداء */
-
-  const insights = [
-    {
-      label: "الوقت المستغرق",
-      value: formatTime(actualElapsed),
-      detail: `من أصل ${formatTime(CONFIG.TEST_DURATION_SECONDS)}`
-    },
-    {
-      label: "النقاط المحققة",
-      value: `${score} / ${total * CONFIG.POINTS_PER_CORRECT}`,
-      detail: "نقطة لكل إجابة صحيحة"
-    },
-    {
-      label: "معدل الإجابة",
-      value: `${total - unansweredAnswers} / ${total}`,
-      detail: "الأسئلة التي تمت الإجابة عنها"
-    }
-  ];
-
-  const insightsContainer = $("#analysisInsights");
-  insightsContainer.replaceChildren();
-
-  insights.forEach((insight) => {
-    const card = document.createElement("div");
-    card.className = "insight-card";
-
-    const value = document.createElement("strong");
-    value.textContent = insight.value;
-
-    const label = document.createElement("span");
-    label.textContent = insight.label;
-
-    const detail = document.createElement("small");
-    detail.textContent = insight.detail;
-
-    card.append(value, label, detail);
-
-    insightsContainer.appendChild(card);
-  });
-
+  renderAnalysis(correctCount, wrongCount, unansweredCount, percentage);
   renderAnswerReview();
 
-  updateProgress(total);
-
-  showScreen("result");
+  $("#quitDialog").classList.add("hidden");
+  showScreen("#resultScreen");
 }
 
-/* ==================================================
-   مراجعة جميع الإجابات
-   ================================================== */
+function renderAnalysis(correct, wrong, unanswered, percentage) {
+  const insights = $("#analysisInsights");
+  insights.innerHTML = "";
+
+  const messages = [
+    `أجبت إجابة صحيحة عن ${correct} من ${state.questions.length} سؤالاً.`,
+    `نسبة نجاحك في هذا الاختبار: ${percentage}%.`,
+    wrong > 0
+      ? `راجع ${wrong} إجابة غير صحيحة لفهم مواضع الخطأ.`
+      : "لم تسجل أي إجابة خاطئة — أحسنت!",
+    unanswered > 0
+      ? `هناك ${unanswered} أسئلة دون إجابة.`
+      : "أجبت عن جميع أسئلة الاختبار."
+  ];
+
+  messages.forEach((message) => {
+    const item = document.createElement("div");
+    item.className = "insight";
+    item.textContent = message;
+    insights.appendChild(item);
+  });
+}
 
 function renderAnswerReview() {
-  const container = $("#answerReview");
+  const review = $("#answerReview");
+  review.innerHTML = "";
 
-  container.replaceChildren();
+  state.questions.forEach((question, index) => {
+    const answer = state.answers[index];
+    const item = document.createElement("article");
 
-  answersLog.forEach((answer, index) => {
-    const article = document.createElement("article");
+    let type = "skipped-review";
+    let status = "دون إجابة";
 
-    let statusClass = "review-unanswered";
-    let statusText = "دون إجابة";
-
-    if (answer.isCorrect) {
-      statusClass = "review-correct";
-      statusText = `صحيحة +${CONFIG.POINTS_PER_CORRECT} نقطة`;
-    } else if (answer.chosen !== null) {
-      statusClass = "review-wrong";
-      statusText = "إجابة خاطئة";
+    if (answer?.correct) {
+      type = "correct-review";
+      status = "إجابة صحيحة";
+    } else if (answer) {
+      type = "wrong-review";
+      status = "إجابة خاطئة";
     }
 
-    article.className = `review-item ${statusClass}`;
+    item.className = `review-item ${type}`;
 
-    const top = document.createElement("div");
-    top.className = "review-item-top";
+    const title = document.createElement("div");
+    title.className = "review-question";
+    title.textContent = `${index + 1}. ${question.q}`;
 
-    const number = document.createElement("span");
-    number.className = "review-number";
-    number.textContent = `السؤال ${index + 1}`;
-
-    const status = document.createElement("span");
-    status.className = "review-status";
-    status.textContent = statusText;
-
-    top.append(number, status);
-
-    const question = document.createElement("h3");
-    question.textContent = answer.question;
+    const statusLine = document.createElement("p");
+    statusLine.className = "review-answer";
+    statusLine.textContent = status;
 
     const yourAnswer = document.createElement("p");
     yourAnswer.className = "review-answer";
@@ -707,117 +917,115 @@ function renderAnswerReview() {
     const yourLabel = document.createElement("strong");
     yourLabel.textContent = "إجابتك: ";
 
-    yourAnswer.append(
-      yourLabel,
-      document.createTextNode(
-        answer.chosen === null
-          ? "لم تختر إجابة"
-          : answer.chosen
-      )
-    );
+    yourAnswer.append(yourLabel, document.createTextNode(
+      answer ? answer.selected : "لم تجب"
+    ));
 
     const correctAnswer = document.createElement("p");
-    correctAnswer.className = "review-correct-answer";
+    correctAnswer.className = "review-answer";
 
     const correctLabel = document.createElement("strong");
     correctLabel.textContent = "الإجابة الصحيحة: ";
 
-    correctAnswer.append(
-      correctLabel,
-      document.createTextNode(answer.correct)
-    );
+    correctAnswer.append(correctLabel, document.createTextNode(question.a));
 
-    article.append(
-      top,
-      question,
-      yourAnswer,
-      correctAnswer
-    );
-
-    container.appendChild(article);
+    item.append(title, statusLine, yourAnswer, correctAnswer);
+    review.appendChild(item);
   });
 }
 
-/* ==================================================
-   إعادة الاختبار والعودة للرئيسية
-   ================================================== */
+/* =========================================================
+   10. التنقل والأزرار
+   ========================================================= */
 
-function returnHome() {
-  clearInterval(timerInterval);
-  timerInterval = null;
+function goToLibrary() {
+  stopTimer();
+  state.finished = true;
+  state.material = null;
 
-  testFinished = true;
-
-  const dialog = $("#quitDialog");
-
-  if (dialog.open) {
-    dialog.close();
+  if (state.student) {
+    updateStudentHeader();
+    showScreen("#libraryScreen");
+  } else {
+    showScreen("#loginScreen");
   }
-
-  showScreen("welcome");
 }
 
-/* ==================================================
-   نافذة تأكيد إنهاء الاختبار
-   ================================================== */
+function retryQuiz() {
+  if (!state.material) return;
+  prepareQuiz();
+}
 
 function openQuitDialog() {
-  if (testFinished) return;
+  if (!state.finished) {
+    $("#quitDialog").classList.remove("hidden");
+  }
+}
 
-  const dialog = $("#quitDialog");
+function closeQuitDialog() {
+  $("#quitDialog").classList.add("hidden");
+}
 
-  if (typeof dialog.showModal === "function") {
-    dialog.showModal();
-  } else {
-    const shouldQuit = window.confirm(
-      "هل تريد إنهاء الاختبار وعرض نتيجتك الحالية؟"
-    );
+/* =========================================================
+   11. تشغيل التطبيق
+   ========================================================= */
 
-    if (shouldQuit) {
-      finishTest(false);
+function bindEvents() {
+  $("#loginForm").addEventListener("submit", loginStudent);
+
+  $("#togglePassword").addEventListener("click", () => {
+    const input = $("#studentPassword");
+    input.type = input.type === "password" ? "text" : "password";
+  });
+
+  $("#logoutButton").addEventListener("click", logout);
+
+  $("#brandHome").addEventListener("click", (event) => {
+    event.preventDefault();
+
+    if (state.student) {
+      goToLibrary();
+    } else {
+      showScreen("#loginScreen");
     }
+  });
+
+  $("#backToLibrary").addEventListener("click", () => {
+    showScreen("#libraryScreen");
+  });
+
+  $("#backToMaterials").addEventListener("click", () => {
+    if (state.section) openSection(state.section.id);
+  });
+
+  $("#startButton").addEventListener("click", prepareQuiz);
+  $("#nextButton").addEventListener("click", nextQuestion);
+
+  $("#quitButton").addEventListener("click", openQuitDialog);
+  $("#cancelQuitButton").addEventListener("click", closeQuitDialog);
+
+  $("#confirmQuitButton").addEventListener("click", () => {
+    finishQuiz("quit");
+  });
+
+  $("#retryButton").addEventListener("click", retryQuiz);
+  $("#homeButton").addEventListener("click", goToLibrary);
+
+  $("#quitDialog").addEventListener("click", (event) => {
+    if (event.target === $("#quitDialog")) closeQuitDialog();
+  });
+}
+
+async function init() {
+  bindEvents();
+  await loadStudents();
+
+  showScreen("#loginScreen");
+
+  // لا نخفي رسالة الخطأ إذا فشل تحميل students.json.
+  if (state.students.length === 0) {
+    console.info("أضف حساب طالب إلى students.json لتجربة تسجيل الدخول.");
   }
 }
 
-function cancelQuitDialog() {
-  const dialog = $("#quitDialog");
-
-  if (dialog.open) {
-    dialog.close();
-  }
-}
-
-function confirmQuit() {
-  cancelQuitDialog();
-  finishTest(false);
-}
-
-/* ==================================================
-   ربط الأزرار
-   ================================================== */
-
-$("#startButton").addEventListener("click", startTest);
-
-$("#nextButton").addEventListener("click", nextQuestion);
-
-$("#retryButton").addEventListener("click", startTest);
-
-$("#homeButton").addEventListener("click", returnHome);
-
-$("#quitButton").addEventListener("click", openQuitDialog);
-
-$("#cancelQuitButton").addEventListener(
-  "click",
-  cancelQuitDialog
-);
-
-$("#confirmQuitButton").addEventListener(
-  "click",
-  confirmQuit
-);
-
-/* ==================================================
-   بدء تشغيل المنصة
-   ================================================== */
-
-loadQuestions();
+document.addEventListener("DOMContentLoaded", init);
