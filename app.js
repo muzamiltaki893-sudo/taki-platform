@@ -35,8 +35,8 @@ const CONFIG = {
       id: 2,
       name: "القسم الثاني",
       subtitle: "التعلّم والتطبيق",
-      questionCount: 15,
-      durationMinutes: 8,
+      questionCount: 20,
+      durationMinutes: 10,
       accent: "#a795ff",
       icon: "◈",
       materials: [
