@@ -6,8 +6,8 @@
    ================================================== */
 
 const CONFIG = {
-  QUESTION_COUNT: 5,
-  TEST_DURATION_SECONDS: 300,
+  QUESTION_COUNT: 40,
+  TEST_DURATION_SECONDS: 1200,
   POINTS_PER_CORRECT: 1,
 
   SHUFFLE_QUESTIONS: true,
