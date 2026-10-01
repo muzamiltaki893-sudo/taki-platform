@@ -8,7 +8,7 @@
   {
     "studentNumber": "1002",
     "name": "ملكة تكي",
-    "specialization": "علوم المختبرات الطبية"
+    "specialization": "علوم المختبرات الطبية",
     "password": "TAKI-MK-7354"
   },
   {
@@ -20,25 +20,25 @@
   {
     "studentNumber": "1004",
     "name": "محمد تكي",
-    "specialization": "الهندسة المدنية" 
+    "specialization": "الهندسة المدنية",
     "password": "TAKI-MH-8246"
   },
   {
     "studentNumber": "1005",
     "name": "مدثر تكي",
-    "specialization": "الاحياء" 
+    "specialization": "الاحياء",
     "password": "TAKI-MD-3579"
   },
   {
     "studentNumber": "1006",
     "name": "مودة تكي",
-    "specialization": "كلية الاداب" 
+    "specialization": "كلية الاداب",
     "password": "TAKI-MW-9415"
   },
   {
     "studentNumber": "1007",
     "name": "سامي الصادق",
-    "specialization": "علوم المختبرات الطبية" 
+    "specialization": "علوم المختبرات الطبية",
     "password": "TAKI-SM-2684"
   }
 ]
