@@ -8,7 +8,8 @@
   {
     "studentNumber": "1002",
     "name": "ملكة تكي",
-    "specialization": "علوم المختبرات الحاسوب    "password": "TAKI-MK-7354"
+    "specialization": "علوم المختبرات الطبية"
+    "password": "TAKI-MK-7354"
   },
   {
     "studentNumber": "1003",
@@ -19,12 +20,13 @@
   {
     "studentNumber": "1004",
     "name": "محمد تكي",
-    "specialization": "الهندسة الحاسوب   "password": "TAKI-MH-8246"
+    "specialization": "الهندسة المدنية" 
+    "password": "TAKI-MH-8246"
   },
   {
     "studentNumber": "1005",
     "name": "مدثر تكي",
-    "specialization": "الحاسوب" 
+    "specialization": "الاحياء" 
     "password": "TAKI-MD-3579"
   },
   {
