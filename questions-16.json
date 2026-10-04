@@ -1,1 +1,227 @@
-
+[
+  {
+    "q": "What are buffers?",
+    "a": "Solutions of a weak acid and its conjugate base, or a weak base and its conjugate acid.",
+    "w": ["Solutions of a strong acid and strong base", "Solutions containing only a strong acid", "Solutions containing only a strong base"]
+  },
+  {
+    "q": "Why do buffers resist changes in pH?",
+    "a": "Because they have acid to neutralize bases and bases to neutralize acids.",
+    "w": ["Because they completely prevent ionization", "Because they contain only strong acids", "Because they eliminate all hydrogen ions"]
+  },
+  {
+    "q": "What happens to a buffer when H+ is added to the solution?",
+    "a": "The buffer accepts the excess hydrogen ions.",
+    "w": ["The buffer produces more OH- only", "The buffer loses all of its acid component", "The buffer completely stops ionization"]
+  },
+  {
+    "q": "What happens when a buffer accepts hydrogen ions from the solution?",
+    "a": "It accepts hydrogen ions when they are in excess.",
+    "w": ["It produces hydrogen ions only", "It removes the acidic component", "It stops all chemical reactions"]
+  },
+  {
+    "q": "What does a buffer do when hydrogen ions have been depleted?",
+    "a": "It donates hydrogen ions.",
+    "w": ["It donates hydroxide ions only", "It removes all acid from the solution", "It stops ionization"]
+  },
+  {
+    "q": "What are the two common ways to produce a buffer?",
+    "a": "A weak acid with its conjugate base, or a weak base with its conjugate acid.",
+    "w": ["A strong acid with a strong base only", "Two strong acids", "Two strong bases"]
+  },
+  {
+    "q": "Which pair is an example of a weak acid and its conjugate base?",
+    "a": "CH3COOH/CH3COO-",
+    "w": ["NH3/NH4+", "HCl/Cl-", "NaOH/Na+"]
+  },
+  {
+    "q": "Which pair is an example of a weak base and its conjugate acid?",
+    "a": "NH3/NH4+",
+    "w": ["CH3COOH/CH3COO-", "HCl/Cl-", "NaOH/OH-"]
+  },
+  {
+    "q": "What two components are required for a buffer?",
+    "a": "An acidic component and a basic component.",
+    "w": ["Two acidic components", "Two basic components", "A strong acid and water"]
+  },
+  {
+    "q": "What are the most important buffers in the body?",
+    "a": "Proteins.",
+    "w": ["Lipids", "Carbohydrates", "Mineral salts"]
+  },
+  {
+    "q": "Where are proteins mainly found as buffers in the body?",
+    "a": "Mainly intracellular.",
+    "w": ["Only extracellularly", "Only in bone", "Only in the stomach"]
+  },
+  {
+    "q": "Which important protein is included among the body's buffers?",
+    "a": "Haemoglobin.",
+    "w": ["Insulin", "Collagen", "Amylase"]
+  },
+  {
+    "q": "Which phosphate buffer is mainly intracellular?",
+    "a": "H2PO4- : HPO42-",
+    "w": ["H2CO3 : HCO3-", "NH3 : NH4+", "CH3COOH : CH3COO-"]
+  },
+  {
+    "q": "Where is H2CO3 described as a buffer?",
+    "a": "In the blood (extracellular).",
+    "w": ["Only intracellularly", "Only in bone", "Only in the stomach"]
+  },
+  {
+    "q": "What is the ionization equation for carbonic acid?",
+    "a": "H2CO3 ⇌ H+ + HCO3-",
+    "w": ["H2CO3 ⇌ OH- + CO3-", "HCO3- ⇌ H2 + CO2", "H2CO3 ⇌ H2O + O2"]
+  },
+  {
+    "q": "What is H2CO3 called?",
+    "a": "Carbonic acid.",
+    "w": ["Hydrochloric acid", "Acetic acid", "Phosphoric acid"]
+  },
+  {
+    "q": "What is HCO3- called?",
+    "a": "Bicarbonate ion.",
+    "w": ["Carbonate ion", "Hydroxide ion", "Acetate ion"]
+  },
+  {
+    "q": "What happens when a base is added to a weak-acid buffer?",
+    "a": "It reacts with protons furnished by ionization of the weak acid.",
+    "w": ["It reacts only with water", "It destroys the conjugate base", "It produces a strong acid"]
+  },
+  {
+    "q": "Where do the protons come from when a base is added to a weak-acid buffer?",
+    "a": "From ionization of the weak acid.",
+    "w": ["From the conjugate base", "From dissolved oxygen", "From the strong base"]
+  },
+  {
+    "q": "What happens when acid is added to an acetate buffer?",
+    "a": "It reacts with the acid anion (acetate) to give unionized acid.",
+    "w": ["It reacts only with water", "It converts acetate into hydroxide", "It produces more acetate ions"]
+  },
+  {
+    "q": "Which ion reacts with added acid in an acetate buffer?",
+    "a": "The acetate ion.",
+    "w": ["Hydroxide ion", "Chloride ion", "Sodium ion"]
+  },
+  {
+    "q": "What is the result of the reaction between acetate and H+?",
+    "a": "Unionized acid.",
+    "w": ["Hydroxide", "Carbon dioxide", "Ammonia"]
+  },
+  {
+    "q": "What is buffer capacity?",
+    "a": "The effectiveness of a buffer.",
+    "w": ["The volume of a buffer", "The concentration of water", "The strength of a strong acid"]
+  },
+  {
+    "q": "What is one factor affecting buffer capacity?",
+    "a": "Buffer concentration of both components.",
+    "w": ["The color of the solution", "The volume of the container", "The presence of oxygen"]
+  },
+  {
+    "q": "How does the ratio of conjugate acid to conjugate base affect buffer capacity?",
+    "a": "Maximum buffering capacity occurs at a ratio of one.",
+    "w": ["Maximum capacity occurs at a ratio of zero", "The ratio has no effect", "Maximum capacity occurs at a ratio of one hundred"]
+  },
+  {
+    "q": "At what pH is maximum buffering capacity achieved?",
+    "a": "pH = pKa.",
+    "w": ["pH = 0", "pH = 14", "pH = 7 for every buffer"]
+  },
+  {
+    "q": "What is the normal pH of plasma and extracellular fluid?",
+    "a": "7.4.",
+    "w": ["6.0", "8.5", "5.5"]
+  },
+  {
+    "q": "What is the normal pH range of plasma and extracellular fluid?",
+    "a": "7.35–7.45.",
+    "w": ["6.5–6.8", "7.0–7.2", "7.8–8.2"]
+  },
+  {
+    "q": "What is the H+ concentration in plasma and extracellular fluid?",
+    "a": "40 nmol/L.",
+    "w": ["4 nmol/L", "400 mmol/L", "40 mol/L"]
+  },
+  {
+    "q": "What can happen when pH falls below 7.0?",
+    "a": "It can have serious consequences.",
+    "w": ["It always improves health", "It has no physiological effect", "It automatically becomes 7.4"]
+  },
+  {
+    "q": "What can happen when pH rises above 7.8?",
+    "a": "It can have serious consequences.",
+    "w": ["It has no physiological effect", "It always improves oxygen transport", "It automatically becomes 7.4"]
+  },
+  {
+    "q": "What mechanisms control the regulation of blood pH?",
+    "a": "Blood buffers, respiratory mechanisms, and renal mechanisms.",
+    "w": ["Only digestion and sweating", "Only the nervous system", "Only blood circulation"]
+  },
+  {
+    "q": "Which mechanism regulates blood pH through buffers present in blood?",
+    "a": "Blood buffers.",
+    "w": ["Bone movement", "Muscle contraction", "Skin pigmentation"]
+  },
+  {
+    "q": "Which mechanism regulates blood pH through respiration?",
+    "a": "Respiratory mechanisms.",
+    "w": ["Digestive mechanisms", "Skeletal mechanisms", "Dermal mechanisms"]
+  },
+  {
+    "q": "Which mechanism regulates blood pH through the kidneys?",
+    "a": "Renal mechanisms.",
+    "w": ["Respiratory mechanisms", "Muscular mechanisms", "Digestive mechanisms"]
+  },
+  {
+    "q": "What is the Henderson-Hasselbalch equation?",
+    "a": "A modification of the equation for the dissociation of a weak acid.",
+    "w": ["An equation for strong acid combustion", "An equation for water evaporation", "An equation for protein synthesis"]
+  },
+  {
+    "q": "What does pKa represent in the Henderson-Hasselbalch equation?",
+    "a": "The equilibrium dissociation constant for an acid.",
+    "w": ["The concentration of hydroxide", "The volume of the solution", "The concentration of oxygen"]
+  },
+  {
+    "q": "What does [base] represent in the Henderson-Hasselbalch equation?",
+    "a": "The molar concentration of the conjugate base.",
+    "w": ["The molar concentration of water", "The concentration of hydrogen ions", "The concentration of the solvent"]
+  },
+  {
+    "q": "What does [acid] represent in the Henderson-Hasselbalch equation?",
+    "a": "The molar concentration of an acidic solution.",
+    "w": ["The concentration of the conjugate base", "The concentration of hydroxide ions", "The concentration of oxygen"]
+  },
+  {
+    "q": "What concentrations are needed to calculate the pH of a solution of an acid?",
+    "a": "The concentration of the acid, HA, and its conjugate base, [A-].",
+    "w": ["Only the concentration of water", "Only the concentration of H+", "Only the concentration of the strong base"]
+  },
+  {
+    "q": "When the concentration of the conjugate base [A-] equals the concentration of the acid [HA], what is the pH?",
+    "a": "pH = pKa.",
+    "w": ["pH = 2pKa", "pH = 7 in all cases", "pH = 0"]
+  },
+  {
+    "q": "Why does pH equal pKa when [A-] equals [HA]?",
+    "a": "Because log[1] = 0.",
+    "w": ["Because log[1] = 1", "Because the acid completely dissociates", "Because the conjugate base disappears"]
+  },
+  {
+    "q": "What is the value of log 1?",
+    "a": "0.",
+    "w": ["1", "-1", "10"]
+  },
+  {
+    "q": "At what point of a weak-acid titration does pH equal pKa?",
+    "a": "At the midpoint of the titration.",
+    "w": ["At the beginning", "At the endpoint only", "Before any acid is added"]
+  },
+  {
+    "q": "What does pKa indicate in relation to acid and conjugate base concentrations?",
+    "a": "It is the pH at which an equivalent distribution of acid and conjugate base exists in solution.",
+    "w": ["The pH at which only acid exists", "The pH at which only conjugate base exists", "The concentration of water"]
+  }
+    ]
