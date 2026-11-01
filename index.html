@@ -1,358 +1,1524 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#07132f">
-  <meta name="description" content="تكي TAKI - مكتبة الاختبارات الذكية">
-  <title>تكي | مكتبة الاختبارات الذكية</title>
-  <link rel="stylesheet" href="./style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    /* شعار مؤسسة تكي الرسمي */
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-    }
+    <meta
+        name="description"
+        content="TAKI Future - منصة تكي للتعلم والبرمجة والتحديات التعليمية."
+    >
 
-    .brand-mark {
-      width: 49px;
-      height: 49px;
-      flex: 0 0 49px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 5px;
-      overflow: hidden;
-      box-sizing: border-box;
+    <meta name="theme-color" content="#090817">
 
-      background: rgba(255, 255, 255, 0.96);
-      border: 1px solid rgba(132, 173, 235, 0.25);
-      border-radius: 14px;
+    <title>تكي | منصة المستقبل</title>
 
-      box-shadow: 0 4px 18px rgba(37, 135, 255, 0.16);
-    }
+    <!-- الخطوط -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    .brand-logo {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      object-position: center;
-    }
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    >
 
-    .brand-info {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
+    <!-- ملف التنسيق -->
+    <link rel="stylesheet" href="css/style.css">
 
-    .brand-info strong {
-      display: block;
-    }
-
-    .brand-info small {
-      display: block;
-    }
-
-    @media (max-width: 760px) {
-      .brand {
-        gap: 9px;
-      }
-
-      .brand-mark {
-        width: 43px;
-        height: 43px;
-        flex-basis: 43px;
-        padding: 4px;
-        border-radius: 12px;
-      }
-    }
-  </style>
-
-  <script src="./app.js" defer></script>
+    <!-- مكتبة Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
+
 <body>
-  <div class="ambient ambient-one"></div>
-  <div class="ambient ambient-two"></div>
 
-  <header class="topbar">
-    <a href="#" class="brand" id="brandHome" aria-label="الصفحة الرئيسية">
-      <div class="brand-mark">
-        <img
-          src="./assets/logo.png"
-          alt="شعار مؤسسة تكي"
-          class="brand-logo"
-          width="49"
-          height="49"
+    <!-- ==================================================
+         خلفية المنصة
+    =================================================== -->
+
+    <div class="background-effects" aria-hidden="true">
+        <div class="glow glow-one"></div>
+        <div class="glow glow-two"></div>
+        <div class="background-grid"></div>
+    </div>
+
+
+    <!-- ==================================================
+         شاشة تسجيل الدخول
+    =================================================== -->
+
+    <section id="loginScreen" class="login-screen">
+
+        <div class="login-layout">
+
+            <!-- الجانب التعريفي -->
+
+            <div class="login-intro">
+
+                <div class="brand brand-large">
+
+                    <div class="brand-logo">
+                        <img
+                            src="assets/logo.png"
+                            alt="شعار تكي"
+                            onerror="this.style.display='none'"
+                        >
+                    </div>
+
+                    <div class="brand-text">
+                        <span class="brand-name">TAKI</span>
+                        <span class="brand-subtitle">FUTURE PLATFORM</span>
+                    </div>
+
+                </div>
+
+                <div class="intro-content">
+
+                    <span class="eyebrow">
+                        <span class="status-dot"></span>
+                        مستقبل التعلم يبدأ هنا
+                    </span>
+
+                    <h1>
+                        تعلّم اليوم،
+                        <span class="gradient-text">وابنِ المستقبل.</span>
+                    </h1>
+
+                    <p>
+                        مساحة تعليمية تجمع المعرفة والتطبيق والتحديات،
+                        لتساعدك على تطوير مهاراتك خطوة بخطوة.
+                    </p>
+
+                    <div class="intro-features">
+
+                        <div class="intro-feature">
+                            <span class="feature-icon">✦</span>
+                            <span>تعلم بطريقة تفاعلية</span>
+                        </div>
+
+                        <div class="intro-feature">
+                            <span class="feature-icon">⌘</span>
+                            <span>طوّر مهاراتك البرمجية</span>
+                        </div>
+
+                        <div class="intro-feature">
+                            <span class="feature-icon">↗</span>
+                            <span>تقدم ونافس وتحدى نفسك</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="intro-footer">
+                    <span>TAKI FUTURE</span>
+                    <span>LEARN · BUILD · GROW</span>
+                </div>
+
+            </div>
+
+
+            <!-- بطاقة تسجيل الدخول -->
+
+            <div class="login-card">
+
+                <div class="login-card-top">
+
+                    <div class="login-mini-logo">
+                        <img
+                            src="assets/logo.png"
+                            alt="شعار تكي"
+                            onerror="this.style.display='none'"
+                        >
+                    </div>
+
+                    <span class="secure-label">
+                        <span class="status-dot"></span>
+                        بوابة الطلاب
+                    </span>
+
+                </div>
+
+                <div class="login-heading">
+
+                    <span class="section-kicker">
+                        أهلاً بعودتك
+                    </span>
+
+                    <h2>تسجيل الدخول</h2>
+
+                    <p>
+                        أدخل بيانات حسابك للوصول إلى مساحة التعلم الخاصة بك.
+                    </p>
+
+                </div>
+
+
+                <form id="loginForm" class="login-form">
+
+                    <div class="form-group">
+
+                        <label for="studentNumber">
+                            رقم الطالب
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon" aria-hidden="true">
+                                ▤
+                            </span>
+
+                            <input
+                                type="text"
+                                id="studentNumber"
+                                name="student_number"
+                                placeholder="أدخل رقم الطالب"
+                                autocomplete="username"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="studentPassword">
+                            كلمة المرور
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon" aria-hidden="true">
+                                ◈
+                            </span>
+
+                            <input
+                                type="password"
+                                id="studentPassword"
+                                name="password"
+                                placeholder="أدخل كلمة المرور"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                id="togglePassword"
+                                aria-label="إظهار كلمة المرور"
+                            >
+                                ◉
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="loginMessage"
+                        class="message-box"
+                        role="alert"
+                        hidden
+                    ></div>
+
+
+                    <button
+                        type="submit"
+                        id="loginButton"
+                        class="primary-button login-submit"
+                    >
+                        <span>دخول إلى المنصة</span>
+                        <span class="button-arrow">←</span>
+                    </button>
+
+                </form>
+
+
+                <div class="login-divider">
+                    <span></span>
+                    <small>TAKI FUTURE EXPERIENCE</small>
+                    <span></span>
+                </div>
+
+
+                <div class="login-support">
+
+                    <span class="support-icon">✉</span>
+
+                    <div>
+                        <strong>هل تحتاج إلى مساعدة؟</strong>
+
+                        <p>
+                            تواصل مع فريق الدعم
+                        </p>
+                    </div>
+
+                    <a
+                        href="mailto:muzamiltaki893@gmail.com"
+                        class="support-link"
+                        aria-label="التواصل مع دعم تكي"
+                    >
+                        تواصل
+                    </a>
+
+                </div>
+
+
+                <div class="login-bottom">
+                    منصة تكي التعليمية
+                    <span>•</span>
+                    بوابتك نحو المعرفة
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==================================================
+         التطبيق بعد تسجيل الدخول
+    =================================================== -->
+
+    <div id="appShell" class="app-shell" hidden>
+
+
+        <!-- الشريط الجانبي -->
+
+        <aside class="sidebar" id="sidebar">
+
+            <div class="sidebar-brand">
+
+                <div class="sidebar-logo">
+                    <img
+                        src="assets/logo.png"
+                        alt="تكي"
+                        onerror="this.style.display='none'"
+                    >
+                </div>
+
+                <div class="sidebar-brand-text">
+                    <strong>TAKI</strong>
+                    <span>FUTURE</span>
+                </div>
+
+            </div>
+
+
+            <div class="sidebar-section-label">
+                مساحة التعلم
+            </div>
+
+
+            <nav class="sidebar-nav" aria-label="القائمة الرئيسية">
+
+                <button
+                    type="button"
+                    class="nav-item active"
+                    data-view="home"
+                >
+                    <span class="nav-icon">⌂</span>
+                    <span>الرئيسية</span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="nav-item"
+                    data-view="library"
+                >
+                    <span class="nav-icon">▤</span>
+                    <span>المكتبة التعليمية</span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="nav-item"
+                    data-view="ranking"
+                >
+                    <span class="nav-icon">♛</span>
+                    <span>ترتيب الطلاب</span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="nav-item"
+                    data-view="challenges"
+                >
+                    <span class="nav-icon">⚡</span>
+                    <span>التحديات</span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="nav-item"
+                    data-view="ai"
+                >
+                    <span class="nav-icon">✧</span>
+                    <span>المساعد الذكي</span>
+                    <span class="nav-badge">AI</span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="nav-item"
+                    data-view="notifications"
+                >
+                    <span class="nav-icon">♧</span>
+                    <span>الإشعارات</span>
+                </button>
+
+            </nav>
+
+
+            <div class="sidebar-section-label">
+                حسابك
+            </div>
+
+
+            <nav class="sidebar-nav">
+
+                <button
+                    type="button"
+                    class="nav-item"
+                    data-view="profile"
+                >
+                    <span class="nav-icon">◎</span>
+                    <span>ملفي الشخصي</span>
+                </button>
+
+            </nav>
+
+
+            <div class="sidebar-spacer"></div>
+
+
+            <div class="sidebar-promo">
+
+                <div class="promo-orb">✦</div>
+
+                <strong>رحلتك مستمرة</strong>
+
+                <p>
+                    كل مفهوم تتعلمه يقربك من هدفك.
+                </p>
+
+                <button
+                    type="button"
+                    data-view="library"
+                    class="promo-button"
+                >
+                    استكشف المكتبة ←
+                </button>
+
+            </div>
+
+
+            <div class="sidebar-user">
+
+                <button
+                    type="button"
+                    class="user-profile-button"
+                    data-view="profile"
+                >
+
+                    <div class="avatar avatar-small" id="sideAvatar">
+                        ت
+                    </div>
+
+                    <div class="sidebar-user-info">
+                        <strong id="sideName">الطالب</strong>
+                        <span id="sideLevel">المستوى 1</span>
+                    </div>
+
+                    <span class="user-menu-icon">⋯</span>
+
+                </button>
+
+                <button
+                    type="button"
+                    id="logoutButton"
+                    class="logout-button"
+                >
+                    <span>↪</span>
+                    تسجيل الخروج
+                </button>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- منطقة المحتوى الرئيسية -->
+
+        <main class="main-content">
+
+
+            <!-- الشريط العلوي -->
+
+            <header class="topbar">
+
+                <div class="topbar-title">
+
+                    <button
+                        type="button"
+                        id="mobileMenuButton"
+                        class="mobile-menu-button"
+                        aria-label="فتح القائمة"
+                    >
+                        ☰
+                    </button>
+
+                    <div>
+                        <span class="topbar-overline">
+                            TAKI FUTURE PLATFORM
+                        </span>
+
+                        <h1>مساحة التعلم</h1>
+                    </div>
+
+                </div>
+
+
+                <div class="topbar-actions">
+
+                    <button
+                        type="button"
+                        class="topbar-icon-button"
+                        data-view="notifications"
+                        aria-label="الإشعارات"
+                    >
+                        ♧
+                    </button>
+
+                    <button
+                        type="button"
+                        class="topbar-profile"
+                        data-view="profile"
+                        aria-label="الملف الشخصي"
+                    >
+                        <div class="avatar avatar-top" id="topAvatar">
+                            ت
+                        </div>
+                    </button>
+
+                </div>
+
+            </header>
+
+
+
+            <!-- ==================================================
+                 الصفحة الرئيسية
+            =================================================== -->
+
+            <section
+                id="view-home"
+                class="app-view"
+            >
+
+                <div class="welcome-banner">
+
+                    <div class="welcome-banner-content">
+
+                        <span class="banner-kicker">
+                            YOUR FUTURE STARTS HERE
+                        </span>
+
+                        <h2>
+                            مرحبًا بك في
+                            <span class="gradient-text">عالم تكي</span>
+                        </h2>
+
+                        <p>
+                            اكتشف مهارات جديدة، وابدأ التعلم،
+                            وحوّل أفكارك إلى مشاريع حقيقية.
+                        </p>
+
+                        <div class="banner-actions">
+
+                            <button
+                                type="button"
+                                class="primary-button"
+                                data-view="library"
+                            >
+                                استكشف المكتبة
+                                <span>←</span>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="secondary-button"
+                                id="startChallenge"
+                            >
+                                <span>⚡</span>
+                                استكشف التحديات
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="welcome-visual" aria-hidden="true">
+
+                        <div class="visual-orbit orbit-one"></div>
+                        <div class="visual-orbit orbit-two"></div>
+                        <div class="visual-orbit orbit-three"></div>
+
+                        <div class="visual-core">
+                            <span>ت</span>
+                        </div>
+
+                        <div class="floating-code code-one">
+                            &lt;/&gt;
+                        </div>
+
+                        <div class="floating-code code-two">
+                            { }
+                        </div>
+
+                        <div class="floating-code code-three">
+                            01
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- بطاقة الإعلان -->
+
+                <article class="announcement-card">
+
+                    <div class="announcement-icon">
+                        ✦
+                    </div>
+
+                    <div class="announcement-content">
+
+                        <span class="section-kicker">
+                            إعلان المنصة
+                        </span>
+
+                        <h3>
+                            <span id="announcementTitle">
+                                أهلًا بك في تكي
+                            </span>
+                        </h3>
+
+                        <p id="announcementBody">
+                            ابدأ رحلتك التعليمية باستكشاف المكتبة.
+                        </p>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        class="announcement-action"
+                        data-view="library"
+                    >
+                        اكتشف المزيد ←
+                    </button>
+
+                </article>
+
+
+
+                <!-- إحصائيات مختصرة -->
+
+                <div class="section-heading">
+
+                    <div>
+                        <span class="section-kicker">YOUR JOURNEY</span>
+                        <h2>رحلتك التعليمية</h2>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="text-button"
+                        data-view="profile"
+                    >
+                        تفاصيل حسابي ←
+                    </button>
+
+                </div>
+
+
+                <div class="dashboard-stats">
+
+                    <article class="dashboard-stat">
+                        <div class="stat-icon purple-icon">✦</div>
+                        <span>نقاطك</span>
+                        <strong id="homePoints">—</strong>
+                        <small>حسب قاعدة البيانات</small>
+                    </article>
+
+                    <article class="dashboard-stat">
+                        <div class="stat-icon blue-icon">▤</div>
+                        <span>الاختبارات</span>
+                        <strong id="homeTests">—</strong>
+                        <small>الاختبارات المسجلة</small>
+                    </article>
+
+                    <article class="dashboard-stat">
+                        <div class="stat-icon green-icon">✓</div>
+                        <span>الإجابات الصحيحة</span>
+                        <strong id="homeCorrect">—</strong>
+                        <small>حسب قاعدة البيانات</small>
+                    </article>
+
+                    <article class="dashboard-stat">
+                        <div class="stat-icon gold-icon">♛</div>
+                        <span>مستواك</span>
+                        <strong id="homeLevel">1</strong>
+                        <small>استمر في التقدم</small>
+                    </article>
+
+                </div>
+
+
+
+                <!-- الدورات -->
+
+                <div class="section-heading">
+
+                    <div>
+                        <span class="section-kicker">LEARN SOMETHING NEW</span>
+                        <h2>ابدأ التعلم</h2>
+                        <p>مسارات تعليمية لتنمية مهاراتك.</p>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="text-button"
+                        data-view="library"
+                    >
+                        جميع الدورات ←
+                    </button>
+
+                </div>
+
+
+                <div id="homeCourses" class="courses-grid">
+                    <div class="loading-card">جارٍ تحميل الدورات...</div>
+                </div>
+
+
+
+                <!-- المنشورات -->
+
+                <div class="section-heading">
+
+                    <div>
+                        <span class="section-kicker">LATEST UPDATES</span>
+                        <h2>آخر المستجدات</h2>
+                    </div>
+
+                </div>
+
+
+                <div id="homePosts" class="posts-grid">
+                    <div class="loading-card">جارٍ تحميل المنشورات...</div>
+                </div>
+
+            </section>
+
+
+
+            <!-- ==================================================
+                 المكتبة التعليمية
+            =================================================== -->
+
+            <section
+                id="view-library"
+                class="app-view"
+                hidden
+            >
+
+                <div class="page-heading">
+
+                    <span class="section-kicker">
+                        KNOWLEDGE CENTER
+                    </span>
+
+                    <h2>المكتبة التعليمية</h2>
+
+                    <p>
+                        اختر مسارك التعليمي، واستكشف المواد والدورات المتاحة.
+                    </p>
+
+                </div>
+
+
+                <div class="library-toolbar">
+
+                    <div class="library-tabs">
+
+                        <button
+                            type="button"
+                            class="library-tab active"
+                            data-library-tab="courses"
+                        >
+                            <span>▤</span>
+                            الدورات
+                        </button>
+
+                        <button
+                            type="button"
+                            class="library-tab"
+                            data-library-tab="subjects"
+                        >
+                            <span>◈</span>
+                            المواد والاختبارات
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div id="coursesPanel" class="library-panel">
+
+                    <div class="section-heading compact-heading">
+
+                        <div>
+                            <h3>الدورات المتاحة</h3>
+                            <p>اختر دورة لعرض محتواها.</p>
+                        </div>
+
+                    </div>
+
+                    <div id="coursesGrid" class="courses-grid">
+                        <div class="loading-card">جارٍ تحميل الدورات...</div>
+                    </div>
+
+                </div>
+
+
+
+                <div id="subjectsPanel" class="library-panel" hidden>
+
+                    <div class="section-heading compact-heading">
+
+                        <div>
+                            <h3>المواد التعليمية</h3>
+                            <p>اختبر فهمك وراجع ما تعلمته.</p>
+                        </div>
+
+                    </div>
+
+                    <div id="subjectsGrid" class="subjects-grid">
+                        <div class="loading-card">جارٍ تحميل المواد...</div>
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="contentPanel"
+                    class="content-panel"
+                ></div>
+
+            </section>
+
+
+
+            <!-- ==================================================
+                 الاختبارات
+            =================================================== -->
+
+            <section
+                id="view-quiz"
+                class="app-view"
+                hidden
+            >
+
+                <div class="page-heading">
+
+                    <span class="section-kicker">
+                        KNOWLEDGE CHECK
+                    </span>
+
+                    <h2>الاختبار التعليمي</h2>
+
+                    <p>
+                        اقرأ السؤال بعناية، ثم اختر الإجابة المناسبة.
+                    </p>
+
+                </div>
+
+
+                <div class="quiz-topbar">
+
+                    <div class="quiz-status">
+                        <span class="status-dot"></span>
+                        اختبار جارٍ
+                    </div>
+
+                    <div class="quiz-timer-wrapper">
+                        <span>الوقت المتبقي</span>
+                        <strong id="quizTimer">10:00</strong>
+                    </div>
+
+                </div>
+
+
+                <div id="quizMount" class="quiz-mount">
+
+                    <div class="empty-state">
+                        <div class="empty-state-icon">✦</div>
+                        <h3>اختر مادة لبدء الاختبار</h3>
+                        <p>يمكنك بدء اختبار من قسم المكتبة التعليمية.</p>
+
+                        <button
+                            type="button"
+                            class="primary-button"
+                            data-view="library"
+                        >
+                            الذهاب إلى المكتبة
+                        </button>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ==================================================
+                 ترتيب الطلاب
+            =================================================== -->
+
+            <section
+                id="view-ranking"
+                class="app-view"
+                hidden
+            >
+
+                <div class="page-heading">
+
+                    <span class="section-kicker">
+                        STUDENT LEADERBOARD
+                    </span>
+
+                    <h2>ترتيب الطلاب</h2>
+
+                    <p>
+                        تابع ترتيب الطلاب وفق النقاط المسجلة في قاعدة البيانات.
+                    </p>
+
+                </div>
+
+
+                <div class="ranking-hero">
+
+                    <div class="ranking-hero-icon">♛</div>
+
+                    <div>
+                        <span class="section-kicker">KEEP MOVING FORWARD</span>
+                        <h3>التقدم يصنع الفرق</h3>
+                        <p>تعلم باستمرار، وراجع نتائجك، وطوّر مهاراتك.</p>
+                    </div>
+
+                    <button
+                        type="button"
+                        id="refreshRanking"
+                        class="secondary-button"
+                    >
+                        ↻ تحديث الترتيب
+                    </button>
+
+                </div>
+
+
+                <div class="ranking-card">
+
+                    <div class="ranking-card-heading">
+                        <div>
+                            <h3>أفضل الطلاب</h3>
+                            <p>الترتيب حسب النقاط.</p>
+                        </div>
+
+                        <span class="ranking-limit">
+                            TOP 20
+                        </span>
+                    </div>
+
+                    <div id="rankingTable" class="ranking-table-container">
+                        <div class="loading-card">جارٍ تحميل الترتيب...</div>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ==================================================
+                 الملف الشخصي
+            =================================================== -->
+
+            <section
+                id="view-profile"
+                class="app-view"
+                hidden
+            >
+
+                <div class="page-heading">
+
+                    <span class="section-kicker">
+                        YOUR PERSONAL SPACE
+                    </span>
+
+                    <h2>ملفي الشخصي</h2>
+
+                    <p>
+                        راجع بياناتك وتقدمك وسجل اختباراتك على هذا الجهاز.
+                    </p>
+
+                </div>
+
+
+                <div id="profileCard" class="profile-card">
+                    <div class="loading-card">جارٍ تحميل بيانات الحساب...</div>
+                </div>
+
+
+                <div class="section-heading">
+
+                    <div>
+                        <span class="section-kicker">YOUR STATISTICS</span>
+                        <h3>إحصائياتك</h3>
+                    </div>
+
+                </div>
+
+
+                <div id="profileStats" class="profile-stats-grid"></div>
+
+
+                <div class="section-heading">
+
+                    <div>
+                        <span class="section-kicker">RECENT ACTIVITY</span>
+                        <h3>سجل الاختبارات المحلي</h3>
+                        <p>
+                            هذا السجل محفوظ على الجهاز الحالي، وليس سجلًا رسميًا على الخادم.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div id="localHistory" class="history-list">
+                    <div class="loading-card">جارٍ تحميل السجل...</div>
+                </div>
+
+            </section>
+
+
+
+            <!-- ==================================================
+                 التحديات
+            =================================================== -->
+
+            <section
+                id="view-challenges"
+                class="app-view"
+                hidden
+            >
+
+                <div class="page-heading">
+
+                    <span class="section-kicker">
+                        THINK · BUILD · SOLVE
+                    </span>
+
+                    <h2>التحديات التعليمية</h2>
+
+                    <p>
+                        أنشئ فكرة تحدٍّ واحفظها في هذه النسخة من المنصة.
+                    </p>
+
+                </div>
+
+
+                <div class="challenge-hero">
+
+                    <div class="challenge-hero-symbol">⚡</div>
+
+                    <div>
+                        <h3>كل تحدٍّ فرصة للتعلم</h3>
+                        <p>
+                            ابدأ بفكرة صغيرة، وحولها إلى تجربة عملية.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="challenge-layout">
+
+
+                    <!-- إنشاء تحدٍّ -->
+
+                    <form
+                        id="createChallenge"
+                        class="panel-card challenge-form"
+                    >
+
+                        <div class="panel-heading">
+                            <span class="panel-icon">＋</span>
+
+                            <div>
+                                <h3>إنشاء تحدٍّ</h3>
+                                <p>أضف فكرة جديدة إلى قائمتك.</p>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="challengeTitle">
+                                عنوان التحدي
+                            </label>
+
+                            <input
+                                type="text"
+                                id="challengeTitle"
+                                name="title"
+                                placeholder="مثال: بناء آلة حاسبة"
+                                maxlength="120"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="challengeDescription">
+                                وصف التحدي
+                            </label>
+
+                            <textarea
+                                id="challengeDescription"
+                                name="description"
+                                rows="5"
+                                maxlength="2000"
+                                placeholder="اشرح فكرة التحدي..."
+                            ></textarea>
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="primary-button full-width"
+                        >
+                            حفظ التحدي
+                            <span>←</span>
+                        </button>
+
+
+                        <p class="form-note">
+                            تُحفظ التحديات محليًا في هذه النسخة، ولا تظهر للطلاب الآخرين.
+                        </p>
+
+                    </form>
+
+
+
+                    <!-- قائمة التحديات -->
+
+                    <div class="panel-card challenge-list-panel">
+
+                        <div class="panel-heading">
+
+                            <span class="panel-icon">⚡</span>
+
+                            <div>
+                                <h3>قائمة التحديات</h3>
+                                <p>الأفكار التي حفظتها.</p>
+                            </div>
+
+                        </div>
+
+                        <div id="challengeList" class="challenge-list">
+                            <div class="empty-state">
+                                <div class="empty-state-icon">⚡</div>
+                                <h3>لا توجد تحديات بعد</h3>
+                                <p>أنشئ أول تحدٍّ من النموذج المجاور.</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ==================================================
+                 المساعد الذكي
+            =================================================== -->
+
+            <section
+                id="view-ai"
+                class="app-view"
+                hidden
+            >
+
+                <div class="page-heading">
+
+                    <span class="section-kicker">
+                        INTELLIGENT LEARNING ASSISTANT
+                    </span>
+
+                    <h2>المساعد الذكي</h2>
+
+                    <p>
+                        اطرح سؤالًا، واطلب شرحًا أو أمثلة أو أسئلة تدريبية.
+                    </p>
+
+                </div>
+
+
+                <div class="ai-hero">
+
+                    <div class="ai-visual">
+                        <div class="ai-orbit ai-orbit-one"></div>
+                        <div class="ai-orbit ai-orbit-two"></div>
+                        <div class="ai-core">✧</div>
+                    </div>
+
+                    <div class="ai-hero-content">
+
+                        <span class="ai-label">
+                            TAKI AI
+                        </span>
+
+                        <h3>
+                            مساعدك في رحلة المعرفة
+                        </h3>
+
+                        <p>
+                            اطلب توضيح مفهوم، أو مثالًا برمجيًا،
+                            أو مجموعة أسئلة لتختبر فهمك.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="ai-layout">
+
+
+                    <!-- نموذج السؤال -->
+
+                    <form id="aiForm" class="panel-card ai-form">
+
+                        <div class="panel-heading">
+
+                            <span class="panel-icon">✧</span>
+
+                            <div>
+                                <h3>ما الذي تريد معرفته؟</h3>
+                                <p>اكتب سؤالك بوضوح.</p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="aiQuestion">
+                                سؤالك
+                            </label>
+
+                            <textarea
+                                id="aiQuestion"
+                                name="question"
+                                rows="7"
+                                maxlength="8000"
+                                placeholder="اشرح لي مفهوم الحلقات في Python مع أمثلة..."
+                                required
+                            ></textarea>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="aiCount">
+                                عدد الأسئلة التدريبية عند طلبها
+                            </label>
+
+                            <select id="aiCount" name="count">
+
+                                <option value="3">3 أسئلة</option>
+                                <option value="5" selected>5 أسئلة</option>
+                                <option value="10">10 أسئلة</option>
+                                <option value="15">15 سؤالًا</option>
+                                <option value="20">20 سؤالًا</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div
+                            id="aiMessage"
+                            class="message-box"
+                            role="alert"
+                            hidden
+                        ></div>
+
+
+                        <div class="ai-form-actions">
+
+                            <button
+                                type="submit"
+                                id="askAI"
+                                class="primary-button"
+                            >
+                                <span>اسأل المساعد</span>
+                                <span>✧</span>
+                            </button>
+
+                            <button
+                                type="button"
+                                id="newAI"
+                                class="secondary-button"
+                            >
+                                مسح السؤال
+                            </button>
+
+                        </div>
+
+                    </form>
+
+
+
+                    <!-- الإجابة -->
+
+                    <div class="panel-card ai-answer-card">
+
+                        <div class="panel-heading">
+
+                            <span class="panel-icon">✦</span>
+
+                            <div>
+                                <h3>الإجابة</h3>
+                                <p>ستظهر إجابة المساعد هنا.</p>
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            id="aiAnswer"
+                            class="ai-answer"
+                            aria-live="polite"
+                        >
+                            <div class="empty-state">
+                                <div class="empty-state-icon">✧</div>
+                                <h3>مساحة المعرفة</h3>
+                                <p>
+                                    اكتب سؤالك ثم اضغط على زر اسأل المساعد.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ==================================================
+                 الإشعارات
+            =================================================== -->
+
+            <section
+                id="view-notifications"
+                class="app-view"
+                hidden
+            >
+
+                <div class="page-heading">
+
+                    <span class="section-kicker">
+                        STAY UPDATED
+                    </span>
+
+                    <h2>الإشعارات</h2>
+
+                    <p>
+                        تابع الإعلانات والتنبيهات التي توفرها المنصة.
+                    </p>
+
+                </div>
+
+
+                <div class="notifications-hero">
+
+                    <div class="notification-hero-icon">♧</div>
+
+                    <div>
+                        <h3>ابقَ على اطلاع</h3>
+                        <p>كل جديد في مساحة التعلم الخاصة بك.</p>
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="notificationsList"
+                    class="notifications-list"
+                >
+                    <div class="loading-card">جارٍ تحميل الإشعارات...</div>
+                </div>
+
+            </section>
+
+
+
+            <!-- تذييل المحتوى -->
+
+            <footer class="app-footer">
+
+                <div class="footer-brand">
+                    <strong>TAKI FUTURE</strong>
+                    <span>منصة تكي التعليمية</span>
+                </div>
+
+                <div class="footer-links">
+
+                    <a href="mailto:muzamiltaki893@gmail.com">
+                        الدعم الفني
+                    </a>
+
+                    <span>•</span>
+
+                    <span>التعلم المستمر يصنع المستقبل</span>
+
+                </div>
+
+                <div class="footer-version">
+                    الإصدار 1.0.0
+                </div>
+
+            </footer>
+
+
+        </main>
+
+    </div>
+
+
+
+    <!-- ==================================================
+         النافذة المنبثقة العامة
+    =================================================== -->
+
+    <div
+        id="modalBackdrop"
+        class="modal-backdrop"
+        hidden
+    >
+
+        <section
+            class="modal-card"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modalTitle"
         >
-      </div>
 
-      <div class="brand-info">
-        <strong>تكي <span>TAKI</span></strong>
-        <small>مكتبة الاختبارات الذكية</small>
-      </div>
-    </a>
+            <div class="modal-header">
 
-    <div id="headerStudent" class="student-chip hidden">
-      <div class="avatar" id="studentAvatar">ط</div>
-      <div class="student-chip-info">
-        <strong id="headerStudentName">الطالب</strong>
-        <small id="headerStudentSpecialization">التخصص</small>
-      </div>
-      <button id="logoutButton" class="icon-button" type="button"
-              title="تسجيل الخروج" aria-label="تسجيل الخروج">↪</button>
-    </div>
-  </header>
+                <h2 id="modalTitle">
+                    تفاصيل
+                </h2>
 
-  <main class="container">
-    <!-- تسجيل الدخول -->
-    <section id="loginScreen" class="screen login-layout">
-      <div class="login-intro">
-        <div class="eyebrow"><span class="status-dot"></span> رحلتك التعليمية تبدأ هنا</div>
-        <h1>مع كل سؤال،<br><span class="gradient-text">تقترب من التميّز.</span></h1>
-        <p>
-          مكتبتك التعليمية للاختبارات الذكية. اختر مادتك،
-          اختبر معرفتك، وتابع تقدمك خطوة بخطوة.
-        </p>
+                <button
+                    type="button"
+                    id="closeModal"
+                    class="modal-close"
+                    aria-label="إغلاق النافذة"
+                >
+                    ×
+                </button>
 
-        <div class="feature-list">
-          <div class="feature-item">
-            <span class="feature-icon">✦</span>
-            <div><strong>اختبارات متنوعة</strong><small>مواد وأقسام متعددة</small></div>
-          </div>
-          <div class="feature-item">
-            <span class="feature-icon">◷</span>
-            <div><strong>تدريب منظم</strong><small>مؤقت ونتائج فورية</small></div>
-          </div>
-          <div class="feature-item">
-            <span class="feature-icon">↗</span>
-            <div><strong>تابع تقدمك</strong><small>نقاطك ونتائجك</small></div>
-          </div>
-        </div>
-      </div>
+            </div>
 
-      <div class="panel login-panel">
-        <div class="panel-icon">⇥</div>
-        <h2>مرحباً بعودتك</h2>
-        <p class="muted">سجّل الدخول إلى حسابك للمتابعة</p>
+            <div id="modalContent" class="modal-content"></div>
 
-        <form id="loginForm">
-          <label for="studentNumber">رقم الطالب</label>
-          <div class="input-wrap">
-            <span>▤</span>
-            <input id="studentNumber" name="studentNumber"
-                   type="text" autocomplete="username"
-                   placeholder="أدخل رقم الطالب" required>
-          </div>
+        </section>
 
-          <label for="studentPassword">كلمة المرور</label>
-          <div class="input-wrap">
-            <span>⌑</span>
-            <input id="studentPassword" name="password"
-                   type="password" autocomplete="current-password"
-                   placeholder="أدخل كلمة المرور" required>
-            <button type="button" id="togglePassword"
-                    class="password-toggle" aria-label="إظهار كلمة المرور">◉</button>
-          </div>
-
-          <p id="loginMessage" class="message hidden" role="alert"></p>
-          <button type="submit" class="primary-button full-button">
-            <span>دخول إلى مكتبتي</span><span>←</span>
-          </button>
-        </form>
-        <div class="login-foot">TAKI <span>•</span> تعلّم بثقة، وتقدّم باستمرار</div>
-      </div>
-    </section>
-
-    <!-- المكتبة الرئيسية -->
-    <section id="libraryScreen" class="screen hidden">
-      <div class="welcome-banner">
-        <div class="welcome-copy">
-          <div class="eyebrow"><span class="status-dot"></span> مساحتك التعليمية</div>
-          <h1>أهلاً بك، <span id="welcomeName">طالبنا</span> 👋</h1>
-          <p>اختر القسم الذي تريد الدراسة منه، وابدأ رحلتك نحو إنجاز جديد.</p>
-        </div>
-        <div class="welcome-art" aria-hidden="true">
-          <div class="art-orbit orbit-one"></div>
-          <div class="art-orbit orbit-two"></div>
-          <div class="art-book">▤</div>
-          <div class="art-star star-one">✦</div>
-          <div class="art-star star-two">✧</div>
-        </div>
-      </div>
-
-      <div class="stats-grid">
-        <div class="stat-card">
-          <span class="stat-icon blue">▤</span>
-          <div><small>إجمالي المواد</small><strong id="totalSubjects">20</strong></div>
-        </div>
-        <div class="stat-card">
-          <span class="stat-icon gold">✦</span>
-          <div><small>نقاطك</small><strong id="studentPoints">0</strong></div>
-        </div>
-        <div class="stat-card">
-          <span class="stat-icon green">✓</span>
-          <div><small>اختبارات مكتملة</small><strong id="completedTests">0</strong></div>
-        </div>
-      </div>
-
-      <div class="section-heading">
-        <div>
-          <span class="eyebrow">استكشف محتواك</span>
-          <h2>مكتبة الاختبارات</h2>
-          <p class="muted">ستة أقسام، وعشرون مادة في انتظارك.</p>
-        </div>
-        <span class="heading-decoration">✧</span>
-      </div>
-
-      <div id="sectionsGrid" class="sections-grid"></div>
-    </section>
-
-    <!-- المواد داخل القسم -->
-    <section id="materialsScreen" class="screen hidden">
-      <button class="back-button" id="backToLibrary" type="button">→ العودة إلى المكتبة</button>
-
-      <div class="page-heading">
-        <div class="section-emblem" id="materialEmblem">01</div>
-        <div>
-          <span class="eyebrow" id="materialEyebrow">القسم الأول</span>
-          <h1 id="materialsTitle">مواد القسم</h1>
-          <p class="muted" id="materialsDescription">اختر المادة التي ترغب في اختبار نفسك فيها.</p>
-        </div>
-      </div>
-
-      <div id="materialsGrid" class="materials-grid"></div>
-    </section>
-
-    <!-- تفاصيل المادة قبل الاختبار -->
-    <section id="subjectScreen" class="screen hidden">
-      <button class="back-button" id="backToMaterials" type="button">→ العودة إلى المواد</button>
-
-      <div class="subject-hero panel">
-        <div class="subject-symbol" id="subjectSymbol">✦</div>
-        <span class="eyebrow" id="subjectSectionName">القسم الأول</span>
-        <h1 id="subjectTitle">اسم المادة</h1>
-        <p id="subjectDescription" class="muted">استعد للاختبار وابدأ عندما تكون جاهزاً.</p>
-
-        <div class="test-settings">
-          <div><span>▤</span><small>عدد الأسئلة</small><strong id="subjectQuestionCount">10</strong></div>
-          <div><span>◷</span><small>مدة الاختبار</small><strong id="subjectDuration">5 دقائق</strong></div>
-          <div><span>✦</span><small>النقاط لكل إجابة</small><strong id="subjectPoints">1</strong></div>
-        </div>
-
-        <p id="subjectAvailability" class="message hidden"></p>
-        <button id="startButton" class="primary-button start-button" type="button">
-          <span>ابدأ الاختبار</span><span>←</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- شاشة الاختبار -->
-    <section id="quizScreen" class="screen hidden">
-      <div class="quiz-topline">
-        <button id="quitButton" class="back-button" type="button">✕ إنهاء الاختبار</button>
-        <div class="quiz-subject">
-          <strong id="activeSubject">اسم المادة</strong>
-          <small id="activeTopic">اختبار تدريبي</small>
-        </div>
-      </div>
-
-      <div class="quiz-meta">
-        <div class="timer-card">
-          <div class="timer-ring" id="timerRing"><span id="timerText">05:00</span></div>
-          <div><small>الوقت المتبقي</small><strong>زمن الاختبار</strong></div>
-        </div>
-        <div class="score-card">
-          <small>النقاط المكتسبة</small>
-          <strong id="scoreText">0</strong>
-        </div>
-      </div>
-
-      <div class="progress-info">
-        <span id="questionNumberBadge">السؤال 1</span>
-        <span><strong id="currentQuestion">1</strong> / <span id="totalQuestions">10</span></span>
-      </div>
-      <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
-
-      <div class="question-card panel">
-        <div class="question-label">اختبر معرفتك</div>
-        <h2 id="questionText">سيظهر السؤال هنا</h2>
-        <div id="optionsList" class="options-list"></div>
-
-        <div id="feedbackBox" class="feedback-box hidden" role="status">
-          <div id="feedbackIcon" class="feedback-icon">✓</div>
-          <div class="feedback-copy">
-            <strong id="feedbackTitle">إجابة صحيحة</strong>
-            <p id="feedbackText"></p>
-            <small id="feedbackPoints"></small>
-          </div>
-        </div>
-
-        <button id="nextButton" class="primary-button full-button" type="button" disabled>
-          <span id="nextButtonText">السؤال التالي</span><span>←</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- النتائج -->
-    <section id="resultScreen" class="screen hidden">
-      <div class="result-hero panel">
-        <div class="result-medal" id="resultMedal">✦</div>
-        <span class="eyebrow">اكتملت رحلتك في هذا الاختبار</span>
-        <h1 id="resultHeading">أحسنت!</h1>
-        <p id="resultSubtitle" class="muted">كل محاولة تمنحك فرصة جديدة للتقدم.</p>
-
-        <div class="result-score">
-          <strong id="finalScore">0</strong>
-          <span>نقطة</span>
-        </div>
-        <div class="result-percent"><span id="finalPercent">0%</span> نسبة الإجابات الصحيحة</div>
-        <div class="result-progress-track"><div id="resultProgress" class="result-progress"></div></div>
-      </div>
-
-      <div class="result-stats">
-        <div class="result-stat correct"><small>إجابات صحيحة</small><strong id="correctCount">0</strong></div>
-        <div class="result-stat wrong"><small>إجابات خاطئة</small><strong id="wrongCount">0</strong></div>
-        <div class="result-stat skipped"><small>دون إجابة</small><strong id="unansweredCount">0</strong></div>
-      </div>
-
-      <div class="panel analysis-panel">
-        <div class="section-heading compact">
-          <div><span class="eyebrow">راجع أداءك</span><h2>تحليل الإجابات</h2></div>
-        </div>
-        <div id="analysisInsights" class="analysis-insights"></div>
-        <div id="answerReview" class="answer-review"></div>
-      </div>
-
-      <div class="result-actions">
-        <button id="retryButton" class="primary-button" type="button">إعادة الاختبار ↻</button>
-        <button id="homeButton" class="secondary-button" type="button">العودة إلى المكتبة</button>
-      </div>
-    </section>
-
-    <!-- رسالة تأكيد إنهاء الاختبار -->
-    <div id="quitDialog" class="dialog-backdrop hidden">
-      <div class="dialog panel" role="dialog" aria-modal="true" aria-labelledby="quitTitle">
-        <div class="panel-icon warning-icon">!</div>
-        <h2 id="quitTitle">هل تريد إنهاء الاختبار؟</h2>
-        <p class="muted">ستُحسب الأسئلة التي لم تجب عنها دون نقاط.</p>
-        <div class="dialog-actions">
-          <button id="cancelQuitButton" class="secondary-button" type="button">متابعة الاختبار</button>
-          <button id="confirmQuitButton" class="danger-button" type="button">إنهاء الاختبار</button>
-        </div>
-      </div>
     </div>
 
-    <div id="globalMessage" class="global-message hidden" role="status"></div>
-  </main>
 
-  <footer class="footer">
-    <div class="footer-brand">تكي <span>TAKI</span></div>
-    <p>خطوة صغيرة اليوم، إنجاز أكبر غداً.</p>
-  </footer>
+
+    <!-- ==================================================
+         ملفات JavaScript
+    =================================================== -->
+
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+
+
+    <!-- وظائف واجهة صغيرة -->
+    <script>
+        // إظهار وإخفاء كلمة المرور
+        const togglePassword = document.getElementById("togglePassword");
+        const passwordField = document.getElementById("studentPassword");
+
+        togglePassword?.addEventListener("click", () => {
+            if (!passwordField) return;
+
+            const isPassword = passwordField.type === "password";
+
+            passwordField.type = isPassword ? "text" : "password";
+
+            togglePassword.setAttribute(
+                "aria-label",
+                isPassword ? "إخفاء كلمة المرور" : "إظهار كلمة المرور"
+            );
+        });
+
+
+        // القائمة الجانبية على الهاتف
+        const mobileMenuButton = document.getElementById("mobileMenuButton");
+        const sidebar = document.getElementById("sidebar");
+
+        mobileMenuButton?.addEventListener("click", () => {
+            sidebar?.classList.toggle("sidebar-open");
+        });
+
+
+        // إغلاق القائمة بعد اختيار صفحة على الهاتف
+        document.querySelectorAll(".sidebar [data-view]").forEach(button => {
+            button.addEventListener("click", () => {
+                sidebar?.classList.remove("sidebar-open");
+            });
+        });
+    </script>
+
 </body>
-</html>
+  </html>
