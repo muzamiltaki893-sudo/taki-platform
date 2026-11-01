@@ -7,19 +7,25 @@
 
 const $ = selector => document.querySelector(selector);
 const $$ = selector => [...document.querySelectorAll(selector)];
+
 const cfg = window.TAKI_CONFIG || {};
 
+const supabaseUrl = cfg.supabaseUrl;
+const supabaseAnonKey = cfg.supabaseAnonKey;
+
 const ready =
-    window.supabase &&
-    cfg.SUPABASE_URL &&
-    !cfg.SUPABASE_URL.includes("YOUR_PROJECT") &&
-    cfg.SUPABASE_ANON_KEY &&
-    !cfg.SUPABASE_ANON_KEY.includes("YOUR_SUPABASE");
+    typeof window.supabase !== "undefined" &&
+    typeof supabaseUrl === "string" &&
+    /^https:\/\/[^/]+/.test(supabaseUrl) &&
+    !supabaseUrl.includes("ضع_رابط") &&
+    typeof supabaseAnonKey === "string" &&
+    supabaseAnonKey.trim().length > 0 &&
+    !supabaseAnonKey.includes("ضع_المفتاح");
 
 const db = ready
     ? window.supabase.createClient(
-        cfg.SUPABASE_URL,
-        cfg.SUPABASE_ANON_KEY,
+        supabaseUrl,
+        supabaseAnonKey,
         {
             auth: {
                 persistSession: false,
@@ -30,24 +36,40 @@ const db = ready
     )
     : null;
 
+if (!db) {
+    console.error(
+        "TAKI: تعذر إنشاء اتصال Supabase. تحقق من js/config.js ومكتبة Supabase."
+    );
+}
+
+/* =========================================
+   2. حالة التطبيق
+========================================= */
+
 const S = {
     student: null,
+
     view: "home",
     tab: "subjects",
+
     posts: [],
     notifications: [],
     subjects: [],
     courses: [],
+
     quiz: null,
     index: 0,
     answers: [],
+
     timer: null,
     seconds: 600,
-    start: 0
+    start: 0,
+
+    finishing: false
 };
 
 /* =========================================
-   2. أدوات مساعدة
+   3. أدوات مساعدة
 ========================================= */
 
 const esc = value =>
@@ -89,8 +111,10 @@ function toast(text) {
 
 async function json(path, fallback = []) {
     try {
+        const base = cfg.DATA_BASE_PATH || "data/";
+
         const response = await fetch(
-            (cfg.DATA_BASE_PATH || "data/") + path,
+            base + path,
             { cache: "no-store" }
         );
 
@@ -99,8 +123,14 @@ async function json(path, fallback = []) {
         }
 
         return await response.json();
+
     } catch (error) {
-        console.warn("تعذر تحميل البيانات:", path, error);
+        console.warn(
+            "تعذر تحميل البيانات:",
+            path,
+            error
+        );
+
         return fallback;
     }
 }
@@ -115,7 +145,7 @@ function empty(title, description = "") {
 }
 
 /* =========================================
-   3. بدء التطبيق
+   4. بدء التطبيق
 ========================================= */
 
 document.addEventListener("DOMContentLoaded", init);
@@ -139,34 +169,64 @@ async function init() {
     renderNotifications();
     renderChallenges();
 
-    $("#loginForm").onsubmit = login;
-    $("#logoutButton").onclick = logout;
+    if ($("#loginForm")) {
+        $("#loginForm").onsubmit = login;
+    }
 
-    $("#startChallenge").onclick = () => go("challenges");
-    $("#createChallenge").onclick = challengeModal;
+    if ($("#logoutButton")) {
+        $("#logoutButton").onclick = logout;
+    }
 
-    $("#refreshRanking").onclick = ranking;
+    if ($("#startChallenge")) {
+        $("#startChallenge").onclick = () => go("challenges");
+    }
 
-    $("#notificationButton").onclick = () => go("notifications");
+    if ($("#createChallenge")) {
+        $("#createChallenge").onclick = challengeModal;
+    }
 
-    $("#mobileMenu").onclick = () => {
-        $(".sidebar")?.classList.toggle("open");
-    };
+    if ($("#refreshRanking")) {
+        $("#refreshRanking").onclick = ranking;
+    }
 
-    $("#aiQuestion").oninput = event => {
-        $("#aiCount").textContent =
-            `${event.target.value.length} / 5000`;
-    };
+    if ($("#notificationButton")) {
+        $("#notificationButton").onclick = () => go("notifications");
+    }
 
-    $("#aiForm").onsubmit = askAI;
-    $("#newAI").onclick = resetAI;
-    $("#closeModal").onclick = closeModal;
+    if ($("#mobileMenu")) {
+        $("#mobileMenu").onclick = () => {
+            $(".sidebar")?.classList.toggle("open");
+        };
+    }
 
-    $("#modalBackdrop").onclick = event => {
-        if (event.target.id === "modalBackdrop") {
-            closeModal();
-        }
-    };
+    if ($("#aiQuestion")) {
+        $("#aiQuestion").oninput = event => {
+            if ($("#aiCount")) {
+                $("#aiCount").textContent =
+                    `${event.target.value.length} / 5000`;
+            }
+        };
+    }
+
+    if ($("#aiForm")) {
+        $("#aiForm").onsubmit = askAI;
+    }
+
+    if ($("#newAI")) {
+        $("#newAI").onclick = resetAI;
+    }
+
+    if ($("#closeModal")) {
+        $("#closeModal").onclick = closeModal;
+    }
+
+    if ($("#modalBackdrop")) {
+        $("#modalBackdrop").onclick = event => {
+            if (event.target.id === "modalBackdrop") {
+                closeModal();
+            }
+        };
+    }
 
     document.addEventListener("click", event => {
         const nav = event.target.closest("[data-view]");
@@ -196,14 +256,19 @@ async function init() {
 }
 
 /* =========================================
-   4. التنقل بين الصفحات
+   5. التنقل بين الصفحات
 ========================================= */
 
 function go(view) {
     S.view = view;
 
-    if (view === "ranking") ranking();
-    if (view === "profile") profile();
+    if (view === "ranking") {
+        ranking();
+    }
+
+    if (view === "profile") {
+        profile();
+    }
 
     $$(".view").forEach(element => {
         element.classList.toggle(
@@ -228,43 +293,63 @@ function go(view) {
 }
 
 /* =========================================
-   5. تسجيل الدخول والخروج
+   6. تسجيل الدخول
 ========================================= */
 
 async function login(event) {
     event.preventDefault();
 
-    const number = $("#studentNumber").value.trim();
-    const password = $("#studentPassword").value;
+    const number = $("#studentNumber")?.value.trim();
+    const password = $("#studentPassword")?.value;
     const button = $("#loginButton");
 
     if (!number || !password) {
+        msg(
+            $("#loginMessage"),
+            "أدخل رقم الطالب وكلمة المرور.",
+            "error"
+        );
+
         return;
     }
 
-    button.disabled = true;
-    button.textContent = "جارٍ التحقق…";
+    if (!db) {
+        msg(
+            $("#loginMessage"),
+            "تعذر الاتصال بقاعدة البيانات. تحقق من إعدادات Supabase.",
+            "error"
+        );
+
+        return;
+    }
+
+    if (button) {
+        button.disabled = true;
+        button.textContent = "جارٍ التحقق…";
+    }
 
     msg($("#loginMessage"), "");
 
     try {
-        if (!db) {
-            throw new Error(
-                "أكمل إعدادات Supabase في ملف js/config.js أولًا."
-            );
-        }
-
         const { data, error } = await db.rpc(
-            "login_student",
+            cfg.rpc?.loginStudent || "login_student",
             {
                 p_student_number: number,
                 p_password: password
             }
         );
 
-        if (error) throw error;
+        if (error) {
+            console.error("Login RPC error:", error);
 
-        const student = Array.isArray(data) ? data[0] : data;
+            throw new Error(
+                "تعذر التحقق من بيانات الدخول. تحقق من دالة تسجيل الدخول وصلاحياتها."
+            );
+        }
+
+        const student = Array.isArray(data)
+            ? data[0]
+            : data;
 
         if (!student) {
             throw new Error(
@@ -272,42 +357,85 @@ async function login(event) {
             );
         }
 
+        if (!student.id || !student.student_number) {
+            console.error(
+                "بيانات الطالب غير مكتملة:",
+                student
+            );
+
+            throw new Error(
+                "أعادت قاعدة البيانات بيانات طالب غير مكتملة."
+            );
+        }
+
         S.student = student;
 
-        $("#loginScreen").classList.add("hidden");
-        $("#appShell").classList.remove("hidden");
+        $("#loginScreen")?.classList.add("hidden");
+        $("#appShell")?.classList.remove("hidden");
 
-        $("#topGreeting").textContent =
-            `أهلًا ${student.name}، لنصنع إنجازًا جديدًا ✦`;
-
-        $("#sideName").textContent = student.name;
-        $("#sideLevel").textContent =
-            `المستوى ${student.level || 1}`;
-
-        $("#sideAvatar").textContent =
-            (student.name || "ت").trim()[0];
-
-        $("#topAvatar").textContent =
-            (student.name || "ت").trim()[0];
+        updateStudentUI();
 
         renderHome();
         profile();
         go("home");
 
-        toast(`مرحبًا ${student.name}`);
+        toast(`مرحبًا ${student.name || "طالب تكي"}`);
 
     } catch (error) {
+        console.error("TAKI login error:", error);
+
         msg(
             $("#loginMessage"),
-            error.message || "تعذر تسجيل الدخول.",
+            error.message || "حدث خطأ أثناء تسجيل الدخول.",
             "error"
         );
 
     } finally {
-        button.disabled = false;
-        button.textContent = "دخول إلى المنصة ←";
+        if (button) {
+            button.disabled = false;
+            button.textContent = "دخول إلى المنصة ←";
+        }
     }
 }
+
+/* =========================================
+   7. تحديث بيانات الطالب في الواجهة
+========================================= */
+
+function updateStudentUI() {
+    const student = S.student;
+
+    if (!student) return;
+
+    const name = student.name || "طالب تكي";
+    const initial = name.trim().charAt(0) || "ت";
+
+    if ($("#topGreeting")) {
+        $("#topGreeting").textContent =
+            `أهلًا ${name}، لنصنع إنجازًا جديدًا ✦`;
+    }
+
+    if ($("#sideName")) {
+        $("#sideName").textContent = name;
+    }
+
+    if ($("#sideLevel")) {
+        $("#sideLevel").textContent =
+            `المستوى ${Number(student.level || 1)}`;
+    }
+
+    if ($("#sideAvatar")) {
+        $("#sideAvatar").textContent = initial;
+    }
+
+    if ($("#topAvatar")) {
+        $("#topAvatar").textContent = initial;
+    }
+}
+
+/* =========================================
+   8. تسجيل الخروج
+========================================= */
 
 function logout() {
     if (S.timer) {
@@ -316,17 +444,21 @@ function logout() {
     }
 
     S.student = null;
+    S.quiz = null;
+    S.finishing = false;
 
-    $("#appShell").classList.add("hidden");
-    $("#loginScreen").classList.remove("hidden");
+    $("#appShell")?.classList.add("hidden");
+    $("#loginScreen")?.classList.remove("hidden");
 
-    $("#studentPassword").value = "";
+    if ($("#studentPassword")) {
+        $("#studentPassword").value = "";
+    }
 
     msg($("#loginMessage"), "");
 }
 
 /* =========================================
-   6. تبويبات المكتبة
+   9. تبويبات المكتبة
 ========================================= */
 
 function setTab(tab) {
@@ -339,45 +471,53 @@ function setTab(tab) {
         );
     });
 
-    $("#subjectsPanel").classList.toggle(
+    $("#subjectsPanel")?.classList.toggle(
         "hidden",
         tab !== "subjects"
     );
 
-    $("#coursesPanel").classList.toggle(
+    $("#coursesPanel")?.classList.toggle(
         "hidden",
         tab !== "courses"
     );
 
-    $("#contentPanel").classList.add("hidden");
+    $("#contentPanel")?.classList.add("hidden");
 }
 
 /* =========================================
-   7. الصفحة الرئيسية
+   10. الصفحة الرئيسية
 ========================================= */
 
 function renderHome() {
     const notification = S.notifications[0];
 
-    $("#announcement").classList.toggle(
+    $("#announcement")?.classList.toggle(
         "hidden",
         !notification
     );
 
-    if (notification) {
+    if (notification && $("#announcement")) {
         $("#announcement").innerHTML = `
             <b>⚑ ${esc(notification.title)}</b>
-            — ${esc(notification.body || notification.message || "")}
+            — ${esc(
+                notification.body ||
+                notification.message ||
+                ""
+            )}
         `;
     }
 
-    $("#homeCourses").innerHTML =
-        S.courses.slice(0, 3).map(courseCard).join("") ||
-        empty("أضف الكورسات إلى courses.json");
+    if ($("#homeCourses")) {
+        $("#homeCourses").innerHTML =
+            S.courses.slice(0, 3).map(courseCard).join("") ||
+            empty("أضف الكورسات إلى courses.json");
+    }
 
-    $("#homePosts").innerHTML =
-        S.posts.slice(0, 4).map(postCard).join("") ||
-        empty("لا توجد منشورات");
+    if ($("#homePosts")) {
+        $("#homePosts").innerHTML =
+            S.posts.slice(0, 4).map(postCard).join("") ||
+            empty("لا توجد منشورات");
+    }
 
     bindCourses();
 }
@@ -443,10 +583,12 @@ function bindCourses() {
 }
 
 /* =========================================
-   8. عرض الكورسات والمواد
+   11. عرض الكورسات والمواد
 ========================================= */
 
 function renderCourses() {
+    if (!$("#coursesGrid")) return;
+
     $("#coursesGrid").innerHTML =
         S.courses.map(courseCard).join("") ||
         empty("لا توجد كورسات");
@@ -455,6 +597,8 @@ function renderCourses() {
 }
 
 function renderSubjects() {
+    if (!$("#subjectsGrid")) return;
+
     $("#subjectsGrid").innerHTML = S.subjects.map(subject => `
         <button
             class="subject-card"
@@ -539,14 +683,16 @@ async function openSubject(id) {
 }
 
 /* =========================================
-   9. محتوى المادة أو الكورس
+   12. محتوى المادة أو الكورس
 ========================================= */
 
 function content(title, description, actions, data, id, kind) {
-    $("#subjectsPanel").classList.add("hidden");
-    $("#coursesPanel").classList.add("hidden");
+    $("#subjectsPanel")?.classList.add("hidden");
+    $("#coursesPanel")?.classList.add("hidden");
 
     const panel = $("#contentPanel");
+
+    if (!panel) return;
 
     panel.classList.remove("hidden");
 
@@ -562,10 +708,10 @@ function content(title, description, actions, data, id, kind) {
             ${actions.map(action => `
                 <button
                     class="content-action"
-                    data-action="${action[0]}"
+                    data-action="${esc(action[0])}"
                 >
-                    <b>${action[1]}</b>
-                    <small>${action[2]}</small>
+                    <b>${esc(action[1])}</b>
+                    <small>${esc(action[2])}</small>
                 </button>
             `).join("")}
         </div>
@@ -587,7 +733,10 @@ function content(title, description, actions, data, id, kind) {
                 startQuiz({
                     title,
                     part: "اختيار من متعدد",
-                    questions: (data.quiz || []).slice(0, 20),
+                    questions: (data.quiz || []).slice(
+                        0,
+                        Number(cfg.quiz?.defaultQuestionCount || 20)
+                    ),
                     timed: true,
                     mode: "mc"
                 });
@@ -617,7 +766,11 @@ function content(title, description, actions, data, id, kind) {
 }
 
 function resources(items) {
-    $("#resources").innerHTML = items.length
+    const target = $("#resources");
+
+    if (!target) return;
+
+    target.innerHTML = items.length
         ? items.map(item => `
             <article class="resource">
                 <b>${esc(item.title || "درس")}</b>
@@ -644,22 +797,35 @@ function resources(items) {
 }
 
 /* =========================================
-   10. نظام الاختبارات
+   13. نظام الاختبارات
 ========================================= */
 
 function startQuiz(quiz) {
-    if (!quiz.questions.length) {
+    if (!S.student) {
+        toast("سجّل الدخول أولًا.");
+        return;
+    }
+
+    if (!quiz.questions?.length) {
         toast("لا توجد أسئلة لهذا النوع في JSON بعد.");
         return;
+    }
+
+    if (S.timer) {
+        clearInterval(S.timer);
+        S.timer = null;
     }
 
     S.quiz = quiz;
     S.index = 0;
     S.answers = Array(quiz.questions.length).fill(null);
-    S.seconds = 600;
-    S.start = Date.now();
 
-    if (S.timer) clearInterval(S.timer);
+    S.seconds = Number(
+        cfg.quiz?.defaultDurationSeconds || 600
+    );
+
+    S.start = Date.now();
+    S.finishing = false;
 
     go("quiz");
     quizQuestion();
@@ -675,7 +841,6 @@ function startQuiz(quiz) {
             }
 
             if (S.seconds <= 0) {
-                clearInterval(S.timer);
                 finish(true);
             }
         }, 1000);
@@ -694,6 +859,9 @@ function fmt(seconds) {
 
 function quizQuestion() {
     const quiz = S.quiz;
+
+    if (!quiz) return;
+
     const question = quiz.questions[S.index];
     const index = S.index;
     const mode = quiz.mode;
@@ -728,7 +896,10 @@ function quizQuestion() {
             </p>
 
             <div class="listen">
-                <button id="speak">▶ استمع إلى الجملة</button>
+                <button id="speak" type="button">
+                    ▶ استمع إلى الجملة
+                </button>
+
                 <span>يمكنك الاستماع أكثر من مرة.</span>
             </div>
 
@@ -776,7 +947,9 @@ function quizQuestion() {
         <div class="quiz-shell">
 
             <div class="quiz-top">
-                <button id="quit">← إنهاء والعودة</button>
+                <button id="quit" type="button">
+                    ← إنهاء والعودة
+                </button>
 
                 <span class="counter">
                     ${esc(quiz.title)} · ${esc(quiz.part)}
@@ -789,7 +962,7 @@ function quizQuestion() {
 
             <div class="progress">
                 <span style="width:${Math.round(
-                    index / quiz.questions.length * 100
+                    (index / quiz.questions.length) * 100
                 )}%"></span>
             </div>
 
@@ -820,7 +993,7 @@ function quizQuestion() {
                         السؤال ${index + 1} من ${quiz.questions.length}
                     </span>
 
-                    <button class="btn primary" id="next">
+                    <button class="btn primary" id="next" type="button">
                         ${
                             index === quiz.questions.length - 1
                                 ? "إنهاء ومراجعة"
@@ -836,6 +1009,7 @@ function quizQuestion() {
         if (confirm("إنهاء الاختبار دون احتساب النتيجة؟")) {
             clearInterval(S.timer);
             S.timer = null;
+            S.quiz = null;
             go("library");
         }
     };
@@ -870,6 +1044,8 @@ function quizQuestion() {
     });
 
     $("#next").onclick = () => {
+        if (S.finishing) return;
+
         if (mode === "mc" && S.answers[index] === null) {
             return toast("اختر إجابة قبل المتابعة.");
         }
@@ -906,24 +1082,25 @@ function speak(text) {
 }
 
 /* =========================================
-   11. تصحيح الإجابات وحساب النتيجة
+   14. تصحيح الإجابات
 ========================================= */
 
 function norm(value) {
     return String(value ?? "")
         .trim()
         .replace(/\s+/g, " ")
-        .replace(/[.!?]+$/,"")
+        .replace(/[.!?]+$/, "")
         .toLowerCase();
 }
 
 function correct(question, answer, mode) {
     if (mode === "code") {
-        const expected = question.answer || question.expectedCode;
+        const expectedCode =
+            question.answer || question.expectedCode;
 
-        return Boolean(expected) &&
+        return Boolean(expectedCode) &&
             String(answer || "").replace(/\r\n/g, "\n").trim() ===
-            String(expected).replace(/\r\n/g, "\n").trim();
+            String(expectedCode).replace(/\r\n/g, "\n").trim();
     }
 
     if (mode === "english") {
@@ -937,9 +1114,60 @@ function correct(question, answer, mode) {
     );
 }
 
-function finish(auto) {
-    clearInterval(S.timer);
-    S.timer = null;
+/* =========================================
+   15. حفظ نتيجة الاختبار في Supabase
+========================================= */
+
+async function saveResultToDatabase(record) {
+    if (!db) {
+        throw new Error("اتصال قاعدة البيانات غير متاح.");
+    }
+
+    if (!S.student?.id) {
+        throw new Error("لم يتم تحديد هوية الطالب.");
+    }
+
+    const params = {
+        p_student_id: S.student.id,
+        p_subject: String(record.title || "عام"),
+        p_part: String(record.part || "اختبار"),
+        p_score: Number(record.score),
+        p_total_questions: Number(record.total),
+        p_correct_answers: Number(record.correct),
+        p_wrong_answers: Number(record.wrong),
+        p_duration_seconds: Number(record.elapsed)
+    };
+
+    const { data, error } = await db.rpc(
+        cfg.rpc?.submitTestResult || "submit_test_result",
+        params
+    );
+
+    if (error) {
+        console.error("Save result RPC error:", error);
+
+        throw new Error(
+            error.message ||
+            "تعذر حفظ النتيجة في قاعدة البيانات."
+        );
+    }
+
+    return data;
+}
+
+/* =========================================
+   16. إنهاء الاختبار
+========================================= */
+
+async function finish(auto) {
+    if (!S.quiz || S.finishing) return;
+
+    S.finishing = true;
+
+    if (S.timer) {
+        clearInterval(S.timer);
+        S.timer = null;
+    }
 
     const quiz = S.quiz;
 
@@ -967,15 +1195,19 @@ function finish(auto) {
         total,
         correct: right,
         wrong: total - right,
-        percent: Math.round(right / total * 100),
+        percent: total
+            ? Math.round((right / total) * 100)
+            : 0,
         elapsed,
         date: new Date().toISOString(),
+        databaseSaved: false,
 
         review: results.map(item => ({
             question:
                 item.q.prompt ||
                 item.q.question ||
-                item.q.sentence,
+                item.q.sentence ||
+                "السؤال",
 
             answer: answerText(
                 item.q,
@@ -993,6 +1225,7 @@ function finish(auto) {
         }))
     };
 
+    // الحفظ المحلي لا يعني الحفظ الرسمي في قاعدة البيانات.
     const history = readHistory();
 
     history.unshift(record);
@@ -1002,8 +1235,36 @@ function finish(auto) {
         JSON.stringify(history.slice(0, 100))
     );
 
+    try {
+        await saveResultToDatabase(record);
+
+        record.databaseSaved = true;
+
+        const updatedHistory = readHistory();
+
+        if (updatedHistory.length) {
+            updatedHistory[0] = record;
+
+            localStorage.setItem(
+                historyKey(),
+                JSON.stringify(updatedHistory.slice(0, 100))
+            );
+        }
+
+        toast("تم حفظ النتيجة في قاعدة البيانات.");
+
+    } catch (error) {
+        console.error("Database result save failed:", error);
+
+        toast(
+            "حُفظت النتيجة محليًا، لكن تعذر تأكيد حفظها في قاعدة البيانات."
+        );
+    }
+
     result(record, auto);
     profile();
+
+    S.finishing = false;
 }
 
 function answerText(question, answer, mode) {
@@ -1038,7 +1299,7 @@ function expected(question, mode) {
 }
 
 /* =========================================
-   12. عرض نتيجة الاختبار
+   17. عرض نتيجة الاختبار
 ========================================= */
 
 function result(record, auto) {
@@ -1065,6 +1326,14 @@ function result(record, auto) {
                         auto
                             ? "انتهى الوقت. تم تصحيح الإجابات."
                             : "اكتمل الاختبار وتم تصحيح إجاباتك."
+                    }
+                </p>
+
+                <p class="hint">
+                    ${
+                        record.databaseSaved
+                            ? "✓ تم تأكيد حفظ النتيجة في قاعدة البيانات."
+                            : "⚠ النتيجة محفوظة محليًا، لكن لم يتأكد حفظها في قاعدة البيانات."
                     }
                 </p>
 
@@ -1106,7 +1375,7 @@ function result(record, auto) {
                         <b class="${item.ok ? "" : "bad"}">
                             ${item.ok ? "✓ إجابة صحيحة" : "✕ إجابة غير صحيحة"}
                             · ${index + 1}.
-                            ${esc(item.question || "السؤال")}
+                            ${esc(item.question)}
                         </b>
 
                         <p>
@@ -1132,11 +1401,14 @@ function result(record, auto) {
         </div>
     `;
 
-    $("#backResult").onclick = () => go("library");
+    $("#backResult").onclick = () => {
+        S.quiz = null;
+        go("library");
+    };
 }
 
 /* =========================================
-   13. الملف الشخصي وسجل الاختبارات
+   18. الملف الشخصي وسجل الاختبارات
 ========================================= */
 
 function readHistory() {
@@ -1155,107 +1427,129 @@ function profile() {
     const student = S.student;
     const history = readHistory();
 
-    $("#profileCard").innerHTML = `
-        <div class="profile-avatar">
-            ${esc((student.name || "ت")[0])}
-        </div>
-
-        <div>
-            <small class="eyebrow">TAKI MEMBER</small>
-
-            <h2>${esc(student.name)}</h2>
-
-            <p>
-                الرقم الدراسي:
-                ${esc(student.student_number || "—")}
-
-                ·
-
-                ${esc(student.specialization || "متعلم")}
-            </p>
-        </div>
-
-        <div class="profile-extra">
-            المستوى
-            <br>
-            <b>${Number(student.level || 1)}</b>
-        </div>
-    `;
-
-    $("#profileStats").innerHTML = [
-        ["النقاط الرسمية", student.points || 0, "قاعدة البيانات"],
-        ["المستوى", student.level || 1, "قاعدة البيانات"],
-        ["اختبارات مكتملة", student.tests_count || 0, "قاعدة البيانات"],
-        ["سجل محلي", history.length, "هذا الجهاز"]
-    ].map(item => `
-        <div class="stat">
-            <span>${item[0]}</span>
-            <b>${Number(item[1])}</b>
-            <small>${item[2]}</small>
-        </div>
-    `).join("");
-
-    $("#localHistory").innerHTML = history.length
-        ? history.map(record => `
-            <div class="history-row">
-                <div>✓</div>
-
-                <div>
-                    <b>
-                        ${esc(record.title)}
-                        —
-                        ${esc(record.part)}
-                    </b>
-
-                    <small>
-                        ${new Date(record.date).toLocaleString("ar")}
-                    </small>
-                </div>
-
-                <div class="history-score">
-                    ${record.score}/${record.total}
-                    ·
-                    ${record.percent}%
-                </div>
+    if ($("#profileCard")) {
+        $("#profileCard").innerHTML = `
+            <div class="profile-avatar">
+                ${esc((student.name || "ت")[0])}
             </div>
-        `).join("")
-        : empty(
-            "لم تكمل أي اختبار بعد",
-            "ستظهر نتائجك هنا محليًا."
-        );
+
+            <div>
+                <small class="eyebrow">TAKI MEMBER</small>
+
+                <h2>${esc(student.name || "طالب تكي")}</h2>
+
+                <p>
+                    الرقم الدراسي:
+                    ${esc(student.student_number || "—")}
+
+                    ·
+
+                    ${esc(student.specialization || "متعلم")}
+                </p>
+            </div>
+
+            <div class="profile-extra">
+                المستوى
+                <br>
+                <b>${Number(student.level || 1)}</b>
+            </div>
+        `;
+    }
+
+    if ($("#profileStats")) {
+        $("#profileStats").innerHTML = [
+            ["النقاط الرسمية", student.points || 0, "قاعدة البيانات"],
+            ["المستوى", student.level || 1, "قاعدة البيانات"],
+            ["اختبارات مكتملة", student.tests_count || 0, "قاعدة البيانات"],
+            ["الإجابات الصحيحة", student.correct_answers || 0, "قاعدة البيانات"],
+            ["الإجابات الخاطئة", student.wrong_answers || 0, "قاعدة البيانات"],
+            ["سجل محلي", history.length, "هذا الجهاز"]
+        ].map(item => `
+            <div class="stat">
+                <span>${esc(item[0])}</span>
+                <b>${Number(item[1])}</b>
+                <small>${esc(item[2])}</small>
+            </div>
+        `).join("");
+    }
+
+    if ($("#localHistory")) {
+        $("#localHistory").innerHTML = history.length
+            ? history.map(record => `
+                <div class="history-row">
+                    <div>✓</div>
+
+                    <div>
+                        <b>
+                            ${esc(record.title)}
+                            —
+                            ${esc(record.part)}
+                        </b>
+
+                        <small>
+                            ${new Date(record.date).toLocaleString("ar")}
+                        </small>
+
+                        <small>
+                            ${
+                                record.databaseSaved
+                                    ? "محفوظ في قاعدة البيانات"
+                                    : "محفوظ محليًا فقط أو لم يتأكد الحفظ"
+                            }
+                        </small>
+                    </div>
+
+                    <div class="history-score">
+                        ${record.score}/${record.total}
+                        ·
+                        ${record.percent}%
+                    </div>
+                </div>
+            `).join("")
+            : empty(
+                "لم تكمل أي اختبار بعد",
+                "ستظهر نتائجك هنا محليًا."
+            );
+    }
 }
 
 /* =========================================
-   14. ترتيب الطلاب من Supabase
+   19. ترتيب الطلاب من Supabase
 ========================================= */
 
-// يتطلب وجود دالة RPC باسم get_ranking في قاعدة بيانات تكي.
-
 async function ranking() {
+    const target = $("#rankingTable");
+
+    if (!target) return;
+
     if (!S.student) {
-        $("#rankingTable").innerHTML =
-            empty("سجّل الدخول أولًا");
+        target.innerHTML = empty("سجّل الدخول أولًا");
         return;
     }
 
     if (!db) {
-        $("#rankingTable").innerHTML = empty(
+        target.innerHTML = empty(
             "قاعدة البيانات غير مهيأة",
-            "عدّل js/config.js"
+            "تحقق من js/config.js"
         );
+
         return;
     }
 
-    $("#rankingTable").innerHTML =
-        empty("جارٍ تحميل الترتيب…");
+    target.innerHTML = empty("جارٍ تحميل الترتيب…");
 
     try {
-        const { data, error } = await db.rpc("get_ranking");
+        const { data, error } = await db.rpc(
+            cfg.rpc?.getRanking || "get_ranking"
+        );
 
         if (error) throw error;
 
-        $("#rankingTable").innerHTML = (data || []).map(
-            (student, index) => `
+        const limit = Number(cfg.ranking?.limit || 20);
+
+        target.innerHTML = (data || [])
+            .slice(0, limit)
+            .map((student, index) => `
                 <div class="rank-row ${
                     student.student_number === S.student.student_number
                         ? "me"
@@ -1268,7 +1562,8 @@ async function ranking() {
 
                     <div class="rank-name">
                         <b>
-                            ${esc(student.name)}
+                            ${esc(student.name || "طالب")}
+
                             ${
                                 student.student_number ===
                                 S.student.student_number
@@ -1290,49 +1585,51 @@ async function ranking() {
                         المستوى ${Number(student.level || 1)}
                     </div>
                 </div>
-            `
-        ).join("") || empty("لا يوجد طلاب");
+            `).join("") || empty("لا يوجد طلاب");
 
     } catch (error) {
-        $("#rankingTable").innerHTML = empty(
+        console.error("Ranking error:", error);
+
+        target.innerHTML = empty(
             "تعذر تحميل الترتيب",
-            error.message
+            error.message || "تحقق من دالة get_ranking وصلاحياتها."
         );
     }
 }
 
 /* =========================================
-   15. التنبيهات
+   20. التنبيهات
 ========================================= */
 
 function renderNotifications() {
-    $("#notificationsList").innerHTML =
-        S.notifications.length
-            ? S.notifications.map(notification => `
-                <article class="post">
-                    <small>✧ تنبيه</small>
+    const target = $("#notificationsList");
 
-                    <h3>
-                        ${esc(notification.title || "تنبيه")}
-                    </h3>
+    if (!target) return;
 
-                    <p>
-                        ${esc(
-                            notification.body ||
-                            notification.message ||
-                            ""
-                        )}
-                    </p>
-                </article>
-            `).join("")
-            : empty("لا توجد تنبيهات");
+    target.innerHTML = S.notifications.length
+        ? S.notifications.map(notification => `
+            <article class="post">
+                <small>✧ تنبيه</small>
+
+                <h3>
+                    ${esc(notification.title || "تنبيه")}
+                </h3>
+
+                <p>
+                    ${esc(
+                        notification.body ||
+                        notification.message ||
+                        ""
+                    )}
+                </p>
+            </article>
+        `).join("")
+        : empty("لا توجد تنبيهات");
 }
 
 /* =========================================
-   16. التحديات
+   21. التحديات المحلية
 ========================================= */
-
-// هذه التحديات محلية للتجربة وليست منافسات حقيقية متعددة اللاعبين.
 
 function readChallenges() {
     try {
@@ -1345,9 +1642,13 @@ function readChallenges() {
 }
 
 function renderChallenges() {
+    const target = $("#challengeList");
+
+    if (!target) return;
+
     const challenges = readChallenges();
 
-    $("#challengeList").innerHTML = challenges.length
+    target.innerHTML = challenges.length
         ? challenges.map((challenge, index) => `
             <article class="challenge-card">
 
@@ -1390,15 +1691,19 @@ function renderChallenges() {
     $$("[data-join]").forEach(button => {
         button.onclick = () => {
             toast(
-                "مسودة محلية فقط؛ المنافسة الحقيقية تحتاج إلى خادم وتزامن آمن."
+                "هذه مسودة محلية فقط؛ المنافسة الحقيقية تحتاج إلى خادم وتزامن آمن."
             );
         };
     });
 }
 
 function challengeModal() {
+    if (!$("#modalContent") || !$("#modalBackdrop")) return;
+
     const options = S.subjects.map(subject => `
-        <option>${esc(subject.title)}</option>
+        <option value="${esc(subject.title)}">
+            ${esc(subject.title)}
+        </option>
     `).join("");
 
     $("#modalContent").innerHTML = `
@@ -1492,27 +1797,37 @@ function challengeModal() {
 }
 
 function closeModal() {
-    $("#modalBackdrop").classList.add("hidden");
+    $("#modalBackdrop")?.classList.add("hidden");
 }
 
 /* =========================================
-   17. المساعد الذكي
+   22. المساعد الذكي
 ========================================= */
-
-// يستدعي وظيفة آمنة على Supabase Edge Functions.
-// لا تضع مفاتيح Gemini السرية في هذا الملف.
 
 async function askAI(event) {
     event.preventDefault();
 
-    const question = $("#aiQuestion").value.trim();
+    const question = $("#aiQuestion")?.value.trim();
 
-    if (!question) return;
+    if (!question) {
+        msg($("#aiMessage"), "اكتب سؤالك أولًا.", "error");
+        return;
+    }
+
+    if (question.length > 5000) {
+        msg(
+            $("#aiMessage"),
+            "الحد الأقصى للسؤال 5000 حرف.",
+            "error"
+        );
+
+        return;
+    }
 
     if (!db) {
         msg(
             $("#aiMessage"),
-            "أكمل إعدادات Supabase ثم انشر وظيفة ask-gemini مع مفاتيح Gemini كـ Secrets.",
+            "أكمل إعدادات Supabase أولًا.",
             "error"
         );
 
@@ -1521,16 +1836,18 @@ async function askAI(event) {
 
     const button = $("#askAI");
 
+    if (!button) return;
+
     button.disabled = true;
     button.textContent = "جارٍ إعداد الإجابة…";
 
     msg($("#aiMessage"), "");
 
-    $("#aiAnswer").classList.add("hidden");
+    $("#aiAnswer")?.classList.add("hidden");
 
     try {
         const { data, error } = await db.functions.invoke(
-            cfg.AI_FUNCTION_NAME || "ask-gemini",
+            cfg.functions?.askGemini || "ask-gemini",
             {
                 body: { question }
             }
@@ -1540,13 +1857,14 @@ async function askAI(event) {
 
         if (!data?.answer) {
             throw new Error(
-                data?.error || "لم تصل إجابة"
+                data?.error || "لم تصل إجابة من المساعد."
             );
         }
 
         $("#aiAnswer").textContent = data.answer;
         $("#aiAnswer").classList.remove("hidden");
-        $("#newAI").classList.remove("hidden");
+
+        $("#newAI")?.classList.remove("hidden");
 
         msg(
             $("#aiMessage"),
@@ -1555,9 +1873,11 @@ async function askAI(event) {
         );
 
     } catch (error) {
+        console.error("AI function error:", error);
+
         msg(
             $("#aiMessage"),
-            "تعذر الحصول على إجابة. تحقق من نشر الوظيفة وإعداد مفاتيح Gemini. " +
+            "تعذر الحصول على إجابة. تحقق من نشر وظيفة ask-gemini ومفاتيح Gemini. " +
             (error.message || ""),
             "error"
         );
@@ -1569,16 +1889,24 @@ async function askAI(event) {
 }
 
 function resetAI() {
-    $("#aiQuestion").value = "";
-    $("#aiCount").textContent = "0 / 5000";
+    if ($("#aiQuestion")) {
+        $("#aiQuestion").value = "";
+    }
 
-    $("#aiAnswer").textContent = "";
-    $("#aiAnswer").classList.add("hidden");
-    $("#newAI").classList.add("hidden");
+    if ($("#aiCount")) {
+        $("#aiCount").textContent = "0 / 5000";
+    }
+
+    if ($("#aiAnswer")) {
+        $("#aiAnswer").textContent = "";
+        $("#aiAnswer").classList.add("hidden");
+    }
+
+    $("#newAI")?.classList.add("hidden");
 
     msg($("#aiMessage"), "");
 
-    $("#aiQuestion").focus();
+    $("#aiQuestion")?.focus();
 }
 
 })();
